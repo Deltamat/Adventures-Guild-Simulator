@@ -9,6 +9,8 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class Game1 : Game
     {
+        //YEA BOI
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
