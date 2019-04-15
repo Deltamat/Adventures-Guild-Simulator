@@ -10,6 +10,7 @@ namespace Adventures_Guild_Simulator
     public class Game1 : Game
     {
         //YEA BOI
+        //KIllROY was here
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
