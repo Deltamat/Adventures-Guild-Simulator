@@ -25,12 +25,9 @@ namespace Adventures_Guild_Simulator
         internal Item Helmet { get => helmet; set => helmet = value; }
         internal Item Boot { get => boot; set => boot = value; }
 
-        public Adventurer()
-        {
+       
 
-        }
-
-        public Adventurer(int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot)
+        public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot) : base(position, spriteName)
         {
             Id = id;
             Name = name;

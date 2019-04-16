@@ -19,7 +19,7 @@ namespace Adventures_Guild_Simulator
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
 
-        public Item(int id, int skillRating, string type, string name)
+        public Item(Vector2 position, string spriteName, int id, int skillRating, string type, string name) : base (position, spriteName)
         {
             Id = id;
             SkillRating = skillRating;

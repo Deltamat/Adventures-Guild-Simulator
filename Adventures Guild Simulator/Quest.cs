@@ -19,7 +19,7 @@ namespace Adventures_Guild_Simulator
 
         string enemy;
 
-        public Quest()
+        public Quest(Vector2 position, string spriteName) : base (position, spriteName)
         {
             difficultyRating = rng.Next(1, 101);
             reward = rng.Next(10, 21);
