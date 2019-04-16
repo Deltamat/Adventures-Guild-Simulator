@@ -9,9 +9,8 @@ namespace Adventures_Guild_Simulator
 {
     class Consumable : Item
     {
-        public Consumable(Vector2 position, string spriteName) : base(position, spriteName)
+        public Consumable(int id, int skillRating, string type, string name) : base(id, skillRating, type, name)
         {
-
         }
     }
 }
