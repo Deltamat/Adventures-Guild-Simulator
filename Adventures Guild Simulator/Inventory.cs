@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
-    class Weapon : Item
+    class Inventory
     {
+        List<Item> currentInventory = new List<Item>();
     }
 }

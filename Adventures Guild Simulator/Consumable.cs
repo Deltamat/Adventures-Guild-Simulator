@@ -8,5 +8,8 @@ namespace Adventures_Guild_Simulator
 {
     class Consumable : Item
     {
+        public Consumable(int id, int skillRating, string type, string name) : base(id, skillRating, type, name)
+        {
+        }
     }
 }
