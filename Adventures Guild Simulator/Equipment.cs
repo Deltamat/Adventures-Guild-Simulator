@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
-    class Consumable : Item
+    class Equipment : Item
     {
-        public Consumable(Vector2 position, string spriteName) : base(position, spriteName)
+        public Equipment(Vector2 position, string spriteName) : base(position, spriteName)
         {
 
         }

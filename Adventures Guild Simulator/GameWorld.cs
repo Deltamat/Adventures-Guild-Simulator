@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using System.Collections.Generic;
 
 namespace Adventures_Guild_Simulator
 {
@@ -14,11 +17,34 @@ namespace Adventures_Guild_Simulator
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
+        private List<GameObject> userInterfaceObjects;
+
+        private static ContentManager content;
+        public static ContentManager ContentManager
+        {
+            get
+            {
+                return content;
+            }
+        }
+
+        /// <summary>
+        /// Creates a rectangle whithin the bounds of the window
+        /// </summary>
+        public Rectangle ScreenSize
+        {
+            get
+            {
+                return graphics.GraphicsDevice.Viewport.Bounds;
+            }
+        }
 
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            content = Content;
         }
 
         /// <summary>
@@ -44,6 +70,33 @@ namespace Adventures_Guild_Simulator
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            //Buttons
+            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(200), (int)(400)), "Button")
+            {
+                TextForButton = "test",
+            };
+            
+            //sets a click event for each Button
+            testButton.Click += TestButtonClickEvent;
+
+            //List of our buttons
+            userInterfaceObjects = new List<GameObject>()
+            {
+                testButton,
+                
+            };
+
+            font = Content.Load<SpriteFont>("font");
+        }
+        /// <summary>
+        /// Looks for the click event for the button which this event was added to.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TestButtonClickEvent(object sender, EventArgs e)
+        {
+           //noget
         }
 
         /// <summary>
