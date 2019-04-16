@@ -7,7 +7,7 @@ namespace Adventures_Guild_Simulator
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class AGS : Game
+    public class GameWorld : Game
     {
         //YEA BOI
         //KIllROY was here
@@ -15,7 +15,7 @@ namespace Adventures_Guild_Simulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public AGS()
+        public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
