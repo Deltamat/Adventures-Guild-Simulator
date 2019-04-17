@@ -66,11 +66,14 @@ namespace Adventures_Guild_Simulator
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            //"Inception"
             previousMouse = currentMouse;
+            //Gets current position and "click info" from the mouse
             currentMouse = Mouse.GetState();
 
             var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
 
+            //Makes sure that the "hovering state" disappears from any button you previously hovered over with the mouse
             isHovering = false;
 
             //Checks if the mouseRectangle intersects with a button's Rectangle. 
@@ -96,24 +99,24 @@ namespace Adventures_Guild_Simulator
         {
             var color = Color.White;
 
-            //pretty selfexplanatory, but it changes the button's color to gray from  
+            //Pretty selfexplanatory, but it changes the button's color to gray from  
             //white if you hover over it with the mouse.
             if (isHovering)
             {
                 color = Color.Gray;
             }
-            //draws the button, without text.
+            //Draws the button, without text.
             spriteBatch.Draw(texture, Rectangle, color);
 
-            //if there's no text for the button, then it writes the text in the middle of the button via 
+            //If there's no text for the button, then it writes the text in the middle of the button via 
             //some simple math that calculates where the vector for the string should be.
             if (!string.IsNullOrEmpty(TextForButton))
             {
-                //much calculations, much wow.
+                //Much calculations, much wow.
                 var x = (Rectangle.X + (Rectangle.Width * 0.5f)) - (font.MeasureString(TextForButton).X * 0.5f);
                 var y = (Rectangle.Y + (Rectangle.Height * 0.5f)) - (font.MeasureString(TextForButton).Y * 0.5f);
 
-                //draws the text inside the button.
+                //Draws the text inside the button.
                 spriteBatch.DrawString(font, TextForButton, new Vector2(x, y), FontColor);
             }
         }
