@@ -163,8 +163,6 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.End();
             // TODO: Add your drawing code here
-
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
