@@ -66,7 +66,7 @@ namespace Adventures_Guild_Simulator
             // TODO: use this.Content to load your game content here
 
             //Buttons
-            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(200), (int)(400)), "Button")
+            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
                 TextForButton = "test",
             };
@@ -91,6 +91,7 @@ namespace Adventures_Guild_Simulator
         private void TestButtonClickEvent(object sender, EventArgs e)
         {
            //noget
+
         }
 
         /// <summary>
@@ -112,6 +113,11 @@ namespace Adventures_Guild_Simulator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             
+            //updates our click-events for the UI
+            foreach (var item in userInterfaceObjects)
+            {
+                item.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -124,7 +130,12 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-
+            
+            //Draws all the buttons of the UI
+            foreach (var item in userInterfaceObjects)
+            {
+                item.Draw(spriteBatch);
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
