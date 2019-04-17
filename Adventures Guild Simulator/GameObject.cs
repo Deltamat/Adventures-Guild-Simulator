@@ -21,6 +21,11 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         public Vector2 Position { get => position; set => position = value; }
         
+        public GameObject()
+        {
+
+        }
+
         /// <summary>
         /// Constructor for the GameObject
         /// </summary>

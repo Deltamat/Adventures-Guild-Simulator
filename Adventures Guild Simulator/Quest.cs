@@ -21,80 +21,93 @@ namespace Adventures_Guild_Simulator
         string enemy;
         bool ongoing;
 
-        public Quest(Vector2 position, string spriteName) : base (position, spriteName)
+        public Quest()
         {
-            difficultyRating = rng.Next(1, 101);
-            durationTime = rng.Next(60, 121);
-            expireTime = rng.Next(30, 61);
+            DifficultyRating = rng.Next(1, 101);
+            DurationTime = rng.Next(60, 121);
+            ExpireTime = rng.Next(30, 61);
 
-            if (difficultyRating <= 10)
+            if (DifficultyRating <= 10)
             {
-                enemy = "rat";
-                reward = rng.Next(1, 6);
+                Enemy = "rat";
+                Reward = rng.Next(1, 6);
             }
-            else if (difficultyRating > 10 && difficultyRating <= 20)
+            else if (DifficultyRating > 10 && DifficultyRating <= 20)
             {
-                enemy = "bat";
-                reward = rng.Next(6, 12);
+                Enemy = "bat";
+                Reward = rng.Next(6, 12);
             }
-            else if (difficultyRating > 20 && difficultyRating <= 30)
+            else if (DifficultyRating > 20 && DifficultyRating <= 30)
             {
-                enemy = "wolf";
-                reward = rng.Next(12, 18);
+                Enemy = "wolf";
+                Reward = rng.Next(12, 18);
             }
-            else if (difficultyRating > 30 && difficultyRating <= 40)
+            else if (DifficultyRating > 30 && DifficultyRating <= 40)
             {
-                enemy = "bear";
-                reward = rng.Next(18, 24);
+                Enemy = "bear";
+                Reward = rng.Next(18, 24);
             }
-            else if (difficultyRating > 40 && difficultyRating <= 50)
+            else if (DifficultyRating > 40 && DifficultyRating <= 50)
             {
-                enemy = "orc";
-                reward = rng.Next(24, 30);
+                Enemy = "orc";
+                Reward = rng.Next(24, 30);
             }
-            else if (difficultyRating > 50 && difficultyRating <= 60)
+            else if (DifficultyRating > 50 && DifficultyRating <= 60)
             {
-                enemy = "skeleton";
-                reward = rng.Next(30, 36);
+                Enemy = "skeleton";
+                Reward = rng.Next(30, 36);
             }
-            else if (difficultyRating > 60 && difficultyRating <= 70)
+            else if (DifficultyRating > 60 && DifficultyRating <= 70)
             {
-                enemy = "livingarmour";
-                reward = rng.Next(36, 42);
+                Enemy = "livingarmour";
+                Reward = rng.Next(36, 42);
             }
-            else if (difficultyRating > 70 && difficultyRating <= 80)
+            else if (DifficultyRating > 70 && DifficultyRating <= 80)
             {
-                enemy = "warlock";
-                reward = rng.Next(42, 48);
+                Enemy = "warlock";
+                Reward = rng.Next(42, 48);
             }
-            else if (difficultyRating > 80 && difficultyRating <= 90)
+            else if (DifficultyRating > 80 && DifficultyRating <= 90)
             {
-                enemy = "giantspider";
-                reward = rng.Next(48, 54);
+                Enemy = "giantspider";
+                Reward = rng.Next(48, 54);
             }
-            else if (difficultyRating > 90)
+            else if (DifficultyRating > 90)
             {
-                enemy = "dragon";
-                reward = rng.Next(54, 60);
+                Enemy = "dragon";
+                Reward = rng.Next(54, 60);
             }
         }
+
+        public Quest(Vector2 position, string spriteName) : base (position, spriteName)
+        {
+            
+        }
+
+        public int DifficultyRating { get => difficultyRating; set => difficultyRating = value; }
+        public int Reward { get => reward; set => reward = value; }
+        public float DurationTime { get => durationTime; set => durationTime = value; }
+        public float ProgressTime { get => progressTime; set => progressTime = value; }
+        public float ExpireTime { get => expireTime; set => expireTime = value; }
+        public float TimeToExpire { get => timeToExpire; set => timeToExpire = value; }
+        public string Enemy { get => enemy; set => enemy = value; }
 
         public override void Update(GameTime gameTime)
         {
             if (ongoing == false)
             {
-                timeToExpire += (float)GameWorld.Instance.globalDeltaTime;
-                if (timeToExpire > expireTime)
+                TimeToExpire += (float)GameWorld.Instance.globalDeltaTime;
+                if (TimeToExpire > ExpireTime)
                 {
-                    GameWorld.Instance.quests.Remove(this);
+                    GameWorld.Instance.questsToBeRemoved.Add(this);
                 }
             }
             else
             {
-                progressTime += (float)GameWorld.Instance.globalDeltaTime;
-                if (progressTime > durationTime)
+                ProgressTime += (float)GameWorld.Instance.globalDeltaTime;
+                if (ProgressTime > DurationTime)
                 {
-                    GameWorld.Instance.quests.Remove(this);
+                    GameWorld.Instance.questsToBeRemoved.Add(this);
                     //complete quest, give rewards
                 }
             }

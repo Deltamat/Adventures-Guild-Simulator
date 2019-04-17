@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Adventures_Guild_Simulator
 {
@@ -12,8 +13,6 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
-        //YEA BOI
-        //KIllROY was here
         ModelAdventurer m; // midlertidig
         string name;
         int number = 1;
@@ -25,6 +24,7 @@ namespace Adventures_Guild_Simulator
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
+        public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
 
         private static ContentManager content;
@@ -84,6 +84,7 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
+            this.IsMouseVisible = true;
             base.Initialize();
         }
 
@@ -151,7 +152,23 @@ namespace Adventures_Guild_Simulator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
-            
+
+            while (quests.Count < 5)
+            {
+                quests.Add(new Quest());
+                Thread.Sleep(15);
+            }
+
+            foreach (Quest quest in quests)
+            {
+                quest.Update(gameTime);
+            }
+            foreach (Quest quest in questsToBeRemoved)
+            {
+                quests.Remove(quest);
+            }
+            questsToBeRemoved.Clear();
+
             //updates our click-events for the UI
             foreach (var item in userInterfaceObjects)
             {
@@ -196,6 +213,13 @@ namespace Adventures_Guild_Simulator
             foreach (var item in userInterfaceObjects)
             {
                 item.Draw(spriteBatch);
+            }
+
+            int tmpDrawQuestVector = 400;
+            foreach (Quest quest in quests)
+            {
+                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(400, tmpDrawQuestVector), Color.Red);
+                tmpDrawQuestVector += 50;
             }
 
             spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
