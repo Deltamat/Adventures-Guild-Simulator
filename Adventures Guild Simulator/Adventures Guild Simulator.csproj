@@ -53,11 +53,10 @@
     <Compile Include="Item.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ModelAdventurer.cs" />
-    <Compile Include="ModelArmour.cs" />
+    <Compile Include="ModelEquipment.cs" />
     <Compile Include="ModelConsumable.cs" />
     <Compile Include="ModelInventory.cs" />
     <Compile Include="ModelShop.cs" />
-    <Compile Include="ModelWeapon.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quest.cs" />
