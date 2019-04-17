@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
-    class GameObject
+    public class GameObject
     {
         protected Texture2D sprite;
         protected Vector2 position;

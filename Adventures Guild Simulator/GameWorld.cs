@@ -15,7 +15,10 @@ namespace Adventures_Guild_Simulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
-        private List<GameObject> userInterfaceObjects;
+        private List<GameObject> userInterfaceObjects = new List<GameObject>();
+        public double globalDeltaTime;
+        public List<Quest> quests = new List<Quest>();
+        public int gold;
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -23,6 +26,23 @@ namespace Adventures_Guild_Simulator
             get
             {
                 return content;
+            }
+        }
+
+        static GameWorld instance;
+        static public GameWorld Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new GameWorld();
+                }
+                return instance;
+            }
+            set
+            {
+                instance = value;
             }
         }
 
@@ -42,6 +62,11 @@ namespace Adventures_Guild_Simulator
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
+            //Sets the window size
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            //graphics.IsFullScreen = true;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -111,7 +136,7 @@ namespace Adventures_Guild_Simulator
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            
+            globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
             base.Update(gameTime);
         }
