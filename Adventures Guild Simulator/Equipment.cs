@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,7 @@ namespace Adventures_Guild_Simulator
 
         public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
 
-        public Equipment(int id, int skillRating, string type, string name, bool isEquipped) : base(id, skillRating, type, name)
+        public Equipment(Vector2 position, string spriteName, int id, int skillRating, string type, string name, bool isEquipped) : base(position, spriteName, id, skillRating, type, name)
         {            
             IsEquipped = isEquipped;            
         }

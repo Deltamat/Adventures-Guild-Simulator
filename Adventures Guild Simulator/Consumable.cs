@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Adventures_Guild_Simulator
 {
     class Consumable : Item
     {
-        public Consumable(int id, int skillRating, string type, string name) : base(id, skillRating, type, name)
+        public Consumable(Vector2 position, string spriteName, int id, int skillRating, string type, string name) : base(position, spriteName, id, skillRating, type, name)
         {
         }
     }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,12 +25,9 @@ namespace Adventures_Guild_Simulator
         public Item Helmet { get => helmet; set => helmet = value; }
         public Item Boot { get => boot; set => boot = value; }
 
-        public Adventurer()
-        {
+       
 
-        }
-
-        public Adventurer(int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot)
+        public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot) : base(position, spriteName)
         {
             Id = id;
             Name = name;
