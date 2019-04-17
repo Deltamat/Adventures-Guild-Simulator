@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
-    class ModelArmour : Model
+    class ModelEquipment : Model
     {
     }
 }
