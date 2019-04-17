@@ -12,6 +12,7 @@ namespace Adventures_Guild_Simulator
         int id;
         string name;
         int level;
+        int tempSkillBuff;
         Item weapon;
         Item chest;
         Item helmet;
@@ -20,6 +21,7 @@ namespace Adventures_Guild_Simulator
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public int Level { get => level; set => level = value; }
+        public int TempSkillBuff { get => tempSkillBuff; set => tempSkillBuff = value; }
         public Item Weapon { get => weapon; set => weapon = value; }
         public Item Chest { get => chest; set => chest = value; }
         public Item Helmet { get => helmet; set => helmet = value; }

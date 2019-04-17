@@ -14,7 +14,7 @@ namespace Adventures_Guild_Simulator
         [STAThread]
         static void Main()
         {
-            using (var game = new GameWorld())
+            using (var game = GameWorld.Instance)
                 game.Run();
         }
     }
