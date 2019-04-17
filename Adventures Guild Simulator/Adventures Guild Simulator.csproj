@@ -46,14 +46,14 @@
     <Compile Include="Adventurer.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="GameWorld.cs" />
-    <Compile Include="Armour.cs" />
     <Compile Include="Consumable.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="Inventory.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Model.cs" />
     <Compile Include="ModelAdventurer.cs" />
-    <Compile Include="ModelAmour.cs" />
+    <Compile Include="ModelArmour.cs" />
     <Compile Include="ModelConsumable.cs" />
     <Compile Include="ModelInventory.cs" />
     <Compile Include="ModelShop.cs" />
@@ -62,7 +62,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quest.cs" />
     <Compile Include="View.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="Equipment.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
