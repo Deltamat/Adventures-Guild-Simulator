@@ -31,7 +31,7 @@ namespace Adventures_Guild_Simulator
             }
             else if (difficultyRating > 10 && difficultyRating <= 20)
             {
-                enemy = "boar";
+                enemy = "bat";
             }
             else if (difficultyRating > 20 && difficultyRating <= 30)
             {
@@ -39,11 +39,11 @@ namespace Adventures_Guild_Simulator
             }
             else if (difficultyRating > 30 && difficultyRating <= 40)
             {
-                enemy = "bandit";
+                enemy = "bear";
             }
             else if (difficultyRating > 40 && difficultyRating <= 50)
             {
-                enemy = "direwolf";
+                enemy = "orc";
             }
             else if (difficultyRating > 50 && difficultyRating <= 60)
             {
@@ -51,17 +51,17 @@ namespace Adventures_Guild_Simulator
             }
             else if (difficultyRating > 60 && difficultyRating <= 70)
             {
-                enemy = "warlock";
+                enemy = "livingarmour";
             }
             else if (difficultyRating > 70 && difficultyRating <= 80)
             {
-                enemy = "manticore";
+                enemy = "warlock";
             }
             else if (difficultyRating > 80 && difficultyRating <= 90)
             {
-                enemy = "hydra";
+                enemy = "giantspider";
             }
-            else if (difficultyRating > 90 && difficultyRating <= 100)
+            else if (difficultyRating > 90)
             {
                 enemy = "dragon";
             }
