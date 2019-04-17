@@ -74,5 +74,42 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return level;
         }
+
+        /// <summary>
+        /// Delete an adventurer with specific id
+        /// </summary>
+        /// <param name="id">The id of the adventurer</param>
+        public void DeleteAdventurerByID(int id)
+        {
+            cmd.CommandText = $"DELETE FROM adventurer WHERE id='{id}'";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void GetAdventurerByID(int id, out int level, out string name)
+        {
+            name = null;
+            level = 0;
+            cmd.CommandText = "SELECT name, level FROM Adventurer WHERE id='" + id.ToString() + "'";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                name = reader.GetString(0);
+                level = reader.GetInt32(1);
+            }
+            reader.Close();
+        }
+
+        public int GetLength()
+        {
+            int count = 0;
+            cmd.CommandText = "SELECT COUNT(*) FROM Adventurer";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                count = reader.GetInt32(0);
+            }
+            reader.Close();
+            return count;
+        }
     }
 }

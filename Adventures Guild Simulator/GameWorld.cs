@@ -14,7 +14,7 @@ namespace Adventures_Guild_Simulator
     {
         //YEA BOI
         //KIllROY was here
-        ModelAdventurer m; // midlertidig
+        ModelAdventurer m = new ModelAdventurer(); // midlertidig
         string name;
         int number = 1;
         double counter;
@@ -23,6 +23,7 @@ namespace Adventures_Guild_Simulator
         SpriteBatch spriteBatch;
         SpriteFont font;
         private List<GameObject> userInterfaceObjects;
+        private List<Adventurer> adventurers;
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -49,6 +50,7 @@ namespace Adventures_Guild_Simulator
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -59,6 +61,18 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
+            
+            int outlevel;
+            string outname;
+            adventurers = new List<Adventurer>();
+
+            for (int i = 1; i < m.GetLength() + 1; i++)
+            {
+                m.GetAdventurerByID(i, out outlevel, out outname);
+                adventurers.Add(new Adventurer(1, outname, outlevel));
+            }
+            
+
             base.Initialize();
         }
 
@@ -73,10 +87,7 @@ namespace Adventures_Guild_Simulator
             
 
             //midlertidig
-            m = new ModelAdventurer();
             name = m.GetNameByID(1);
-
-            // TODO: use this.Content to load your game content here
 
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
@@ -152,7 +163,6 @@ namespace Adventures_Guild_Simulator
             }
             
 
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -175,7 +185,6 @@ namespace Adventures_Guild_Simulator
             spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
 
             spriteBatch.End();
-            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
     }
