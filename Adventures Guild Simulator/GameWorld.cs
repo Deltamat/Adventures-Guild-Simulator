@@ -12,6 +12,13 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
+        //YEA BOI
+        //KIllROY was here
+        ModelAdventurer m; // midlertidig
+        string name;
+        int number = 1;
+        double counter;
+
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
@@ -87,11 +94,17 @@ namespace Adventures_Guild_Simulator
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("font");
+            
+
+            //midlertidig
+            m = new ModelAdventurer();
+            name = m.GetNameByID(1);
 
             // TODO: use this.Content to load your game content here
 
             //Buttons
-            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(200), (int)(400)), "Button")
+            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
                 TextForButton = "test",
             };
@@ -116,6 +129,7 @@ namespace Adventures_Guild_Simulator
         private void TestButtonClickEvent(object sender, EventArgs e)
         {
            //noget
+
         }
 
         /// <summary>
@@ -137,6 +151,34 @@ namespace Adventures_Guild_Simulator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
+            
+            //updates our click-events for the UI
+            foreach (var item in userInterfaceObjects)
+            {
+                item.Update(gameTime);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                m.CreateAdventurer("Gert");
+            }
+
+            counter += gameTime.ElapsedGameTime.TotalSeconds;
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && counter > 1)
+            {
+                number++;
+                counter = 0;
+                name = m.GetNameByID(number);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && counter > 1)
+            {
+                number--;
+                counter = 0;
+                name = m.GetNameByID(number);
+            }
+            
+
+            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -149,9 +191,17 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
+            
+            //Draws all the buttons of the UI
+            foreach (var item in userInterfaceObjects)
+            {
+                item.Draw(spriteBatch);
+            }
 
+            spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
 
             spriteBatch.End();
+            // TODO: Add your drawing code here
             base.Draw(gameTime);
         }
     }
