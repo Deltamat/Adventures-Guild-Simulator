@@ -11,9 +11,14 @@ namespace Adventures_Guild_Simulator
     {
         //YEA BOI
         //KIllROY was here
+        ModelAdventurer m; // midlertidig
+        string name;
+        int number = 1;
+        double counter;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
 
         public GameWorld()
         {
@@ -42,6 +47,12 @@ namespace Adventures_Guild_Simulator
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            font = Content.Load<SpriteFont>("font");
+            
+
+            //midlertidig
+            m = new ModelAdventurer();
+            name = m.GetNameByID(1);
 
             // TODO: use this.Content to load your game content here
         }
@@ -65,6 +76,26 @@ namespace Adventures_Guild_Simulator
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                m.CreateAdventurer("Gert");
+            }
+
+            counter += gameTime.ElapsedGameTime.TotalSeconds;
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) && counter > 1)
+            {
+                number++;
+                counter = 0;
+                name = m.GetNameByID(number);
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Down) && counter > 1)
+            {
+                number--;
+                counter = 0;
+                name = m.GetNameByID(number);
+            }
+            
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -77,7 +108,11 @@ namespace Adventures_Guild_Simulator
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            spriteBatch.Begin();
 
+            spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
+
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
