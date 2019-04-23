@@ -14,7 +14,7 @@ namespace Adventures_Guild_Simulator
         int skillRating;
         int goldCost;
         string type;
-        string rarity;        
+        string rarity;
         string name;
         
 
@@ -35,7 +35,15 @@ namespace Adventures_Guild_Simulator
             Type = type;
             Name = name;
             GoldCost = goldCost;
+        }
 
+        public Item(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName)
+        {
+            Rarity = rarity;
+            SkillRating = skillRating;
+            Type = type;
+            Name = name;
+            GoldCost = goldCost;
         }
         /// <summary>
         /// Constructor for generating temporary items (because it doesn't need the "id")
@@ -113,7 +121,7 @@ namespace Adventures_Guild_Simulator
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
 
-            GameWorld.itemList.Add(new Item(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType,tempGoldCost, tempItemType));
+            GameWorld.itemList.Add(new Item(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
