@@ -244,7 +244,7 @@ namespace Adventures_Guild_Simulator
                 tmpDrawQuestVector += 90;
             }
 
-            spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
+            
 
             spriteBatch.End();
             base.Draw(gameTime);
