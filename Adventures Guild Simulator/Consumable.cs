@@ -13,7 +13,7 @@ namespace Adventures_Guild_Simulator
                 
         public int Uses { get => uses; set => uses = value; }
 
-        public Consumable(Vector2 position, string spriteName, int id, string rarity, int skillRating, string type, int goldCost, string name, int uses) : base(position, spriteName, id, rarity, skillRating, type, goldCost, name)
+        public Consumable(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses) : base(position, id, name, spriteName, type, rarity, goldCost, skillRating)
         {
             Uses = uses;
         }
