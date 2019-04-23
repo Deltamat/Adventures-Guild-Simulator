@@ -55,7 +55,7 @@ namespace Adventures_Guild_Simulator
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            
+            spriteBatch.Draw(sprite, position, Color.White);
         }
     }
 }

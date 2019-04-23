@@ -30,52 +30,52 @@ namespace Adventures_Guild_Simulator
             if (DifficultyRating <= 10)
             {
                 Enemy = "rat";
-                Reward = rng.Next(1, 6);
+                Reward = rng.Next(10, 16);
             }
             else if (DifficultyRating > 10 && DifficultyRating <= 20)
             {
                 Enemy = "bat";
-                Reward = rng.Next(6, 12);
+                Reward = rng.Next(16, 22);
             }
             else if (DifficultyRating > 20 && DifficultyRating <= 30)
             {
                 Enemy = "wolf";
-                Reward = rng.Next(12, 18);
+                Reward = rng.Next(22, 28);
             }
             else if (DifficultyRating > 30 && DifficultyRating <= 40)
             {
                 Enemy = "bear";
-                Reward = rng.Next(18, 24);
+                Reward = rng.Next(28, 34);
             }
             else if (DifficultyRating > 40 && DifficultyRating <= 50)
             {
                 Enemy = "orc";
-                Reward = rng.Next(24, 30);
+                Reward = rng.Next(34, 40);
             }
             else if (DifficultyRating > 50 && DifficultyRating <= 60)
             {
                 Enemy = "skeleton";
-                Reward = rng.Next(30, 36);
+                Reward = rng.Next(40, 46);
             }
             else if (DifficultyRating > 60 && DifficultyRating <= 70)
             {
                 Enemy = "livingarmour";
-                Reward = rng.Next(36, 42);
+                Reward = rng.Next(46, 52);
             }
             else if (DifficultyRating > 70 && DifficultyRating <= 80)
             {
                 Enemy = "warlock";
-                Reward = rng.Next(42, 48);
+                Reward = rng.Next(52, 58);
             }
             else if (DifficultyRating > 80 && DifficultyRating <= 90)
             {
                 Enemy = "giantspider";
-                Reward = rng.Next(48, 54);
+                Reward = rng.Next(58, 64);
             }
             else if (DifficultyRating > 90)
             {
                 Enemy = "dragon";
-                Reward = rng.Next(54, 60);
+                Reward = rng.Next(64, 70);
             }
         }
 

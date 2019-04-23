@@ -13,20 +13,22 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
-        ModelAdventurer m = new ModelAdventurer(); // midlertidig
-        string name;
-        int number = 1;
-        double counter;
+
+        public static Random rng = new Random();
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont font;
+        public List<GameObject> UI = new List<GameObject>();
+
+        public static SpriteFont font;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
+        public static List<Item> itemList = new List<Item>(); //Tempoary
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
         private List<Adventurer> adventurers;
+        float delay = 0;
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -86,8 +88,17 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
-            adventurers = m.LoadAdventurers();
-            
+            adventurers = Controller.Instance.LoadAdventurers();
+            gold = Controller.Instance.LoadGold();
+
+            //UI
+            UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
+            UI.Add(new GameObject(new Vector2(10), "questShop"));
+            UI.Add(new GameObject(new Vector2(10, 520), "questShop"));
+            UI.Add(new GameObject(new Vector2(565, 10), "statPlank"));
+            UI.Add(new GameObject(new Vector2(565, 100), "infoChar"));
+            UI.Add(new GameObject(new Vector2(565, 560), "infoChar"));
+            UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
 
             base.Initialize();
         }
@@ -100,10 +111,6 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            
-
-            //midlertidig
-            name = m.GetNameByID(1);
 
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
@@ -152,6 +159,8 @@ namespace Adventures_Guild_Simulator
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+            delay += gameTime.ElapsedGameTime.Milliseconds;
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
             while (quests.Count < 5)
@@ -178,24 +187,23 @@ namespace Adventures_Guild_Simulator
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                m.CreateAdventurer("Gert");
+                //m.CreateAdventurer("Gert");
             }
 
-            counter += gameTime.ElapsedGameTime.TotalSeconds;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && counter > 1)
+            if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
-                number++;
-                counter = 0;
-                name = m.GetNameByID(number);
+                Item.GenerateItem(new Vector2(300, 200));
+                Item.GenerateItem(new Vector2(300, 350));
+                Item.GenerateItem(new Vector2(300, 500));
+                Item.GenerateItem(new Vector2(300, 650));
+                Item.GenerateItem(new Vector2(300, 800));
+                delay = 0;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && counter > 1)
-            {
-                number--;
-                counter = 0;
-                name = m.GetNameByID(number);
-            }
-            
 
+            if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
+            {
+                itemList.Clear();
+            }
 
             base.Update(gameTime);
         }
@@ -206,26 +214,40 @@ namespace Adventures_Guild_Simulator
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
-            
+
+            foreach (GameObject UIelement in UI)
+            {
+                UIelement.Draw(spriteBatch);
+            }
+
+
+            foreach (var item in itemList)
+            {
+                item.Draw(spriteBatch);
+            }
             //Draws all the buttons of the UI
             foreach (var item in userInterfaceObjects)
             {
                 item.Draw(spriteBatch);
             }
 
-            int tmpDrawQuestVector = 400;
-            foreach (Quest quest in quests)
-            {
-                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(400, tmpDrawQuestVector), Color.Red);
-                tmpDrawQuestVector += 50;
-            }
-
-            spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
+            //int tmpDrawQuestVector = 400;
+            //foreach (Quest quest in quests)
+            //{
+            //    spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(400, tmpDrawQuestVector), Color.Red);
+            //    tmpDrawQuestVector += 50;
+            //}
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public static int GenerateRandom(int minValue, int maxValue)
+        {
+            int value = rng.Next(minValue, maxValue);
+            return value;
         }
     }
 }
