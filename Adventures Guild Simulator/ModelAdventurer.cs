@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
@@ -33,10 +34,19 @@ namespace Adventures_Guild_Simulator
         /// Create an level 1 adventurer without equipment
         /// </summary>
         /// <param name="name">Name of the adventurer</param>
-        public void CreateAdventurer(string name)
+        public Adventurer CreateAdventurer(string name)
         {
+            Adventurer a = null;
             cmd.CommandText = $"INSERT INTO Adventurer (id, name, level) VALUES (null, '{name}', 1)";
             cmd.ExecuteNonQuery();
+            cmd.CommandText = "SELECT * FROM Adventurer ORDER BY id DESC LIMIT 1";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                 a = new Adventurer(Vector2.Zero, "bat", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null);
+            }
+            reader.Close();
+            return a;
         }
 
         /// <summary>
@@ -85,20 +95,10 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void GetAdventurerByID(int id, out int level, out string name)
-        {
-            name = null;
-            level = 0;
-            cmd.CommandText = "SELECT name, level FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                name = reader.GetString(0);
-                level = reader.GetInt32(1);
-            }
-            reader.Close();
-        }
-
+        /// <summary>
+        /// Get the amount of rows in the table
+        /// </summary>
+        /// <returns>the count</returns>
         public int GetLength()
         {
             int count = 0;
@@ -110,6 +110,23 @@ namespace Adventures_Guild_Simulator
             }
             reader.Close();
             return count;
+        }
+
+        /// <summary>
+        /// Returns a List of all the adventurers in the table
+        /// </summary>
+        /// <returns></returns>
+        public List<Adventurer> LoadAdventurers()
+        {
+            List<Adventurer> adventurers = new List<Adventurer>();
+            cmd.CommandText = "SELECT * FROM adventurer";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                adventurers.Add(new Adventurer(Vector2.Zero, "bat", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null));
+            }
+            reader.Close();
+            return adventurers;
         }
     }
 }

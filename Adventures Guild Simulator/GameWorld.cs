@@ -13,14 +13,14 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
-        //ModelAdventurer m; // midlertidig
-        string name;
-        int number = 1;
-        double counter;
+
         public static Random rng = new Random();
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont font;
+        public List<GameObject> UI = new List<GameObject>();
+
         public static SpriteFont font;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         public static List<Item> itemList = new List<Item>(); //Tempoary
@@ -89,17 +89,17 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
-            
-            int outlevel;
-            string outname;
-            adventurers = new List<Adventurer>();
+            adventurers = Controller.Instance.LoadAdventurers();
+            gold = Controller.Instance.LoadGold();
 
-            //for (int i = 1; i < m.GetLength() + 1; i++)
-            //{
-            //    m.GetAdventurerByID(i, out outlevel, out outname);
-            //    adventurers.Add(new Adventurer(1, outname, outlevel));
-            //}
-            
+            //UI
+            UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
+            UI.Add(new GameObject(new Vector2(10), "questShop"));
+            UI.Add(new GameObject(new Vector2(10, 520), "questShop"));
+            UI.Add(new GameObject(new Vector2(565, 10), "statPlank"));
+            UI.Add(new GameObject(new Vector2(565, 100), "infoChar"));
+            UI.Add(new GameObject(new Vector2(565, 560), "infoChar"));
+            UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
 
             base.Initialize();
         }
@@ -115,7 +115,7 @@ namespace Adventures_Guild_Simulator
             
 
             //midlertidig
-            //name = m.GetNameByID(1);
+            name = m.GetNameByID(1);
 
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
@@ -238,6 +238,12 @@ namespace Adventures_Guild_Simulator
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
 
+            foreach (GameObject UIelement in UI)
+            {
+                UIelement.Draw(spriteBatch);
+            }
+
+
             foreach (var item in itemList)
             {
                 item.Draw(spriteBatch);
@@ -254,8 +260,6 @@ namespace Adventures_Guild_Simulator
             //    spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(400, tmpDrawQuestVector), Color.Red);
             //    tmpDrawQuestVector += 50;
             //}
-
-            //spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
