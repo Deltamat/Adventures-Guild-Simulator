@@ -12,7 +12,6 @@ namespace Adventures_Guild_Simulator
         ModelConsumable consumable;
         ModelEquipment equipment;
         ModelInventory inventory;
-        ModelShop shop;
 
         static Controller instance;
         static public Controller Instance
@@ -36,7 +35,6 @@ namespace Adventures_Guild_Simulator
             consumable = new ModelConsumable();
             equipment = new ModelEquipment();
             inventory = new ModelInventory();
-            shop = new ModelShop();
         }
 
         #region Adventurer
