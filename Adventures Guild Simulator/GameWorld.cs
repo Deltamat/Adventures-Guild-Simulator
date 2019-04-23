@@ -164,16 +164,19 @@ namespace Adventures_Guild_Simulator
                 Exit();
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
+            //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
             {
                 quests.Add(new Quest());
                 Thread.Sleep(15);
             }
 
+            //Updates quests
             foreach (Quest quest in quests)
             {
                 quest.Update(gameTime);
             }
+            //Removes expired/completed quests
             foreach (Quest quest in questsToBeRemoved)
             {
                 quests.Remove(quest);
@@ -219,6 +222,7 @@ namespace Adventures_Guild_Simulator
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
+            //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
             {
                 UIelement.Draw(spriteBatch);
@@ -230,11 +234,11 @@ namespace Adventures_Guild_Simulator
                 item.Draw(spriteBatch);
             }
 
-            int tmpDrawQuestVector = 400;
+            int tmpDrawQuestVector = 575;
             foreach (Quest quest in quests)
             {
-                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(400, tmpDrawQuestVector), Color.Red);
-                tmpDrawQuestVector += 50;
+                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
+                tmpDrawQuestVector += 90;
             }
 
             spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);

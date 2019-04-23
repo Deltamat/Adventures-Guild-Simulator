@@ -23,10 +23,12 @@ namespace Adventures_Guild_Simulator
 
         public Quest()
         {
+            //Random difficulty, duration time and expire time
             DifficultyRating = rng.Next(1, 101);
             DurationTime = rng.Next(60, 121);
             ExpireTime = rng.Next(30, 61);
 
+            //Chooses enemies and gold reward depending on difficulty rating
             if (DifficultyRating <= 10)
             {
                 Enemy = "rat";
@@ -94,8 +96,9 @@ namespace Adventures_Guild_Simulator
 
         public override void Update(GameTime gameTime)
         {
-            if (ongoing == false)
+            if (ongoing == false) //Whether any one is assinged to the quest
             {
+                //Counts down how much time before the quest expires
                 TimeToExpire += (float)GameWorld.Instance.globalDeltaTime;
                 if (TimeToExpire > ExpireTime)
                 {
@@ -104,6 +107,7 @@ namespace Adventures_Guild_Simulator
             }
             else
             {
+                //Counts down how much time before the quest is completed
                 ProgressTime += (float)GameWorld.Instance.globalDeltaTime;
                 if (ProgressTime > DurationTime)
                 {
