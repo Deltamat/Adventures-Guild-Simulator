@@ -34,10 +34,19 @@ namespace Adventures_Guild_Simulator
         /// Create an level 1 adventurer without equipment
         /// </summary>
         /// <param name="name">Name of the adventurer</param>
-        public void CreateAdventurer(string name)
+        public Adventurer CreateAdventurer(string name)
         {
+            Adventurer a = null;
             cmd.CommandText = $"INSERT INTO Adventurer (id, name, level) VALUES (null, '{name}', 1)";
             cmd.ExecuteNonQuery();
+            cmd.CommandText = "SELECT * FROM Adventurer ORDER BY id DESC LIMIT 1";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                 a = new Adventurer(Vector2.Zero, "bat", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null);
+            }
+            reader.Close();
+            return a;
         }
 
         /// <summary>

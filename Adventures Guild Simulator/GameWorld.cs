@@ -87,7 +87,7 @@ namespace Adventures_Guild_Simulator
         protected override void Initialize()
         {
             adventurers = m.LoadAdventurers();
-            
+            adventurers.Add(m.CreateAdventurer("Mathias"));
 
             base.Initialize();
         }
@@ -100,7 +100,7 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            
+
 
             //midlertidig
             name = m.GetNameByID(1);
