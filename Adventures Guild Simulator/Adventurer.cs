@@ -26,7 +26,7 @@ namespace Adventures_Guild_Simulator
         public Item Chest { get => chest; set => chest = value; }
         public Item Helmet { get => helmet; set => helmet = value; }
         public Item Boot { get => boot; set => boot = value; }
-
+        
         public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot) : base(position, spriteName)
         {
             Id = id;
