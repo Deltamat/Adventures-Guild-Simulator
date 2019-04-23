@@ -14,16 +14,16 @@ namespace Adventures_Guild_Simulator
 
         public ModelConsumable()
         {
-            string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
-                "name string, " +
-                "spriteName string, " +
-                "value integer, " +
-                "type string, " +
-                "skillRating integer, " +
-                "uses integer, ";
-            cmd = connection.CreateCommand();
-            cmd.CommandText = sqlexp;
-            cmd.ExecuteNonQuery();
+            //string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
+            //    "name string, " +
+            //    "spriteName string, " +
+            //    "value integer, " +
+            //    "type string, " +
+            //    "skillRating integer, " +
+            //    "uses integer, ";
+            //cmd = connection.CreateCommand();
+            //cmd.CommandText = sqlexp;
+            //cmd.ExecuteNonQuery();
         }
 
         public void CreateEquipment(string name, string type , int skillRating, int uses)

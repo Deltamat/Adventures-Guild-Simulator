@@ -24,60 +24,60 @@ namespace Adventures_Guild_Simulator
         public Quest()
         {
             //Random difficulty, duration time and expire time
-            DifficultyRating = rng.Next(1, 101);
-            DurationTime = rng.Next(60, 121);
-            ExpireTime = rng.Next(30, 61);
+            DifficultyRating = GameWorld.GenerateRandom(1, 101);
+            DurationTime = GameWorld.GenerateRandom(60, 121);
+            ExpireTime = GameWorld.GenerateRandom(30, 61);
 
             //Chooses enemies and gold reward depending on difficulty rating
             if (DifficultyRating <= 10)
             {
                 Enemy = "rat";
-                Reward = rng.Next(10, 16);
+                Reward = GameWorld.GenerateRandom(10, 16);
             }
             else if (DifficultyRating > 10 && DifficultyRating <= 20)
             {
                 Enemy = "bat";
-                Reward = rng.Next(16, 22);
+                Reward = GameWorld.GenerateRandom(16, 22);
             }
             else if (DifficultyRating > 20 && DifficultyRating <= 30)
             {
                 Enemy = "wolf";
-                Reward = rng.Next(22, 28);
+                Reward = GameWorld.GenerateRandom(22, 28);
             }
             else if (DifficultyRating > 30 && DifficultyRating <= 40)
             {
                 Enemy = "bear";
-                Reward = rng.Next(28, 34);
+                Reward = GameWorld.GenerateRandom(28, 34);
             }
             else if (DifficultyRating > 40 && DifficultyRating <= 50)
             {
                 Enemy = "orc";
-                Reward = rng.Next(34, 40);
+                Reward = GameWorld.GenerateRandom(34, 40);
             }
             else if (DifficultyRating > 50 && DifficultyRating <= 60)
             {
                 Enemy = "skeleton";
-                Reward = rng.Next(40, 46);
+                Reward = GameWorld.GenerateRandom(40, 46);
             }
             else if (DifficultyRating > 60 && DifficultyRating <= 70)
             {
                 Enemy = "livingarmour";
-                Reward = rng.Next(46, 52);
+                Reward = GameWorld.GenerateRandom(46, 52);
             }
             else if (DifficultyRating > 70 && DifficultyRating <= 80)
             {
                 Enemy = "warlock";
-                Reward = rng.Next(52, 58);
+                Reward = GameWorld.GenerateRandom(52, 58);
             }
             else if (DifficultyRating > 80 && DifficultyRating <= 90)
             {
                 Enemy = "giantspider";
-                Reward = rng.Next(58, 64);
+                Reward = GameWorld.GenerateRandom(58, 64);
             }
             else if (DifficultyRating > 90)
             {
                 Enemy = "dragon";
-                Reward = rng.Next(64, 70);
+                Reward = GameWorld.GenerateRandom(64, 70);
             }
         }
 

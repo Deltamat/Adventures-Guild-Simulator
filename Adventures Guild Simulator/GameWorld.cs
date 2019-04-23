@@ -167,7 +167,6 @@ namespace Adventures_Guild_Simulator
             while (quests.Count < 5)
             {
                 quests.Add(new Quest());
-                Thread.Sleep(15);
             }
 
             //Updates quests
@@ -187,11 +186,7 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                //m.CreateAdventurer("Gert");
-            }
+            
 
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
@@ -243,9 +238,7 @@ namespace Adventures_Guild_Simulator
                 spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
                 tmpDrawQuestVector += 90;
             }
-
-            spriteBatch.DrawString(font, $"Name: {name}, Level: {m.GetLevelByID(number)}", new Vector2(50), Color.White);
-
+           
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -254,6 +247,6 @@ namespace Adventures_Guild_Simulator
         {
             int value = rng.Next(minValue, maxValue);
             return value;
-        }
+        }        
     }
 }
