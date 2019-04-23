@@ -37,14 +37,7 @@ namespace Adventures_Guild_Simulator
             GoldCost = goldCost;
         }
 
-        public Item(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName)
-        {
-            Rarity = rarity;
-            SkillRating = skillRating;
-            Type = type;
-            Name = name;
-            GoldCost = goldCost;
-        }
+       
         /// <summary>
         /// Constructor for generating temporary items (because it doesn't need the "id")
         /// </summary>       
