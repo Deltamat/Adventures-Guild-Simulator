@@ -14,8 +14,7 @@ namespace Adventures_Guild_Simulator
         int skillRating;
         int goldCost;
         string type;
-        string rarity;
-        int goldCost;
+        string rarity;        
         string name;
         
 
@@ -26,8 +25,23 @@ namespace Adventures_Guild_Simulator
         public int GoldCost { get => goldCost; set => goldCost = value; }
         public string Rarity { get => rarity; set => rarity = value; }
 
+        /// <summary>
+        /// Constructor for generating items for the database (because it has the "id")
+        /// </summary>        
         public Item(Vector2 position, string spriteName, int id, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName)
         {            
+            Rarity = rarity;
+            SkillRating = skillRating;
+            Type = type;
+            Name = name;
+            GoldCost = goldCost;
+
+        }
+        /// <summary>
+        /// Constructor for generating temporary items (because it doesn't need the "id")
+        /// </summary>       
+        public Item(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName)
+        {
             Rarity = rarity;
             SkillRating = skillRating;
             Type = type;
