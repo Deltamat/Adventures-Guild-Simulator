@@ -12,6 +12,7 @@ namespace Adventures_Guild_Simulator
         ModelConsumable consumable;
         ModelEquipment equipment;
         ModelInventory inventory;
+        ModelStat stat;
 
         static Controller instance;
         static public Controller Instance
@@ -35,6 +36,8 @@ namespace Adventures_Guild_Simulator
             consumable = new ModelConsumable();
             equipment = new ModelEquipment();
             inventory = new ModelInventory();
+            stat = new ModelStat();
+
         }
 
         #region Adventurer
@@ -61,8 +64,16 @@ namespace Adventures_Guild_Simulator
 
         #endregion
 
-        #region Shop
+        #region Stat
+        public void SetGold(int gold)
+        {
+            stat.SetGold(gold);
+        }
 
+        public int LoadGold()
+        {
+            return stat.LoadGold();
+        }
         #endregion
 
     }
