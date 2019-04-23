@@ -18,9 +18,12 @@ namespace Adventures_Guild_Simulator
         int number = 1;
         double counter;
 
+        //Graphics
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont font;
+        public List<GameObject> UI = new List<GameObject>();
+
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
@@ -88,6 +91,14 @@ namespace Adventures_Guild_Simulator
         {
             adventurers = m.LoadAdventurers();
             
+            //UI
+            UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
+            UI.Add(new GameObject(new Vector2(10), "questShop"));
+            UI.Add(new GameObject(new Vector2(10, 520), "questShop"));
+            UI.Add(new GameObject(new Vector2(565, 10), "statPlank"));
+            UI.Add(new GameObject(new Vector2(565, 100), "infoChar"));
+            UI.Add(new GameObject(new Vector2(565, 560), "infoChar"));
+            UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
 
             base.Initialize();
         }
@@ -100,7 +111,6 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            
 
             //midlertidig
             name = m.GetNameByID(1);
@@ -208,7 +218,12 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
-            
+
+            foreach (GameObject UIelement in UI)
+            {
+                UIelement.Draw(spriteBatch);
+            }
+
             //Draws all the buttons of the UI
             foreach (var item in userInterfaceObjects)
             {
