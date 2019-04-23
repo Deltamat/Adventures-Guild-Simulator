@@ -9,8 +9,15 @@ namespace Adventures_Guild_Simulator
 {
     class Consumable : Item
     {
-        public Consumable(Vector2 position, string spriteName, int id, int skillRating, string type, string name) : base(position, spriteName, id, skillRating, type, name)
+        int uses;
+                
+        public int Uses { get => uses; set => uses = value; }
+
+        public Consumable(Vector2 position, string spriteName, int id, string rarity, int skillRating, string type, int goldCost, string name, int uses) : base(position, spriteName, id, rarity, skillRating, type, goldCost, name)
         {
+            Uses = uses;
         }
+
+        
     }
 }
