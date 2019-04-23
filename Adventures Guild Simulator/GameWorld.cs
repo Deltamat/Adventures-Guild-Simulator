@@ -13,7 +13,7 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
-        ModelAdventurer m; // midlertidig
+        ModelAdventurer m = new ModelAdventurer(); // midlertidig
         string name;
         int number = 1;
         double counter;
@@ -86,16 +86,7 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
-            
-            int outlevel;
-            string outname;
-            adventurers = new List<Adventurer>();
-
-            for (int i = 1; i < m.GetLength() + 1; i++)
-            {
-                m.GetAdventurerByID(i, out outlevel, out outname);
-                adventurers.Add(new Adventurer(1, outname, outlevel));
-            }
+            adventurers = m.LoadAdventurers();
             
 
             base.Initialize();

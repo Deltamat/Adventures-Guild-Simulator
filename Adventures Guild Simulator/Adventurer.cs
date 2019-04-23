@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
-    class Adventurer/* : GameObject*/
+    class Adventurer : GameObject
     {
         int id;
         string name;
@@ -29,7 +29,7 @@ namespace Adventures_Guild_Simulator
 
        
 
-        public Adventurer(/*Vector2 position, string spriteName,*/ int id, string name, int level) /*Item weapon, Item chest, Item helmet, Item boot) : base(position, spriteName)*/
+        public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot) : base(position, spriteName)
         {
             Id = id;
             Name = name;
