@@ -18,7 +18,6 @@ namespace Adventures_Guild_Simulator
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        SpriteFont font;
         public List<GameObject> UI = new List<GameObject>();
 
         public static SpriteFont font;
@@ -112,10 +111,6 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            
-
-            //midlertidig
-            name = m.GetNameByID(1);
 
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
@@ -209,22 +204,6 @@ namespace Adventures_Guild_Simulator
             {
                 itemList.Clear();
             }
-
-                counter += gameTime.ElapsedGameTime.TotalSeconds;
-            if (Keyboard.GetState().IsKeyDown(Keys.Up) && counter > 1)
-            {
-                number++;
-                counter = 0;
-                //name = m.GetNameByID(number);
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.Down) && counter > 1)
-            {
-                number--;
-                counter = 0;
-                //name = m.GetNameByID(number);
-            }
-            
-
 
             base.Update(gameTime);
         }
