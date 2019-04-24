@@ -17,13 +17,13 @@ namespace Adventures_Guild_Simulator
             string sqlexp = "CREATE TABLE IF NOT EXISTS Adventurer (id integer primary key, " +
                 "name string, " +
                 "weapon integer, " +
-                "head integer, " +
+                "helmet integer, " +
                 "chest integer, " +
                 "boot integer, " +
                 "level integer, " +
                 "FOREIGN KEY(weapon) REFERENCES Inventory(id)" +
                 "FOREIGN KEY(chest) REFERENCES Inventory(id)" +
-                "FOREIGN KEY(head) REFERENCES Inventory(id)" +
+                "FOREIGN KEY(helmet) REFERENCES Inventory(id)" +
                 "FOREIGN KEY(boot) REFERENCES Inventory(id) )";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;

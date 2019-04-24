@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,15 @@ namespace Adventures_Guild_Simulator
 
         public Quest()
         {
+            Sprite = GameWorld.ContentManager.Load<Texture2D>("questPlank");
+
             //Random difficulty, duration time and expire time
             DifficultyRating = GameWorld.Instance.GenerateRandom(1, 101);
             DurationTime = GameWorld.Instance.GenerateRandom(60, 121);
             ExpireTime = GameWorld.Instance.GenerateRandom(30, 61);
 
             //Chooses enemies and gold reward depending on difficulty rating
+            #region
             if (DifficultyRating <= 10)
             {
                 Enemy = "rat";
@@ -80,6 +84,7 @@ namespace Adventures_Guild_Simulator
                 Enemy = "dragon";
                 Reward = GameWorld.Instance.GenerateRandom(64, 70);
             }
+            #endregion
         }
 
         public Quest(Vector2 position, string spriteName) : base (position, spriteName)
@@ -94,10 +99,11 @@ namespace Adventures_Guild_Simulator
         public float ExpireTime { get => expireTime; set => expireTime = value; }
         public float TimeToExpire { get => timeToExpire; set => timeToExpire = value; }
         public string Enemy { get => enemy; set => enemy = value; }
+        public bool Ongoing { get => ongoing; set => ongoing = value; }
 
         public override void Update(GameTime gameTime)
         {
-            if (ongoing == false) //Whether any one is assinged to the quest
+            if (Ongoing == false) //Whether any one is assinged to the quest
             {
                 //Counts down how much time before the quest expires
                 TimeToExpire += (float)GameWorld.Instance.globalDeltaTime;
