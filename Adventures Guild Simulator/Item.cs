@@ -16,6 +16,7 @@ namespace Adventures_Guild_Simulator
         string type;
         string rarity;
         string name;
+        private bool owned = true;
         
 
         public int Id { get => id; set => id = value; }
@@ -24,6 +25,7 @@ namespace Adventures_Guild_Simulator
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
         public string Rarity { get => rarity; set => rarity = value; }
+        public bool Owned { get => owned; set => owned = value; }
 
         /// <summary>
         /// Constructor for generating items for the database (because it has the "id")
@@ -148,6 +150,12 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.DrawString(GameWorld.font, $"Cost: {GoldCost}", Position + new Vector2(200, 0), Color.Gold);
             spriteBatch.DrawString(GameWorld.font, $"GearScore: {skillRating}", Position + new Vector2(100, 100), Color.White);
+
+        }
+
+        public void Draw(SpriteBatch spriteBatch, Vector2 Position)
+        {
+            spriteBatch.Draw(sprite, Position, Color.White);
 
         }
     }

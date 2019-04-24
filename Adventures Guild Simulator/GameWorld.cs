@@ -19,6 +19,10 @@ namespace Adventures_Guild_Simulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public List<GameObject> UI = new List<GameObject>();
+        public List<Item> inventoryList = new List<Item>();
+        public List<GameObject> inventoryFrameList = new List<GameObject>();
+        public static List<Item> toBeRemovedItem = new List<Item>();
+        public int inventoryRowList;
 
         public static SpriteFont font;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
@@ -186,7 +190,11 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
-            
+
+            foreach (Item item in toBeRemovedItem)
+            {
+                itemList.Remove(item);
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
@@ -196,6 +204,17 @@ namespace Adventures_Guild_Simulator
                 Item.GenerateItem(new Vector2(300, 650));
                 Item.GenerateItem(new Vector2(300, 800));
                 delay = 0;
+            }
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
+            {
+                Inventory.AddToInventory();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
+            {
+                Inventory.GenerateInventoryFrames();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
@@ -215,6 +234,9 @@ namespace Adventures_Guild_Simulator
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
 
+
+
+
             //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
             {
@@ -222,10 +244,7 @@ namespace Adventures_Guild_Simulator
             }
 
 
-            foreach (var item in itemList)
-            {
-                item.Draw(spriteBatch);
-            }
+
             //Draws all the buttons of the UI
             foreach (var item in userInterfaceObjects)
             {
@@ -238,7 +257,23 @@ namespace Adventures_Guild_Simulator
                 spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
                 tmpDrawQuestVector += 90;
             }
-           
+
+            foreach (GameObject item in inventoryFrameList)
+            {
+                item.Draw(spriteBatch);
+            }
+                for (int i = 0; i < inventoryList.Count; i++)
+                {
+                    inventoryList[i].Draw(spriteBatch, inventoryFrameList[i].Position + new Vector2(10,10));
+                }
+
+            foreach (Item item in itemList)
+            {
+                item.Draw(spriteBatch);
+            }
+
+            spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

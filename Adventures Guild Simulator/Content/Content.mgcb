@@ -49,18 +49,6 @@
 /processorParam:TextureFormat=Color
 /build:boardBackground.png
 
-#begin Button.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Button.png
-
 #begin Boot.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -116,6 +104,18 @@
 /processorParam:TextureFormat=Compressed
 /build:font.spritefont
 
+#begin Frame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Frame.png
+
 #begin giantspider.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -127,6 +127,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:giantspider.png
+
+#begin Head.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Head.png
 
 #begin infoChar.png
 /importer:TextureImporter
@@ -151,18 +163,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:inventory.png
-
-#begin Head.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Head.png
 
 #begin livingarmor.png
 /importer:TextureImporter
@@ -237,6 +237,17 @@
 /build:statPlank.png
 
 #begin warlock.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:warlock.png
+
 #begin Weapon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -248,7 +259,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Weapon.png
-/build:warlock.png
 
 #begin wolf.png
 /importer:TextureImporter
