@@ -28,7 +28,7 @@ namespace Adventures_Guild_Simulator
 
         public void CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
         {
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating) VALUES (null, '{name}', '{type}', '{skillRating}', '{rarity}', '{goldCost}', '{skillRating}')";
+            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}')";
             cmd.ExecuteNonQuery();
         }
 
