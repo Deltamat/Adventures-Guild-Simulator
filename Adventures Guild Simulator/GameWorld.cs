@@ -27,7 +27,7 @@ namespace Adventures_Guild_Simulator
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
-        private List<Adventurer> adventurers;
+        public List<Adventurer> adventurers;
         float delay = 0;
 
         private static ContentManager content;
@@ -243,7 +243,7 @@ namespace Adventures_Guild_Simulator
             base.Draw(gameTime);
         }
 
-        public static int GenerateRandom(int minValue, int maxValue)
+        public int GenerateRandom(int minValue, int maxValue)
         {
             int value = rng.Next(minValue, maxValue);
             return value;
