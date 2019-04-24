@@ -38,7 +38,8 @@ namespace Adventures_Guild_Simulator
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
+                //return new Rectangle((int)Position.X, (int)Position.Y, texture.Width, texture.Height);
+                return new Rectangle((int)(Position.X - Sprite.Width * 0.5), (int)(Position.Y - texture.Height * 0.5), texture.Width, texture.Height);
             }
         }
 
