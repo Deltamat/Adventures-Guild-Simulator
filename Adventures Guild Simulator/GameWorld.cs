@@ -27,7 +27,7 @@ namespace Adventures_Guild_Simulator
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
-        private List<Adventurer> adventurers;
+        public List<Adventurer> adventurers;
         float delay = 0;
 
         private static ContentManager content;
@@ -163,16 +163,18 @@ namespace Adventures_Guild_Simulator
             delay += gameTime.ElapsedGameTime.Milliseconds;
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
+            //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
             {
                 quests.Add(new Quest());
-                Thread.Sleep(15);
             }
 
+            //Updates quests
             foreach (Quest quest in quests)
             {
                 quest.Update(gameTime);
             }
+            //Removes expired/completed quests
             foreach (Quest quest in questsToBeRemoved)
             {
                 quests.Remove(quest);
@@ -218,6 +220,7 @@ namespace Adventures_Guild_Simulator
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
 
+            //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
             {
                 UIelement.Draw(spriteBatch);
@@ -234,18 +237,18 @@ namespace Adventures_Guild_Simulator
                 item.Draw(spriteBatch);
             }
 
-            //int tmpDrawQuestVector = 400;
-            //foreach (Quest quest in quests)
-            //{
-            //    spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(400, tmpDrawQuestVector), Color.Red);
-            //    tmpDrawQuestVector += 50;
-            //}
-
+            int tmpDrawQuestVector = 575;
+            foreach (Quest quest in quests)
+            {
+                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
+                tmpDrawQuestVector += 90;
+            }
+           
             spriteBatch.End();
             base.Draw(gameTime);
         }
 
-        public static int GenerateRandom(int minValue, int maxValue)
+        public int GenerateRandom(int minValue, int maxValue)
         {
             int value = rng.Next(minValue, maxValue);
             return value;

@@ -14,17 +14,34 @@ namespace Adventures_Guild_Simulator
         int skillRating;
         int goldCost;
         string type;
+        string rarity;
         string name;
-        string rarity; 
+        
 
         public int Id { get => id; set => id = value; }
         public int SkillRating { get => skillRating; set => skillRating = value; }
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
-        public string Rarity { get => rarity; set => rarity = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
+        public string Rarity { get => rarity; set => rarity = value; }
 
-        public Item(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name) : base (position, spriteName)
+        /// <summary>
+        /// Constructor for generating items from the database (because it has the "id")
+        /// </summary>        
+        public Item(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating) : base(position, spriteName)
+        {            
+            Rarity = rarity;
+            SkillRating = skillRating;
+            Type = type;
+            Name = name;
+            GoldCost = goldCost;
+        }
+
+        
+        /// <summary>
+        /// Constructor for generating temporary items (because it doesn't need the "id")
+        /// </summary>       
+        public Item(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName)
         {
             Rarity = rarity;
             SkillRating = skillRating;
@@ -36,42 +53,42 @@ namespace Adventures_Guild_Simulator
 
         public static void GenerateItem(Vector2 itemPosition)
         {
-            int tempRarityGenerator = GameWorld.GenerateRandom(0, 100);
+            int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
             int tempSkillRating;
             string tempRarity;
 
             if (tempRarityGenerator == 99)
             {
                 tempRarity = "Legendary";
-                tempSkillRating = GameWorld.GenerateRandom(0, 20) + 80;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
             }
 
             else if (tempRarityGenerator > 90)
             {
                 tempRarity = "Epic";
-                tempSkillRating = GameWorld.GenerateRandom(0, 20) + 60;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
             }
 
             else if (tempRarityGenerator > 75)
             {
                 tempRarity = "Rare";
-                tempSkillRating = GameWorld.GenerateRandom(0, 20) + 40;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
             }
 
             else if (tempRarityGenerator > 50)
             {
                 tempRarity = "Uncommon";
-                tempSkillRating = GameWorld.GenerateRandom(0, 20) + 20;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
             }
 
             else
             {
                 tempRarity = "Common";
-                tempSkillRating = GameWorld.GenerateRandom(0, 20) + 1;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 1;
             }
 
             string tempItemType = "Weapon";
-            int tempItemTypeGenerate = GameWorld.GenerateRandom(0, 4);
+            int tempItemTypeGenerate = GameWorld.Instance.GenerateRandom(0, 4);
 
             if (tempItemTypeGenerate == 0)
             {
@@ -93,11 +110,11 @@ namespace Adventures_Guild_Simulator
                 tempItemType = "Boot";
             }
 
-            double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.GenerateRandom(1, 50)) / 100);
+            double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
 
-            GameWorld.itemList.Add(new Item(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType,tempGoldCost, tempItemType));
+            GameWorld.itemList.Add(new Item(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType));
         }
 
         public override void Draw(SpriteBatch spriteBatch)

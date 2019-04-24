@@ -20,62 +20,65 @@ namespace Adventures_Guild_Simulator
 
         string enemy;
         bool ongoing;
+        Adventurer assignedAdventurer;
 
         public Quest()
         {
-            DifficultyRating = rng.Next(1, 101);
-            DurationTime = rng.Next(60, 121);
-            ExpireTime = rng.Next(30, 61);
+            //Random difficulty, duration time and expire time
+            DifficultyRating = GameWorld.Instance.GenerateRandom(1, 101);
+            DurationTime = GameWorld.Instance.GenerateRandom(60, 121);
+            ExpireTime = GameWorld.Instance.GenerateRandom(30, 61);
 
+            //Chooses enemies and gold reward depending on difficulty rating
             if (DifficultyRating <= 10)
             {
                 Enemy = "rat";
-                Reward = rng.Next(10, 16);
+                Reward = GameWorld.Instance.GenerateRandom(10, 16);
             }
             else if (DifficultyRating > 10 && DifficultyRating <= 20)
             {
                 Enemy = "bat";
-                Reward = rng.Next(16, 22);
+                Reward = GameWorld.Instance.GenerateRandom(16, 22);
             }
             else if (DifficultyRating > 20 && DifficultyRating <= 30)
             {
                 Enemy = "wolf";
-                Reward = rng.Next(22, 28);
+                Reward = GameWorld.Instance.GenerateRandom(22, 28);
             }
             else if (DifficultyRating > 30 && DifficultyRating <= 40)
             {
                 Enemy = "bear";
-                Reward = rng.Next(28, 34);
+                Reward = GameWorld.Instance.GenerateRandom(28, 34);
             }
             else if (DifficultyRating > 40 && DifficultyRating <= 50)
             {
                 Enemy = "orc";
-                Reward = rng.Next(34, 40);
+                Reward = GameWorld.Instance.GenerateRandom(34, 40);
             }
             else if (DifficultyRating > 50 && DifficultyRating <= 60)
             {
                 Enemy = "skeleton";
-                Reward = rng.Next(40, 46);
+                Reward = GameWorld.Instance.GenerateRandom(40, 46);
             }
             else if (DifficultyRating > 60 && DifficultyRating <= 70)
             {
                 Enemy = "livingarmour";
-                Reward = rng.Next(46, 52);
+                Reward = GameWorld.Instance.GenerateRandom(46, 52);
             }
             else if (DifficultyRating > 70 && DifficultyRating <= 80)
             {
                 Enemy = "warlock";
-                Reward = rng.Next(52, 58);
+                Reward = GameWorld.Instance.GenerateRandom(52, 58);
             }
             else if (DifficultyRating > 80 && DifficultyRating <= 90)
             {
                 Enemy = "giantspider";
-                Reward = rng.Next(58, 64);
+                Reward = GameWorld.Instance.GenerateRandom(58, 64);
             }
             else if (DifficultyRating > 90)
             {
                 Enemy = "dragon";
-                Reward = rng.Next(64, 70);
+                Reward = GameWorld.Instance.GenerateRandom(64, 70);
             }
         }
 
@@ -94,8 +97,9 @@ namespace Adventures_Guild_Simulator
 
         public override void Update(GameTime gameTime)
         {
-            if (ongoing == false)
+            if (ongoing == false) //Whether any one is assinged to the quest
             {
+                //Counts down how much time before the quest expires
                 TimeToExpire += (float)GameWorld.Instance.globalDeltaTime;
                 if (TimeToExpire > ExpireTime)
                 {
@@ -104,11 +108,24 @@ namespace Adventures_Guild_Simulator
             }
             else
             {
+                //Counts down how much time before the quest is completed
                 ProgressTime += (float)GameWorld.Instance.globalDeltaTime;
                 if (ProgressTime > DurationTime)
                 {
                     GameWorld.Instance.questsToBeRemoved.Add(this);
-                    //complete quest, give rewards
+                    float failureChance;
+                    //Every positive skill point difference between a quest's difficulty rating, and the adventurer's skill rating equals a 5% failure rate
+                    //I.E. difficultyRating = 10, assignedAdventurer total skill = 5. 5 point difference equals 25% failure chance
+                    failureChance = (DifficultyRating - (assignedAdventurer.Skill + assignedAdventurer.TempSkillBuff)) * 5; 
+                    if (GameWorld.Instance.GenerateRandom(0, 101) > failureChance) //Checks whether the quest was succesfully completed
+                    {
+                        GameWorld.Instance.gold += Reward; //Adds the gold reward to the player's stats
+                        //random item
+                    }
+                    else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.1) > 50) //Quest failed, rolls chance for the adventurer to die
+                    {
+                        GameWorld.Instance.adventurers.Remove(assignedAdventurer);
+                    }
                 }
             }
         }
