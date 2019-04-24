@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin AB.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:AB.png
+
 #begin bat.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -135,6 +147,7 @@
 /processorParam:TextureFormat=Color
 /build:Helmet.png
 
+
 #begin infoChar.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -158,18 +171,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:inventory.png
-
-#begin livingarmor.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:livingarmor.png
 
 #begin orc.png
 /importer:TextureImporter

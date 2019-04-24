@@ -67,7 +67,6 @@ namespace Adventures_Guild_Simulator
                 return graphics.GraphicsDevice.Viewport.Bounds;
             }
         }
-
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -114,12 +113,16 @@ namespace Adventures_Guild_Simulator
             font = Content.Load<SpriteFont>("font");
             fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
 
+
+
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
                 TextForButton = "test",
             };
-            
+
+            UpdateAdventurerButtons();
+
             //sets a click event for each Button
             testButton.Click += TestButtonClickEvent;
 
@@ -128,6 +131,8 @@ namespace Adventures_Guild_Simulator
             {
                 testButton,                
             };
+            userInterfaceObjects.Add(testButton);
+
 
             font = Content.Load<SpriteFont>("font");
         }
@@ -186,7 +191,12 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
-            
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                //adventurers.Add(Controller.Instance.CreateAdventurer("Gert"));
+                //UpdateAdventurerButtons();
+            }
 
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
@@ -260,6 +270,33 @@ namespace Adventures_Guild_Simulator
         {
             int value = rng.Next(minValue, maxValue);
             return value;
-        }        
+        }
+
+        private void UpdateAdventurerButtons()
+        {
+            int i = 0;
+            int line = 0;
+            foreach (var item in adventurers)
+            {
+                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("Font"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
+                {
+                    TextForButton = $"{item.Name} LvL: {item.Level}",
+                    FontColor = Color.White
+                };
+                userInterfaceObjects.Add(AdventurerButton);
+                i++;
+                if (i == 9)
+                {
+                    line++;
+                    i = 0;
+                }
+                AdventurerButton.Click += AdventurerButtonClickEvent;
+            }
+        }
+
+        private void AdventurerButtonClickEvent(object sender, EventArgs e)
+        {
+
+        }
     }
 }
