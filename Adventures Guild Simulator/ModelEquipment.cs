@@ -14,20 +14,21 @@ namespace Adventures_Guild_Simulator
 
         public ModelEquipment()
         {
-            //string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
-            //    "name string, " +
-            //    "spriteName string, " +
-            //    "value integer, " +
-            //    "type string, " +               
-            //    "skillRating integer, ";
-            //cmd = connection.CreateCommand();
-            //cmd.CommandText = sqlexp;
-            //cmd.ExecuteNonQuery();
+            string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
+                "name string, " +
+                "spriteName string, " +
+                "type string, " +
+                "rarity string, " +
+                "goldCost integer, " +
+                "skillRating integer)";
+            cmd = connection.CreateCommand();
+            cmd.CommandText = sqlexp;
+            cmd.ExecuteNonQuery();
         }
 
-        public void CreateEquipment(string name, string type, int skillRating)
+        public void CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
         {
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, type, skillRating) VALUES (null, '{name}', '{type}', '{skillRating}')";
+            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}')";
             cmd.ExecuteNonQuery();
         }
 
@@ -42,7 +43,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                //equipmentItems.Add(new Equipment(Vector2.Zero, reader.GetString(2), reader.GetInt32(0), reader.GetInt32(5), reader.GetString(4), reader.GetString(1)));
+                equipmentItems.Add(new Equipment(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6)));
             }
             reader.Close();
             return equipmentItems;

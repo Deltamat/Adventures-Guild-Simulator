@@ -14,21 +14,22 @@ namespace Adventures_Guild_Simulator
 
         public ModelConsumable()
         {
-            //string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
-            //    "name string, " +
-            //    "spriteName string, " +
-            //    "value integer, " +
-            //    "type string, " +
-            //    "skillRating integer, " +
-            //    "uses integer, ";
-            //cmd = connection.CreateCommand();
-            //cmd.CommandText = sqlexp;
-            //cmd.ExecuteNonQuery();
+            string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
+                "name string, " +
+                "spriteName string, " +                
+                "type string, " +
+                "rarity string, " +
+                "goldCost integer, " +
+                "skillRating integer, " +
+                "uses integer )";
+            cmd = connection.CreateCommand();
+            cmd.CommandText = sqlexp;
+            cmd.ExecuteNonQuery();
         }
 
-        public void CreateEquipment(string name, string type , int skillRating, int uses)
+        public void CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
         {
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, uses, skillRating) VALUES (null, '{name}', '{type}', '{skillRating}')";
+            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating, uses) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}', '{uses}')";
             cmd.ExecuteNonQuery();
         }
 
@@ -43,7 +44,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                //consumables.Add(new Consumable(Vector2.Zero, reader.GetString(2), reader.GetInt32(0), reader.GetInt32(5), reader.GetString(4), reader.GetString(1)));
+                consumables.Add(new Consumable(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7)));
             }
             reader.Close();
             return consumables;

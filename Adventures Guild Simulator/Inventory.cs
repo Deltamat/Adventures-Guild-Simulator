@@ -16,7 +16,7 @@ namespace Adventures_Guild_Simulator
         List<Item> currentInventory = new List<Item>();
 
      
-        public Inventory(Vector2 position, string spriteName, int id, string rarity, int skillRating, string type, int goldCost, string name, bool isEquipped) :base(position, spriteName, id, rarity, skillRating, type, goldCost, name)
+        public Inventory(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped) :base(position, id, name, spriteName, type, rarity, goldCost, skillRating)
         {
             IsEquipped = isEquipped;
         }

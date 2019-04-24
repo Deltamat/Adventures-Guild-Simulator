@@ -9,9 +9,9 @@ namespace Adventures_Guild_Simulator
 {
     class Equipment : Item
     {        
-        public Equipment(Vector2 position, string spriteName, int id, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName, id, rarity, skillRating, type, goldCost, name)
-        {           
-                        
+        public Equipment(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating) : base(position, id, name, spriteName, type, rarity, goldCost, skillRating)
+        {
+            
         }
     }
 }
