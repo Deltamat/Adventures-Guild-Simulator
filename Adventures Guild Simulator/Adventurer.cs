@@ -18,7 +18,9 @@ namespace Adventures_Guild_Simulator
         Item chest;
         Item helmet;
         Item boot;
-
+        bool onQuest = false;
+        
+       
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public int Level { get => level; set => level = value; }
@@ -28,6 +30,7 @@ namespace Adventures_Guild_Simulator
         public Item Chest { get => chest; set => chest = value; }
         public Item Helmet { get => helmet; set => helmet = value; }
         public Item Boot { get => boot; set => boot = value; }
+        public bool OnQuest { get => onQuest; set => onQuest = value; }
 
         public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot) : base(position, spriteName)
         {

@@ -20,7 +20,7 @@ namespace Adventures_Guild_Simulator
                 "helmet integer, " +
                 "chest integer, " +
                 "boot integer, " +
-                "level integer, " +
+                "level integer, " +                
                 "FOREIGN KEY(weapon) REFERENCES Inventory(id)" +
                 "FOREIGN KEY(chest) REFERENCES Inventory(id)" +
                 "FOREIGN KEY(helmet) REFERENCES Inventory(id)" +
