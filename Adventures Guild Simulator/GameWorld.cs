@@ -30,7 +30,7 @@ namespace Adventures_Guild_Simulator
         public List<Adventurer> adventurers;
         float delay = 0;
 
-        //public List<string> 
+        public List<string> infoScreen = new List<string>();
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -117,8 +117,6 @@ namespace Adventures_Guild_Simulator
             font = Content.Load<SpriteFont>("font");
             fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
 
-
-
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
@@ -137,7 +135,6 @@ namespace Adventures_Guild_Simulator
             };
             userInterfaceObjects.Add(testButton);
 
-
             font = Content.Load<SpriteFont>("font");
         }
 
@@ -152,8 +149,9 @@ namespace Adventures_Guild_Simulator
         }
 
         private void ShowQuestInfo(object sender, EventArgs e)
-        {
-            
+        {            
+            infoScreen.Clear();
+            infoScreen.Add("Select an adventurer to send on this quest!");
         }
 
         /// <summary>
@@ -272,7 +270,15 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
                 }
                 drawQuestVector += 90; //Moves the next quest down by a margin
-            }           
+            }
+
+            //Writes to info screen
+            Vector2 infoScreenVector = new Vector2(600, 120); //Top left of info screen
+            foreach (string String in infoScreen)
+            {
+                spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
+                infoScreenVector.Y += 50; //Moves the next string down by a margin
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
