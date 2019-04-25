@@ -13,6 +13,9 @@ namespace Adventures_Guild_Simulator
                 
         public int Uses { get => uses; set => uses = value; }
 
+        /// <summary>
+        /// Constructor for generating consumables from the database (because it has the "id")
+        /// </summary>
         public Consumable(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses) : base(position, id, name, spriteName, type, rarity, goldCost, skillRating)
         {
             Uses = uses;
