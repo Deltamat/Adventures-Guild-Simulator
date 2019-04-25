@@ -26,7 +26,7 @@ namespace Adventures_Guild_Simulator
         public static SpriteFont font;
         public static SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
-        private List<GameObject> adventurerButtons = new List<GameObject>();
+        public List<GameObject> adventurerButtons = new List<GameObject>();
         public static List<Item> itemList = new List<Item>(); //Tempoary
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
@@ -36,7 +36,6 @@ namespace Adventures_Guild_Simulator
         public Dictionary<int, Adventurer> adventurersDic;
         float delay = 0;
         int adventurerToShowId;
-        bool adventurerSelected;
         Button sellAdventurerButton;
         public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
         public bool questSelected;
@@ -192,7 +191,7 @@ namespace Adventures_Guild_Simulator
             Controller.Instance.RemoveAdventurer(adventurerToShowId);
             adventurersDic.Remove(adventurerToShowId);
             UpdateAdventurerButtons();
-            adventurerSelected = false;
+            drawSelectedAdventurer = false;
         }
 
         /// <summary>
@@ -250,7 +249,7 @@ namespace Adventures_Guild_Simulator
             }
 
             // updates the sell button
-            if (adventurerSelected is true)
+            if (drawSelectedAdventurer is true)
             {
                 sellAdventurerButton.Update(gameTime);
             }
@@ -305,6 +304,7 @@ namespace Adventures_Guild_Simulator
                 }
                 infoScreen.Clear();
                 drawSelectedAdventurer = false;
+                questSelected = false;
             }
 
             base.Update(gameTime);
@@ -357,7 +357,7 @@ namespace Adventures_Guild_Simulator
 
 
                 //draws the sell adventurer button
-                if (adventurerSelected is true)
+                if (drawSelectedAdventurer is true)
                 {
                     sellAdventurerButton.Draw(spriteBatch);
                 }
@@ -472,7 +472,6 @@ namespace Adventures_Guild_Simulator
             if (adventurersDic[button.Id].OnQuest == false)
             {
                 adventurerToShowId = button.Id;
-                adventurerSelected = true;
                 foreach (Button item in adventurerButtons)
                 {
                     item.selected = false;
@@ -488,6 +487,10 @@ namespace Adventures_Guild_Simulator
                         if (item.selected == true)
                         {
                             adventurer = adventurersDic[item.Id];
+                            adventurer.OnQuest = true;
+                            button.questActive = true;
+                            button.selected = false;
+                            drawSelectedAdventurer = false;
                         }
                     }
                     foreach (Quest item in quests)
@@ -496,6 +499,8 @@ namespace Adventures_Guild_Simulator
                         {
                             item.assignedAdventurer = adventurer;
                             item.Ongoing = true;
+                            item.selected = false;
+                            questSelected = false;
                         }
                     }
                 }

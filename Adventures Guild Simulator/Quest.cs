@@ -133,7 +133,15 @@ namespace Adventures_Guild_Simulator
                 ProgressTime += (float)GameWorld.Instance.globalDeltaTime;
                 if (ProgressTime > DurationTime)
                 {
-                    assignedAdventurer.OnQuest = true;
+                    foreach (Button item in GameWorld.Instance.adventurerButtons)
+                    {
+                        if (item.Id == assignedAdventurer.Id)
+                        {
+                            item.questActive = false;
+                        }
+                    }
+                    
+                    assignedAdventurer.OnQuest = false;
                     GameWorld.Instance.questsToBeRemoved.Add(this);
                     float failureChance;
                     //Every positive skill point difference between a quest's difficulty rating, and the adventurer's skill rating equals a 5% failure rate
@@ -149,10 +157,10 @@ namespace Adventures_Guild_Simulator
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                     }
                 }
-                else
-                {
-                    assignedAdventurer.OnQuest = false;
-                }
+                //else
+                //{
+                //    assignedAdventurer.OnQuest = true;
+                //}
             }
             #region            
             //"Inception"
@@ -175,6 +183,10 @@ namespace Adventures_Guild_Simulator
                     Click?.Invoke(this, new EventArgs());
                     selected = true;
                     GameWorld.Instance.questSelected = true;
+                    foreach (Button item in GameWorld.Instance.adventurerButtons)
+                    {
+                        item.selected = false;
+                    }
                 }
             }
             #endregion
