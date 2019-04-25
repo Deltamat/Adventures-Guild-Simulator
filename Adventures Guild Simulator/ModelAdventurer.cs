@@ -31,7 +31,7 @@ namespace Adventures_Guild_Simulator
         }
 
         /// <summary>
-        /// Create an level 1 adventurer without equipment
+        /// Create an level 1 adventurer without equipment and adds the person to our ingame list 
         /// </summary>
         /// <param name="name">Name of the adventurer</param>
         public Adventurer CreateAdventurer(string name)
@@ -113,7 +113,7 @@ namespace Adventures_Guild_Simulator
         }
 
         /// <summary>
-        /// Returns a List of all the adventurers in the table
+        /// Returns a List of all the adventurers in the table and adds them to the ingame list "adventurers".
         /// </summary>
         /// <returns></returns>
         public List<Adventurer> LoadAdventurers()

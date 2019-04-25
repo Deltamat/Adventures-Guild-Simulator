@@ -14,7 +14,10 @@ namespace Adventures_Guild_Simulator
 
         public ModelConsumable()
         {
-            string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
+            /// <summary>
+            /// Creates the columns for the table, unless the table with the specified name "Consumable" already exists.
+            /// </summary>
+            string sqlexp = "CREATE TABLE IF NOT EXISTS Consumable (id integer primary key, " +
                 "name string, " +
                 "spriteName string, " +                
                 "type string, " +
@@ -27,20 +30,39 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
+        /// <summary>
+        /// Specifies which attributes to insert values on and then adds said Consumable to the list by returning it as an object.
+        /// </summary>
+        /// <param name="name">Name of the consumable</param>
+        /// <param name="spriteName">Name of the sprite</param>
+        /// <param name="type">Type of consumable(only "potion" so far, but ready for "expansion")</param>
+        /// <param name="rarity">Common, Uncommon, Rare, Epic, Legendary</param>
+        /// <param name="goldCost">Base cost of the item</param>
+        /// <param name="skillRating">How much power stat it gives to an adventurer when you equip it on said one</param>
+        /// <param name="uses">The amount times you can roll for better result before it's "useless"</param>
+        /// <returns>an object of the type Consumable with the specified attributes</returns>
+        public Consumable CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
         {
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating, uses) VALUES (null, '{name}', '{type}', '{skillRating}', '{rarity}', '{goldCost}', '{skillRating}', '{uses}')";
+            Consumable temp = null;
+            cmd.CommandText = $"INSERT INTO Consumable (id, name, spriteName, type, rarity, goldCost, skillRating, uses) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}', '{uses}')";
             cmd.ExecuteNonQuery();
+            cmd.CommandText = "select * from Consumable order by id desc limit 1";
+            SQLiteDataReader chugchugchug = cmd.ExecuteReader();
+            while (chugchugchug.Read())
+            {
+                temp = new Consumable(Vector2.Zero, chugchugchug.GetInt32(0), chugchugchug.GetString(1), chugchugchug.GetString(2), chugchugchug.GetString(3), chugchugchug.GetString(4), chugchugchug.GetInt32(5), chugchugchug.GetInt32(6), chugchugchug.GetInt32(7));
+            }
+            return temp;
         }
 
         /// <summary>
-        /// Adds all equipment from the database to a list
+        /// Adds all consumables from the database to a list
         /// </summary>
         /// <returns></returns>
         public List<Consumable> LoadConsumable()
         {
             List<Consumable> consumables = new List<Consumable>();
-            cmd.CommandText = "SELECT * FROM Equipment";
+            cmd.CommandText = "SELECT * FROM Consumable";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {

@@ -50,6 +50,11 @@ namespace Adventures_Guild_Simulator
         {
             return adventurer.LoadAdventurers();
         }
+
+        public void RemoveAdventurer(int id)
+        {
+            adventurer.DeleteAdventurerByID(id);
+        }
         #endregion
 
         #region Consumable

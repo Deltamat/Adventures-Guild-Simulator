@@ -12,6 +12,9 @@ namespace Adventures_Guild_Simulator
     {
         SQLiteCommand cmd;
 
+        /// <summary>
+        /// Creates the columns for the table, unless the table with the specified name "Equipment" already exists.
+        /// </summary>
         public ModelEquipment()
         {
             string sqlexp = "CREATE TABLE IF NOT EXISTS Equipment (id integer primary key, " +
@@ -26,10 +29,29 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
+        /// <summary>
+        /// Specifies which attributes to insert values on and then adds said equipment to the list by returning it as an object.
+        /// </summary>
+        /// <param name="name">Name of the equipment</param>
+        /// <param name="spriteName">Name of the sprite</param>
+        /// <param name="type">Type of equipment(Chest, Helmet, Boot, Weapon)</param>
+        /// <param name="rarity">Common, Uncommon, Rare, Epic, Legendary</param>
+        /// <param name="goldCost">base cost of the item</param>
+        /// <param name="skillRating">how much power stat it gives to an adventurer when you equip it on said one</param>
+        /// <returns>an object of the type Equipment with the specified attributes</returns>
+        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
         {
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating) VALUES (null, '{name}', '{type}', '{skillRating}', '{rarity}', '{goldCost}', '{skillRating}')";
+            Equipment temp = null;
+            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}')";
             cmd.ExecuteNonQuery();
+            cmd.CommandText = "SELECT * FROM Equipment ORDER BY id desc limit 1";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                temp = new Equipment(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
+            }
+            reader.Close();
+            return temp;
         }
 
         /// <summary>
