@@ -235,9 +235,7 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
-
-            // updates the sell button
-            if (adventurerSelected is true)
+            
             foreach (Item item in toBeRemovedItem)
             {
                 itemList.Remove(item);
@@ -262,16 +260,19 @@ namespace Adventures_Guild_Simulator
             if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
             {
                 Inventory.AddToInventory();
+                delay = 0;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
             {
                 Inventory.GenerateInventoryFrames();
+                delay = 0;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
             {
                 itemList.Clear();
+                delay = 0;
             }
 
             base.Update(gameTime);
