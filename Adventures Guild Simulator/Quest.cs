@@ -133,6 +133,7 @@ namespace Adventures_Guild_Simulator
                 ProgressTime += (float)GameWorld.Instance.globalDeltaTime;
                 if (ProgressTime > DurationTime)
                 {
+                    assignedAdventurer.OnQuest = true;
                     GameWorld.Instance.questsToBeRemoved.Add(this);
                     float failureChance;
                     //Every positive skill point difference between a quest's difficulty rating, and the adventurer's skill rating equals a 5% failure rate
@@ -147,6 +148,10 @@ namespace Adventures_Guild_Simulator
                     {
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                     }
+                }
+                else
+                {
+                    assignedAdventurer.OnQuest = false;
                 }
             }
             #region

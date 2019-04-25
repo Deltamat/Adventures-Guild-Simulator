@@ -444,14 +444,19 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
+            
             Button button = (Button)sender;
-            adventurerToShowId = button.Id;
-            adventurerSelected = true;
-            foreach (Button item in adventurerButtons)
+            if (adventurersDic[button.Id].OnQuest == false)
             {
-                item.selected = false;
+                adventurerToShowId = button.Id;
+                adventurerSelected = true;
+                foreach (Button item in adventurerButtons)
+                {
+                    item.selected = false;
+                }
+                button.selected = true;
             }
-            button.selected = true;
+            
         }
     }
 }
