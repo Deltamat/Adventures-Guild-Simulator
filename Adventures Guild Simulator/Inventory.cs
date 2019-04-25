@@ -32,6 +32,12 @@ namespace Adventures_Guild_Simulator
                 }
             }
 
+
+            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            {
+                GameWorld.Instance.inventoryFrameList[i].Rarity = GameWorld.Instance.inventoryList[i].Rarity;
+            }
+
         }
 
         public static void GenerateInventoryFrames()

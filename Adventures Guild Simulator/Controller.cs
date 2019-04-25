@@ -12,6 +12,7 @@ namespace Adventures_Guild_Simulator
         ModelConsumable consumable;
         ModelEquipment equipment;
         ModelInventory inventory;
+        ModelNaming naming;
         ModelStat stat;
 
         static Controller instance;
@@ -36,6 +37,7 @@ namespace Adventures_Guild_Simulator
             consumable = new ModelConsumable();
             equipment = new ModelEquipment();
             inventory = new ModelInventory();
+            naming = new ModelNaming();
             stat = new ModelStat();
 
         }
@@ -80,6 +82,8 @@ namespace Adventures_Guild_Simulator
             return stat.LoadGold();
         }
         #endregion
+
+        
 
     }
 }

@@ -103,6 +103,9 @@ namespace Adventures_Guild_Simulator
             UI.Add(new GameObject(new Vector2(565, 560), "infoChar"));
             UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
 
+            Inventory.GenerateInventoryFrames();
+            //ModelNaming.CreateNames();
+
             base.Initialize();
         }
 
@@ -266,7 +269,7 @@ namespace Adventures_Guild_Simulator
 
             foreach (GameObject item in inventoryFrameList)
             {
-                item.Draw(spriteBatch);
+                item.Draw(spriteBatch,true);
             }
                 for (int i = 0; i < inventoryList.Count; i++)
                 {

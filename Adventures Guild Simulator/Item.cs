@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace Adventures_Guild_Simulator
         string type;
         string rarity;
         string name;
+        SQLiteCommand cmd;
         private bool owned = true;
         
 
@@ -58,6 +60,7 @@ namespace Adventures_Guild_Simulator
             int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
             int tempSkillRating;
             string tempRarity;
+            
 
             if (tempRarityGenerator == 99)
             {
@@ -112,11 +115,13 @@ namespace Adventures_Guild_Simulator
                 tempItemType = "Boot";
             }
 
+            string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
 
-            GameWorld.itemList.Add(new Item(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType));
+            GameWorld.itemList.Add(new Item(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempName));
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -125,30 +130,30 @@ namespace Adventures_Guild_Simulator
             
             if (Rarity == "Common")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Type}", Position + new Vector2(100, 0), Color.White);
+                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.White);
             }
 
             else if (Rarity == "Uncommon")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Type}", Position + new Vector2(100, 0), Color.Green);
+                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Green);
             }
 
             else if (Rarity == "Rare")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Type}", Position + new Vector2(100, 0), Color.Blue);
+                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Blue);
             }
 
             else if (Rarity == "Epic")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Type}", Position + new Vector2(100, 0), Color.Purple);
+                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Purple);
             }
 
             else if (Rarity == "Legendary")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Type}", Position + new Vector2(100, 0), Color.Orange);
+                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Orange);
             }
 
-            spriteBatch.DrawString(GameWorld.font, $"Cost: {GoldCost}", Position + new Vector2(200, 0), Color.Gold);
+            //spriteBatch.DrawString(GameWorld.font, $"Cost: {GoldCost}", Position + new Vector2(200, 0), Color.Gold);
             spriteBatch.DrawString(GameWorld.font, $"GearScore: {skillRating}", Position + new Vector2(100, 100), Color.White);
 
         }
