@@ -48,7 +48,6 @@ namespace Adventures_Guild_Simulator
             }
         }
 
-
         public virtual void Update(GameTime gameTime)
         {   
 

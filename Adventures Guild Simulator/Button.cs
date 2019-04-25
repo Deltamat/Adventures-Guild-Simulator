@@ -82,6 +82,7 @@ namespace Adventures_Guild_Simulator
             //Checks if the mouseRectangle intersects with a button's Rectangle. 
             if (mouseRectangle.Intersects(Rectangle))
             {
+                //Just to tell the draw method to tint the button gray.
                 isHovering = true;
 
                 //while hovering over a button, it checks whether you click it 
@@ -115,7 +116,7 @@ namespace Adventures_Guild_Simulator
             //some simple math that calculates where the vector for the string should be.
             if (!string.IsNullOrEmpty(TextForButton))
             {
-                //Much calculations, much wow.
+                //The simple calculations to determine where the text should be drawn on the button.
                 var x = (Rectangle.X + (Rectangle.Width * 0.5f)) - (font.MeasureString(TextForButton).X * 0.5f);
                 var y = (Rectangle.Y + (Rectangle.Height * 0.5f)) - (font.MeasureString(TextForButton).Y * 0.5f);
 

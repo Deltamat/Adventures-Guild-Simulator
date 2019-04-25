@@ -13,7 +13,6 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
-
         public static Random rng = new Random();
 
         GraphicsDeviceManager graphics;
@@ -21,6 +20,7 @@ namespace Adventures_Guild_Simulator
         public List<GameObject> UI = new List<GameObject>();
 
         public static SpriteFont font;
+        public SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         private List<GameObject> adventurerButtons = new List<GameObject>();
         public static List<Item> itemList = new List<Item>(); //Tempoary
@@ -34,6 +34,8 @@ namespace Adventures_Guild_Simulator
         int adventurerToShowId;
         bool adventurerSelected;
         Button sellAdventurerButton;
+
+        //public List<string> 
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -71,15 +73,18 @@ namespace Adventures_Guild_Simulator
                 return graphics.GraphicsDevice.Viewport.Bounds;
             }
         }
+
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
+            
             //Sets the window size
             graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferHeight = 1080;            
             //graphics.IsFullScreen = true;
+
             graphics.ApplyChanges();
             IsMouseVisible = true;
         }
@@ -115,6 +120,7 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
+            fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
             UpdateAdventurerButtons();
 
 
@@ -136,11 +142,16 @@ namespace Adventures_Guild_Simulator
 
 
             //List of our buttons
+            userInterfaceObjects = new List<GameObject>()
+            {
+                testButton,                
+            };
             userInterfaceObjects.Add(testButton);
 
 
             font = Content.Load<SpriteFont>("font");
         }
+
         /// <summary>
         /// Looks for the click event for the button which this event was added to.
         /// </summary>
@@ -148,10 +159,14 @@ namespace Adventures_Guild_Simulator
         /// <param name="e"></param>
         private void BuyAdventurer(object sender, EventArgs e)
         {
-            //noget
             Adventurer a = Controller.Instance.CreateAdventurer("Gert");
             adventurersDic.Add(a.Id, a);
             UpdateAdventurerButtons();
+        }
+
+        private void ShowQuestInfo(object sender, EventArgs e)
+        {
+            //something
         }
         private void SellAdventurer(object sender, EventArgs e)
         {
@@ -187,7 +202,9 @@ namespace Adventures_Guild_Simulator
             //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
             {
-                quests.Add(new Quest());
+                Quest quest = new Quest();
+                quests.Add(quest);
+                quest.Click += ShowQuestInfo;
             }
 
             //Updates quests
@@ -273,6 +290,7 @@ namespace Adventures_Guild_Simulator
             {
                 item.Draw(spriteBatch);
             }
+
             //Draws all the buttons of the UI
             foreach (var item in userInterfaceObjects)
             {
@@ -285,12 +303,26 @@ namespace Adventures_Guild_Simulator
             }
 
             int tmpDrawQuestVector = 575;
+            //Draws quests
+            int drawQuestVector = 540;
             foreach (Quest quest in quests)
             {
-                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
-                tmpDrawQuestVector += 90;
-            }
-           
+                quest.Position = new Vector2(30, drawQuestVector);
+                quest.Draw(spriteBatch);
+                spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
+                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.DarkOrange); //Writes how difficult the quest is
+                spriteBatch.DrawString(fontCopperplate, $"{quest.Reward}", new Vector2(375, drawQuestVector + 25), Color.Gold); //Writes how much gold the reward is on
+                if (quest.Ongoing == false) //If the quest is NOT under way
+                {
+                    spriteBatch.DrawString(fontCopperplate, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(475, drawQuestVector + 25), Color.MistyRose); //Writes the countdown timer
+                }
+                else if (quest.Ongoing == true) //If the quest is under way
+                {
+                    spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
+                }
+                drawQuestVector += 90; //Moves the next quest down by a margin
+            }           
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
