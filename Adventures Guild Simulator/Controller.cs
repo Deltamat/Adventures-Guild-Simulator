@@ -39,7 +39,6 @@ namespace Adventures_Guild_Simulator
             inventory = new ModelInventory();
             naming = new ModelNaming();
             stat = new ModelStat();
-
         }
 
         #region Adventurer
@@ -48,7 +47,7 @@ namespace Adventures_Guild_Simulator
             return adventurer.CreateAdventurer(name);
         }
 
-        public List<Adventurer> LoadAdventurers()
+        public Dictionary<int, Adventurer> LoadAdventurers()
         {
             return adventurer.LoadAdventurers();
         }

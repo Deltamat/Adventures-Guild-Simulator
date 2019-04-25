@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,19 +19,35 @@ namespace Adventures_Guild_Simulator
         float progressTime;
         float expireTime;
         float timeToExpire;
-
         string enemy;
         bool ongoing;
         Adventurer assignedAdventurer;
 
+        private MouseState currentMouse;
+        private MouseState previousMouse;
+        private bool isHovering;
+
+        public event EventHandler Click;
+
+        public Rectangle Rectangle
+        {
+            get
+            {                
+                return new Rectangle((int)(Position.X), (int)(Position.Y), sprite.Width, sprite.Height);
+            }
+        }
+
         public Quest()
         {
+            Sprite = GameWorld.ContentManager.Load<Texture2D>("questPlank");
+
             //Random difficulty, duration time and expire time
             DifficultyRating = GameWorld.Instance.GenerateRandom(1, 101);
             DurationTime = GameWorld.Instance.GenerateRandom(60, 121);
             ExpireTime = GameWorld.Instance.GenerateRandom(30, 61);
 
             //Chooses enemies and gold reward depending on difficulty rating
+            #region
             if (DifficultyRating <= 10)
             {
                 Enemy = "rat";
@@ -80,6 +98,7 @@ namespace Adventures_Guild_Simulator
                 Enemy = "dragon";
                 Reward = GameWorld.Instance.GenerateRandom(64, 70);
             }
+            #endregion
         }
 
         public Quest(Vector2 position, string spriteName) : base (position, spriteName)
@@ -94,10 +113,11 @@ namespace Adventures_Guild_Simulator
         public float ExpireTime { get => expireTime; set => expireTime = value; }
         public float TimeToExpire { get => timeToExpire; set => timeToExpire = value; }
         public string Enemy { get => enemy; set => enemy = value; }
+        public bool Ongoing { get => ongoing; set => ongoing = value; }
 
         public override void Update(GameTime gameTime)
         {
-            if (ongoing == false) //Whether any one is assinged to the quest
+            if (Ongoing == false) //Whether any one is assinged to the quest
             {
                 //Counts down how much time before the quest expires
                 TimeToExpire += (float)GameWorld.Instance.globalDeltaTime;
@@ -124,10 +144,44 @@ namespace Adventures_Guild_Simulator
                     }
                     else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.1) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
-                        GameWorld.Instance.adventurers.Remove(assignedAdventurer);
+                        GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                     }
                 }
             }
+            #region
+            //"Inception"
+            previousMouse = currentMouse;
+            //Gets current position and "click info" from the mouse
+            currentMouse = Mouse.GetState();
+
+            var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
+            isHovering = false;
+
+            //Checks if the mouseRectangle intersects with a button's Rectangle. 
+            if (mouseRectangle.Intersects(Rectangle))
+            {
+                isHovering = true;
+
+                //while hovering over a button, it checks whether you click it 
+                //(and release the mouse button while still inside the button's rectangle)
+                if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
+                {
+                    Click?.Invoke(this, new EventArgs());
+                }
+            }
+            #endregion
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (isHovering)
+            {
+                spriteBatch.Draw(sprite, position, Color.Gray);
+            }
+            else
+            {
+                spriteBatch.Draw(sprite, position, Color.White);
+            }            
         }
     }
 }

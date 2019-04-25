@@ -40,7 +40,6 @@ namespace Adventures_Guild_Simulator
             Name = name;
             GoldCost = goldCost;
         }
-
         
         /// <summary>
         /// Constructor for generating temporary items (because it doesn't need the "id")
@@ -107,7 +106,7 @@ namespace Adventures_Guild_Simulator
 
             else if (tempItemTypeGenerate == 2)
             {
-                tempItemType = "Head";
+                tempItemType = "helmet";
             }
 
             else if (tempItemTypeGenerate == 3)

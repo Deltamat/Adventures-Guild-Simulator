@@ -97,6 +97,18 @@
 /processorParam:TextureFormat=Color
 /build:Chest.png
 
+#begin defaultSprite.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:defaultSprite.png
+
 #begin dragon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -128,6 +140,13 @@
 /processorParam:TextureFormat=Color
 /build:Frame.png
 
+#begin fontCopperplate.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fontCopperplate.spritefont
+
 #begin giantspider.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -140,7 +159,7 @@
 /processorParam:TextureFormat=Color
 /build:giantspider.png
 
-#begin Head.png
+#begin Helmet.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -150,7 +169,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Head.png
+/build:Helmet.png
 
 #begin infoChar.png
 /importer:TextureImporter
@@ -176,18 +195,6 @@
 /processorParam:TextureFormat=Color
 /build:inventory.png
 
-#begin livingarmor.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:livingarmor.png
-
 #begin orc.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -199,6 +206,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:orc.png
+
+#begin questPlank.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:questPlank.png
 
 #begin questShop.png
 /importer:TextureImporter

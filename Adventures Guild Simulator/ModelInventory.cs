@@ -8,5 +8,6 @@ namespace Adventures_Guild_Simulator
 {
     class ModelInventory : Model
     {
+        
     }
 }
