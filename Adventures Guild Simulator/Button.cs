@@ -24,6 +24,7 @@ namespace Adventures_Guild_Simulator
         private MouseState previousMouse;
         private Texture2D texture;
         private Vector2 positionButton;
+        public bool selected = false;
         #endregion
 
         #region Properties
@@ -33,6 +34,7 @@ namespace Adventures_Guild_Simulator
         public bool Clicked { get; private set; }
 
         public Color FontColor { get; set; }
+        public int Id { get; set; }
 
         public Rectangle Rectangle
         {
@@ -103,7 +105,7 @@ namespace Adventures_Guild_Simulator
 
             //Pretty selfexplanatory, but it changes the button's color to gray from  
             //white if you hover over it with the mouse.
-            if (isHovering)
+            if (isHovering || selected)
             {
                 color = Color.Gray;
             }

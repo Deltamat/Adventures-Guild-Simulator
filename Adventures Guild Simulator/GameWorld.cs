@@ -18,19 +18,29 @@ namespace Adventures_Guild_Simulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public List<GameObject> UI = new List<GameObject>();
+        public List<Item> inventoryList = new List<Item>();
+        public List<GameObject> inventoryFrameList = new List<GameObject>();
+        public static List<Item> toBeRemovedItem = new List<Item>();
+        public int inventoryRowList;
 
         public static SpriteFont font;
-        public SpriteFont fontCopperplate;
+        public static SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
-        public static List<Item> itemList = new List<Item>(); //Temporary
+        private List<GameObject> adventurerButtons = new List<GameObject>();
+        public static List<Item> itemList = new List<Item>(); //Tempoary
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
-        public List<Adventurer> adventurers;
+        //public List<Adventurer> adventurers;
+        public Dictionary<int, Adventurer> adventurersDic;
         float delay = 0;
+        int adventurerToShowId;
+        bool adventurerSelected;
+        Button sellAdventurerButton;
+        public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
 
-        //public List<string> 
+        public List<string> infoScreen = new List<string>();
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -92,7 +102,8 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
-            adventurers = Controller.Instance.LoadAdventurers();
+            equipmentList = Controller.Instance.LoadEquipment();
+            adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
 
             //UI
@@ -103,6 +114,9 @@ namespace Adventures_Guild_Simulator
             UI.Add(new GameObject(new Vector2(565, 100), "infoChar"));
             UI.Add(new GameObject(new Vector2(565, 560), "infoChar"));
             UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
+
+            Inventory.GenerateInventoryFrames();
+            //ModelNaming.CreateNames();
 
             base.Initialize();
         }
@@ -116,19 +130,23 @@ namespace Adventures_Guild_Simulator
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
             fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
-
-
+            UpdateAdventurerButtons();
 
             //Buttons
-            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
+            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
                 TextForButton = "test",
             };
+            sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
+            {
+                TextForButton = "Sell selected adventurer",
+            };
 
-            UpdateAdventurerButtons();
 
             //sets a click event for each Button
-            testButton.Click += TestButtonClickEvent;
+            testButton.Click += BuyAdventurer;
+            sellAdventurerButton.Click += SellAdventurer;
+
 
             //List of our buttons
             userInterfaceObjects = new List<GameObject>()
@@ -136,7 +154,6 @@ namespace Adventures_Guild_Simulator
                 testButton,                
             };
             userInterfaceObjects.Add(testButton);
-
 
             font = Content.Load<SpriteFont>("font");
         }
@@ -146,14 +163,25 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TestButtonClickEvent(object sender, EventArgs e)
+        private void BuyAdventurer(object sender, EventArgs e)
         {
-           //something
+            Adventurer a = Controller.Instance.CreateAdventurer("Gert");
+            adventurersDic.Add(a.Id, a);
+            UpdateAdventurerButtons();
         }
 
         private void ShowQuestInfo(object sender, EventArgs e)
+        {            
+            infoScreen.Clear();
+            infoScreen.Add("Select an adventurer to send on this quest!");
+        }
+        private void SellAdventurer(object sender, EventArgs e)
         {
-            
+            Button b = (Button)sender;
+            Controller.Instance.RemoveAdventurer(adventurerToShowId);
+            adventurersDic.Remove(adventurerToShowId);
+            UpdateAdventurerButtons();
+            adventurerSelected = false;
         }
 
         /// <summary>
@@ -204,10 +232,20 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
+            //updates the adventurer buttons, it is its own list because the list have to be emptied sometimes
+            foreach (var item in adventurerButtons)
+            {
+                item.Update(gameTime);
+            }
+            
+            foreach (Item item in toBeRemovedItem)
+            {
+                itemList.Remove(item);
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                //adventurers.Add(Controller.Instance.CreateAdventurer("Gert"));
-                //UpdateAdventurerButtons();
+                sellAdventurerButton.Update(gameTime);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
@@ -220,9 +258,23 @@ namespace Adventures_Guild_Simulator
                 delay = 0;
             }
 
+
+            if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
+            {
+                Inventory.AddToInventory();
+                delay = 0;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
+            {
+                Inventory.GenerateInventoryFrames();
+                delay = 0;
+            }
+
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
             {
                 itemList.Clear();
+                delay = 0;
             }
 
             base.Update(gameTime);
@@ -237,11 +289,50 @@ namespace Adventures_Guild_Simulator
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
 
+
+
+
             //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
             {
                 UIelement.Draw(spriteBatch);
             }
+
+            // Draws the selected adventurer info
+            Adventurer value;
+            if (adventurersDic.TryGetValue(adventurerToShowId, out value))
+            {
+                spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
+                spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
+                if (value.Helmet != null)
+                {
+                    spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
+                }
+                if (value.Chest != null)
+                {
+                    spriteBatch.Draw(value.Chest.Sprite, value.Chest.CollisionBox, Color.White);
+                }
+                if (value.Weapon != null)
+                {
+                    spriteBatch.Draw(value.Weapon.Sprite, value.Weapon.CollisionBox, Color.White);
+                }
+                if (value.Boot != null)
+                {
+                    spriteBatch.Draw(value.Boot.Sprite, value.Boot.CollisionBox, Color.White);
+                }
+                if (value.Consumable != null)
+                {
+                    spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
+                }
+
+            }
+
+            //draws the sell adventurer button
+            if (adventurerSelected is true)
+            {
+                sellAdventurerButton.Draw(spriteBatch);
+            }
+
 
             foreach (var item in itemList)
             {
@@ -254,8 +345,36 @@ namespace Adventures_Guild_Simulator
                 item.Draw(spriteBatch);
             }
 
+            foreach (var item in adventurerButtons)
+            {
+                item.Draw(spriteBatch);
+            }
+
+            int tmpDrawQuestVector = 575;
             //Draws quests
             int drawQuestVector = 540;
+            foreach (Quest quest in quests)
+            {
+                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
+                tmpDrawQuestVector += 90;
+            }
+
+            foreach (GameObject item in inventoryFrameList)
+            {
+                item.Draw(spriteBatch,true);
+            }
+                for (int i = 0; i < inventoryList.Count; i++)
+                {
+                    inventoryList[i].Draw(spriteBatch, inventoryFrameList[i].Position + new Vector2(10,10));
+                }
+
+            foreach (Item item in itemList)
+            {
+                item.Draw(spriteBatch);
+            }
+
+            spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
+
             foreach (Quest quest in quests)
             {
                 quest.Position = new Vector2(30, drawQuestVector);
@@ -272,7 +391,15 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
                 }
                 drawQuestVector += 90; //Moves the next quest down by a margin
-            }           
+            }
+
+            //Writes to info screen
+            Vector2 infoScreenVector = new Vector2(600, 120); //Top left of info screen
+            foreach (string String in infoScreen)
+            {
+                spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
+                infoScreenVector.Y += 50; //Moves the next string down by a margin
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -286,16 +413,18 @@ namespace Adventures_Guild_Simulator
 
         private void UpdateAdventurerButtons()
         {
+            adventurerButtons.RemoveRange(0, adventurerButtons.Count);
             int i = 0;
             int line = 0;
-            foreach (var item in adventurers)
+            foreach (var item in adventurersDic)
             {
-                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("Font"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
+                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
                 {
-                    TextForButton = $"{item.Name} LvL: {item.Level}",
-                    FontColor = Color.White
+                    TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
+                    FontColor = Color.White,
+                    Id = item.Value.Id
                 };
-                userInterfaceObjects.Add(AdventurerButton);
+                adventurerButtons.Add(AdventurerButton);
                 i++;
                 if (i == 9)
                 {
@@ -308,7 +437,14 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
-
+            Button button = (Button)sender;
+            adventurerToShowId = button.Id;
+            adventurerSelected = true;
+            foreach (Button item in adventurerButtons)
+            {
+                item.selected = false;
+            }
+            button.selected = true;
         }
     }
 }

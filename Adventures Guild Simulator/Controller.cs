@@ -12,6 +12,7 @@ namespace Adventures_Guild_Simulator
         ModelConsumable consumable;
         ModelEquipment equipment;
         ModelInventory inventory;
+        ModelNaming naming;
         ModelStat stat;
 
         static Controller instance;
@@ -36,6 +37,7 @@ namespace Adventures_Guild_Simulator
             consumable = new ModelConsumable();
             equipment = new ModelEquipment();
             inventory = new ModelInventory();
+            naming = new ModelNaming();
             stat = new ModelStat();
         }
 
@@ -45,7 +47,7 @@ namespace Adventures_Guild_Simulator
             return adventurer.CreateAdventurer(name);
         }
 
-        public List<Adventurer> LoadAdventurers()
+        public Dictionary<int, Adventurer> LoadAdventurers()
         {
             return adventurer.LoadAdventurers();
         }
@@ -61,7 +63,14 @@ namespace Adventures_Guild_Simulator
         #endregion
 
         #region Equipment
-
+        public Dictionary<int, Equipment> LoadEquipment()
+        {
+            return equipment.LoadEquipment();
+        }
+        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
+        {
+            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating);
+        }
         #endregion
 
         #region Inventory
@@ -79,5 +88,8 @@ namespace Adventures_Guild_Simulator
             return stat.LoadGold();
         }
         #endregion
+
+        
+
     }
 }
