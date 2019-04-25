@@ -166,6 +166,10 @@ namespace Adventures_Guild_Simulator
         /// <param name="e"></param>
         private void BuyAdventurer(object sender, EventArgs e)
         {
+            if (adventurersDic.Count >= 27)
+            {
+                return;
+            }
             Adventurer a = Controller.Instance.CreateAdventurer("Gert");
             adventurersDic.Add(a.Id, a);
             UpdateAdventurerButtons();
@@ -244,8 +248,11 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
-            sellAdventurerButton.Update(gameTime);
-
+            // updates the sell button
+            if (adventurerSelected is true)
+            {
+                sellAdventurerButton.Update(gameTime);
+            }
             foreach (Item item in toBeRemovedItem)
             {
                 itemList.Remove(item);
