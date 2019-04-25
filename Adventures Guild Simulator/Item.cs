@@ -15,8 +15,7 @@ namespace Adventures_Guild_Simulator
         int goldCost;
         string type;
         string rarity;
-        string name;
-        
+        string name;        
 
         public int Id { get => id; set => id = value; }
         public int SkillRating { get => skillRating; set => skillRating = value; }
@@ -36,7 +35,6 @@ namespace Adventures_Guild_Simulator
             Name = name;
             GoldCost = goldCost;
         }
-
         
         /// <summary>
         /// Constructor for generating temporary items (because it doesn't need the "id")

@@ -13,7 +13,6 @@ namespace Adventures_Guild_Simulator
     /// </summary>
     public class GameWorld : Game
     {
-
         public static Random rng = new Random();
 
         GraphicsDeviceManager graphics;
@@ -23,13 +22,15 @@ namespace Adventures_Guild_Simulator
         public static SpriteFont font;
         public SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
-        public static List<Item> itemList = new List<Item>(); //Tempoary
+        public static List<Item> itemList = new List<Item>(); //Temporary
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
         public List<Adventurer> adventurers;
         float delay = 0;
+
+        //public List<string> 
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -67,6 +68,7 @@ namespace Adventures_Guild_Simulator
                 return graphics.GraphicsDevice.Viewport.Bounds;
             }
         }
+
         public GameWorld()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -136,6 +138,7 @@ namespace Adventures_Guild_Simulator
 
             font = Content.Load<SpriteFont>("font");
         }
+
         /// <summary>
         /// Looks for the click event for the button which this event was added to.
         /// </summary>
@@ -143,7 +146,12 @@ namespace Adventures_Guild_Simulator
         /// <param name="e"></param>
         private void TestButtonClickEvent(object sender, EventArgs e)
         {
-           //noget
+           //something
+        }
+
+        private void ShowQuestInfo(object sender, EventArgs e)
+        {
+            
         }
 
         /// <summary>
@@ -171,7 +179,9 @@ namespace Adventures_Guild_Simulator
             //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
             {
-                quests.Add(new Quest());
+                Quest quest = new Quest();
+                quests.Add(quest);
+                quest.Click += ShowQuestInfo;
             }
 
             //Updates quests
@@ -231,11 +241,11 @@ namespace Adventures_Guild_Simulator
                 UIelement.Draw(spriteBatch);
             }
 
-
             foreach (var item in itemList)
             {
                 item.Draw(spriteBatch);
             }
+
             //Draws all the buttons of the UI
             foreach (var item in userInterfaceObjects)
             {
@@ -260,8 +270,8 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
                 }
                 drawQuestVector += 90; //Moves the next quest down by a margin
-            }
-           
+            }           
+
             spriteBatch.End();
             base.Draw(gameTime);
         }

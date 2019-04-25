@@ -37,7 +37,6 @@ namespace Adventures_Guild_Simulator
             equipment = new ModelEquipment();
             inventory = new ModelInventory();
             stat = new ModelStat();
-
         }
 
         #region Adventurer
@@ -80,6 +79,5 @@ namespace Adventures_Guild_Simulator
             return stat.LoadGold();
         }
         #endregion
-
     }
 }

@@ -17,7 +17,5 @@ namespace Adventures_Guild_Simulator
         {
             Uses = uses;
         }
-
-        
     }
 }
