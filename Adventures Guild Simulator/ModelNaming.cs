@@ -228,7 +228,7 @@ namespace Adventures_Guild_Simulator
 
         public static string SelectPrefix(int id)
         {
-            
+
             cmd.CommandText = $"SELECT name FROM naming WHERE id = {id}";
             sqlite_datareader = cmd.ExecuteReader();
 
@@ -240,6 +240,5 @@ namespace Adventures_Guild_Simulator
             sqlite_datareader.Close();
             return Value;
         }
-
-      }
     }
+}

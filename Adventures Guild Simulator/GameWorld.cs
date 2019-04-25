@@ -175,10 +175,15 @@ namespace Adventures_Guild_Simulator
         }
 
         private void ShowQuestInfo(object sender, EventArgs e)
-        {            
+        {
+            foreach (Quest quest in quests)
+            {
+                quest.selected = false;
+            }
             infoScreen.Clear();
             infoScreen.Add("Select an adventurer to send on this quest!");
         }
+
         private void SellAdventurer(object sender, EventArgs e)
         {
             Button b = (Button)sender;
@@ -271,16 +276,19 @@ namespace Adventures_Guild_Simulator
             if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
             {
                 Inventory.AddToInventory();
+                delay = 0;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
             {
                 Inventory.GenerateInventoryFrames();
+                delay = 0;
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
             {
                 itemList.Clear();
+                delay = 0;
             }
 
             base.Update(gameTime);
@@ -404,7 +412,7 @@ namespace Adventures_Guild_Simulator
             foreach (string String in infoScreen)
             {
                 spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
-                infoScreenVector.Y += 50; //Moves the next string down by a margin
+                infoScreenVector.Y += 25; //Moves the next string down by a margin
             }
 
             spriteBatch.End();
@@ -443,14 +451,19 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
+            
             Button button = (Button)sender;
-            adventurerToShowId = button.Id;
-            adventurerSelected = true;
-            foreach (Button item in adventurerButtons)
+            if (adventurersDic[button.Id].OnQuest == false)
             {
-                item.selected = false;
+                adventurerToShowId = button.Id;
+                adventurerSelected = true;
+                foreach (Button item in adventurerButtons)
+                {
+                    item.selected = false;
+                }
+                button.selected = true;
             }
-            button.selected = true;
+            
         }
     }
 }
