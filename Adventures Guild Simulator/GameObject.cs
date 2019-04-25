@@ -12,6 +12,7 @@ namespace Adventures_Guild_Simulator
     {
         protected Texture2D sprite;
         protected Vector2 position;
+        private string rarity = "Common";
         /// <summary>
         /// Get-set property for the sprite Texture2D
         /// </summary>
@@ -48,6 +49,8 @@ namespace Adventures_Guild_Simulator
             }
         }
 
+        public string Rarity { get => rarity; set => rarity = value; }
+
         public virtual void Update(GameTime gameTime)
         {   
 
@@ -55,6 +58,34 @@ namespace Adventures_Guild_Simulator
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, position, Color.White);
+        }
+
+        public virtual void Draw(SpriteBatch spriteBatch, bool rarity)
+        {
+            if (Rarity == "Common")
+            {
+                spriteBatch.Draw(sprite, position, Color.White);
+            }
+
+            else if (Rarity == "Uncommon")
+            {
+                spriteBatch.Draw(sprite, position, Color.Green);
+            }
+
+            else if (Rarity == "Rare")
+            {
+                spriteBatch.Draw(sprite, position, Color.Blue);
+            }
+
+            else if (Rarity == "Epic")
+            {
+                spriteBatch.Draw(sprite, position, Color.Purple);
+            }
+
+            else if (Rarity == "Legendary")
+            {
+                spriteBatch.Draw(sprite, position, Color.Orange);
+            }
         }
     }
 }

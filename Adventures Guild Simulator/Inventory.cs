@@ -20,5 +20,35 @@ namespace Adventures_Guild_Simulator
         {
             IsEquipped = isEquipped;
         }
+
+        public static void AddToInventory()
+        {
+            foreach (Item item in GameWorld.itemList)
+            {
+                if (item.Owned == true)
+                {
+                    GameWorld.Instance.inventoryList.Add(item);
+                    GameWorld.toBeRemovedItem.Add(item);
+                }
+            }
+
+
+            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            {
+                GameWorld.Instance.inventoryFrameList[i].Rarity = GameWorld.Instance.inventoryList[i].Rarity;
+            }
+
+        }
+
+        public static void GenerateInventoryFrames()
+        {
+            for (int i = 0; i < 7; i++)
+            {
+                for (int t = 0; t < 4; t++)
+                {
+                    GameWorld.Instance.inventoryFrameList.Add(new GameObject(new Vector2(1400 + t * 125, 50 + 125 * i), "Frame"));
+                }
+            }
+        }
     }
 }

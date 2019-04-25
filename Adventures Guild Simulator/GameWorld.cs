@@ -18,9 +18,13 @@ namespace Adventures_Guild_Simulator
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         public List<GameObject> UI = new List<GameObject>();
+        public List<Item> inventoryList = new List<Item>();
+        public List<GameObject> inventoryFrameList = new List<GameObject>();
+        public static List<Item> toBeRemovedItem = new List<Item>();
+        public int inventoryRowList;
 
         public static SpriteFont font;
-        public SpriteFont fontCopperplate;
+        public static SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         private List<GameObject> adventurerButtons = new List<GameObject>();
         public static List<Item> itemList = new List<Item>(); //Tempoary
@@ -36,7 +40,7 @@ namespace Adventures_Guild_Simulator
         Button sellAdventurerButton;
         public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
 
-        //public List<string> 
+        public List<string> infoScreen = new List<string>();
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -111,6 +115,9 @@ namespace Adventures_Guild_Simulator
             UI.Add(new GameObject(new Vector2(565, 560), "infoChar"));
             UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
 
+            Inventory.GenerateInventoryFrames();
+            //ModelNaming.CreateNames();
+
             base.Initialize();
         }
 
@@ -124,8 +131,6 @@ namespace Adventures_Guild_Simulator
             font = Content.Load<SpriteFont>("font");
             fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
             UpdateAdventurerButtons();
-
-
 
             //Buttons
             var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
@@ -150,7 +155,6 @@ namespace Adventures_Guild_Simulator
             };
             userInterfaceObjects.Add(testButton);
 
-
             font = Content.Load<SpriteFont>("font");
         }
 
@@ -167,8 +171,9 @@ namespace Adventures_Guild_Simulator
         }
 
         private void ShowQuestInfo(object sender, EventArgs e)
-        {
-            //something
+        {            
+            infoScreen.Clear();
+            infoScreen.Add("Select an adventurer to send on this quest!");
         }
         private void SellAdventurer(object sender, EventArgs e)
         {
@@ -235,6 +240,12 @@ namespace Adventures_Guild_Simulator
 
             // updates the sell button
             if (adventurerSelected is true)
+            foreach (Item item in toBeRemovedItem)
+            {
+                itemList.Remove(item);
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 sellAdventurerButton.Update(gameTime);
             }
@@ -247,6 +258,17 @@ namespace Adventures_Guild_Simulator
                 Item.GenerateItem(new Vector2(300, 650));
                 Item.GenerateItem(new Vector2(300, 800));
                 delay = 0;
+            }
+
+
+            if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
+            {
+                Inventory.AddToInventory();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
+            {
+                Inventory.GenerateInventoryFrames();
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
@@ -265,6 +287,9 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
+
+
+
 
             //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
@@ -329,6 +354,28 @@ namespace Adventures_Guild_Simulator
             int drawQuestVector = 540;
             foreach (Quest quest in quests)
             {
+                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
+                tmpDrawQuestVector += 90;
+            }
+
+            foreach (GameObject item in inventoryFrameList)
+            {
+                item.Draw(spriteBatch,true);
+            }
+                for (int i = 0; i < inventoryList.Count; i++)
+                {
+                    inventoryList[i].Draw(spriteBatch, inventoryFrameList[i].Position + new Vector2(10,10));
+                }
+
+            foreach (Item item in itemList)
+            {
+                item.Draw(spriteBatch);
+            }
+
+            spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
+
+            foreach (Quest quest in quests)
+            {
                 quest.Position = new Vector2(30, drawQuestVector);
                 quest.Draw(spriteBatch);
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
@@ -343,7 +390,15 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
                 }
                 drawQuestVector += 90; //Moves the next quest down by a margin
-            }           
+            }
+
+            //Writes to info screen
+            Vector2 infoScreenVector = new Vector2(600, 120); //Top left of info screen
+            foreach (string String in infoScreen)
+            {
+                spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
+                infoScreenVector.Y += 50; //Moves the next string down by a margin
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
