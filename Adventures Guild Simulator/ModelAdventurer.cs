@@ -21,10 +21,13 @@ namespace Adventures_Guild_Simulator
                 "chest integer, " +
                 "boot integer, " +
                 "level integer, " +
-                "FOREIGN KEY(weapon) REFERENCES Inventory(id)" +
-                "FOREIGN KEY(chest) REFERENCES Inventory(id)" +
-                "FOREIGN KEY(head) REFERENCES Inventory(id)" +
-                "FOREIGN KEY(boot) REFERENCES Inventory(id) )";
+                "spriteName string," +
+                "consumable integer," +
+                "FOREIGN KEY(weapon) REFERENCES Equipment(id)" +
+                "FOREIGN KEY(chest) REFERENCES Equipment(id)" +
+                "FOREIGN KEY(head) REFERENCES Equipment(id)" +
+                "FOREIGN KEY(boot) REFERENCES Equipment(id)" +
+                "FOREIGN KEY(consumable) REFERENCES Consumable(id))";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
             cmd.ExecuteNonQuery();
@@ -37,13 +40,13 @@ namespace Adventures_Guild_Simulator
         public Adventurer CreateAdventurer(string name)
         {
             Adventurer a = null;
-            cmd.CommandText = $"INSERT INTO Adventurer (id, name, level) VALUES (null, '{name}', 1)";
+            cmd.CommandText = $"INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, '{name}', 1, 'defaultSprite')";
             cmd.ExecuteNonQuery();
             cmd.CommandText = "SELECT * FROM Adventurer ORDER BY id DESC LIMIT 1";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                 a = new Adventurer(Vector2.Zero, "bat", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null);
+                 a = new Adventurer(Vector2.Zero, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null);
             }
             reader.Close();
             return a;
@@ -116,14 +119,14 @@ namespace Adventures_Guild_Simulator
         /// Returns a List of all the adventurers in the table
         /// </summary>
         /// <returns></returns>
-        public List<Adventurer> LoadAdventurers()
+        public Dictionary<int, Adventurer> LoadAdventurers()
         {
-            List<Adventurer> adventurers = new List<Adventurer>();
+            Dictionary<int, Adventurer> adventurers = new Dictionary<int, Adventurer>();
             cmd.CommandText = "SELECT * FROM adventurer";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                adventurers.Add(new Adventurer(Vector2.Zero, "bat", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null));
+                adventurers.Add(reader.GetInt32(0), new Adventurer(new Vector2(700, 200), reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null));
             }
             reader.Close();
             return adventurers;
