@@ -74,10 +74,12 @@ namespace Adventures_Guild_Simulator
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
+            
             //Sets the window size
             graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferHeight = 1080;            
             //graphics.IsFullScreen = true;
+
             graphics.ApplyChanges();
             IsMouseVisible = true;
         }
@@ -113,7 +115,7 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
-            fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
+            //fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
 
 
 
@@ -258,17 +260,17 @@ namespace Adventures_Guild_Simulator
             {
                 quest.Position = new Vector2(30, drawQuestVector);
                 quest.Draw(spriteBatch);
-                spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
-                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.DarkOrange); //Writes how difficult the quest is
-                spriteBatch.DrawString(fontCopperplate, $"{quest.Reward}", new Vector2(375, drawQuestVector + 25), Color.Gold); //Writes how much gold the reward is on
-                if (quest.Ongoing == false) //If the quest is NOT under way
-                {
-                    spriteBatch.DrawString(fontCopperplate, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(475, drawQuestVector + 25), Color.MistyRose); //Writes the countdown timer
-                }
-                else if (quest.Ongoing == true) //If the quest is under way
-                {
-                    spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
-                }
+                //spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
+                //spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.DarkOrange); //Writes how difficult the quest is
+                //spriteBatch.DrawString(fontCopperplate, $"{quest.Reward}", new Vector2(375, drawQuestVector + 25), Color.Gold); //Writes how much gold the reward is on
+                //if (quest.Ongoing == false) //If the quest is NOT under way
+                //{
+                //    spriteBatch.DrawString(fontCopperplate, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(475, drawQuestVector + 25), Color.MistyRose); //Writes the countdown timer
+                //}
+                //else if (quest.Ongoing == true) //If the quest is under way
+                //{
+                //    spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
+                //}
                 drawQuestVector += 90; //Moves the next quest down by a margin
             }           
 

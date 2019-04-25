@@ -116,13 +116,6 @@
 /processorParam:TextureFormat=Compressed
 /build:font.spritefont
 
-#begin fontCopperplate.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fontCopperplate.spritefont
-
 #begin giantspider.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -146,7 +139,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Helmet.png
-
 
 #begin infoChar.png
 /importer:TextureImporter
