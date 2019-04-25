@@ -39,6 +39,7 @@ namespace Adventures_Guild_Simulator
         bool adventurerSelected;
         Button sellAdventurerButton;
         public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
+        public bool questSelected;
 
         public List<string> infoScreen = new List<string>();
 
@@ -451,7 +452,6 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
-            
             Button button = (Button)sender;
             if (adventurersDic[button.Id].OnQuest == false)
             {
@@ -462,6 +462,27 @@ namespace Adventures_Guild_Simulator
                     item.selected = false;
                 }
                 button.selected = true;
+
+
+                Adventurer adventurer = null;
+                if (questSelected == true)
+                {
+                    foreach (Button item in adventurerButtons)
+                    {
+                        if (item.selected == true)
+                        {
+                            adventurer = adventurersDic[item.Id];
+                        }
+                    }
+                    foreach (Quest item in quests)
+                    {
+                        if (item.selected == true)
+                        {
+                            item.assignedAdventurer = adventurer;
+                            item.Ongoing = true;
+                        }
+                    }
+                }
             }
             
         }

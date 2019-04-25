@@ -22,7 +22,7 @@ namespace Adventures_Guild_Simulator
         string enemy;
         bool ongoing;
         public bool selected;
-        Adventurer assignedAdventurer;
+        public Adventurer assignedAdventurer;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -180,6 +180,7 @@ namespace Adventures_Guild_Simulator
                 {
                     Click?.Invoke(this, new EventArgs());
                     selected = true;
+                    GameWorld.Instance.questSelected = true;
                 }
             }
             #endregion
