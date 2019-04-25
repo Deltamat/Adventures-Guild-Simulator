@@ -144,7 +144,7 @@ namespace Adventures_Guild_Simulator
                     }
                     else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.1) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
-                        GameWorld.Instance.adventurers.Remove(assignedAdventurer);
+                        GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                     }
                 }
             }
