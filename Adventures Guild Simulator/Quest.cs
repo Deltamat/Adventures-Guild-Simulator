@@ -21,6 +21,7 @@ namespace Adventures_Guild_Simulator
         float timeToExpire;
         string enemy;
         bool ongoing;
+        public bool selected;
         Adventurer assignedAdventurer;
 
         private MouseState currentMouse;
@@ -149,6 +150,12 @@ namespace Adventures_Guild_Simulator
                 }
             }
             #region
+            if (previousMouse.RightButton == ButtonState.Pressed)
+            {
+                selected = false;
+                GameWorld.Instance.infoScreen.Clear();
+            }
+
             //"Inception"
             previousMouse = currentMouse;
             //Gets current position and "click info" from the mouse
@@ -167,6 +174,7 @@ namespace Adventures_Guild_Simulator
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
                     Click?.Invoke(this, new EventArgs());
+                    selected = true;
                 }
             }
             #endregion
@@ -174,7 +182,7 @@ namespace Adventures_Guild_Simulator
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (isHovering)
+            if (isHovering || selected)
             {
                 spriteBatch.Draw(sprite, position, Color.Gray);
             }

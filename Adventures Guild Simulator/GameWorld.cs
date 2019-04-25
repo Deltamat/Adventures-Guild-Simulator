@@ -171,10 +171,15 @@ namespace Adventures_Guild_Simulator
         }
 
         private void ShowQuestInfo(object sender, EventArgs e)
-        {            
+        {
+            foreach (Quest quest in quests)
+            {
+                quest.selected = false;
+            }
             infoScreen.Clear();
             infoScreen.Add("Select an adventurer to send on this quest!");
         }
+
         private void SellAdventurer(object sender, EventArgs e)
         {
             Button b = (Button)sender;
@@ -237,7 +242,9 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
-            
+
+            sellAdventurerButton.Update(gameTime);
+
             foreach (Item item in toBeRemovedItem)
             {
                 itemList.Remove(item);
@@ -398,7 +405,7 @@ namespace Adventures_Guild_Simulator
             foreach (string String in infoScreen)
             {
                 spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
-                infoScreenVector.Y += 50; //Moves the next string down by a margin
+                infoScreenVector.Y += 25; //Moves the next string down by a margin
             }
 
             spriteBatch.End();
