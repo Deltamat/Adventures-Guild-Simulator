@@ -129,27 +129,27 @@ namespace Adventures_Guild_Simulator
             
             if (Rarity == "Common")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.White);
+                spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), Color.White);
             }
 
             else if (Rarity == "Uncommon")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Green);
+                spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), Color.Green);
             }
 
             else if (Rarity == "Rare")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Blue);
+                spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), Color.Blue);
             }
 
             else if (Rarity == "Epic")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Purple);
+                spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), Color.Purple);
             }
 
             else if (Rarity == "Legendary")
             {
-                spriteBatch.DrawString(GameWorld.font, $"{Name}", Position + new Vector2(100, 0), Color.Orange);
+                spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), Color.Orange);
             }
 
             //spriteBatch.DrawString(GameWorld.font, $"Cost: {GoldCost}", Position + new Vector2(200, 0), Color.Gold);

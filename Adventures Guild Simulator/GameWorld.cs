@@ -24,7 +24,7 @@ namespace Adventures_Guild_Simulator
         public int inventoryRowList;
 
         public static SpriteFont font;
-        public SpriteFont fontCopperplate;
+        public static SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         private List<GameObject> adventurerButtons = new List<GameObject>();
         public static List<Item> itemList = new List<Item>(); //Tempoary
@@ -354,6 +354,8 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
 
+            foreach (Quest quest in quests)
+            {
                 quest.Position = new Vector2(30, drawQuestVector);
                 quest.Draw(spriteBatch);
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
@@ -368,7 +370,7 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{quest.DurationTime - Math.Round(quest.ProgressTime, 0)}", new Vector2(475, drawQuestVector + 25), Color.Turquoise); //Writes the progression timer
                 }
                 drawQuestVector += 90; //Moves the next quest down by a margin
-            }           
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
