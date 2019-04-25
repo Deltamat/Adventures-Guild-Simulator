@@ -40,6 +40,7 @@ namespace Adventures_Guild_Simulator
         Button sellAdventurerButton;
         public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
         public bool questSelected;
+        bool drawSelectedAdventurer;
 
         public List<string> infoScreen = new List<string>();
 
@@ -292,6 +293,20 @@ namespace Adventures_Guild_Simulator
                 delay = 0;
             }
 
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                foreach (Quest quest in quests)
+                {
+                    quest.selected = false;
+                }
+                foreach (Button adventurer in adventurerButtons)
+                {
+                    adventurer.selected = false;
+                }
+                infoScreen.Clear();
+                drawSelectedAdventurer = false;
+            }
+
             base.Update(gameTime);
         }
 
@@ -303,10 +318,7 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
-
-
-
-
+            
             //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
             {
@@ -315,37 +327,40 @@ namespace Adventures_Guild_Simulator
 
             // Draws the selected adventurer info
             Adventurer value;
-            if (adventurersDic.TryGetValue(adventurerToShowId, out value))
+            if (drawSelectedAdventurer == true)
             {
-                spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
-                spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
-                if (value.Helmet != null)
+                if (adventurersDic.TryGetValue(adventurerToShowId, out value))
                 {
-                    spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
-                }
-                if (value.Chest != null)
-                {
-                    spriteBatch.Draw(value.Chest.Sprite, value.Chest.CollisionBox, Color.White);
-                }
-                if (value.Weapon != null)
-                {
-                    spriteBatch.Draw(value.Weapon.Sprite, value.Weapon.CollisionBox, Color.White);
-                }
-                if (value.Boot != null)
-                {
-                    spriteBatch.Draw(value.Boot.Sprite, value.Boot.CollisionBox, Color.White);
-                }
-                if (value.Consumable != null)
-                {
-                    spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
+                    spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
+                    spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
+                    if (value.Helmet != null)
+                    {
+                        spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
+                    }
+                    if (value.Chest != null)
+                    {
+                        spriteBatch.Draw(value.Chest.Sprite, value.Chest.CollisionBox, Color.White);
+                    }
+                    if (value.Weapon != null)
+                    {
+                        spriteBatch.Draw(value.Weapon.Sprite, value.Weapon.CollisionBox, Color.White);
+                    }
+                    if (value.Boot != null)
+                    {
+                        spriteBatch.Draw(value.Boot.Sprite, value.Boot.CollisionBox, Color.White);
+                    }
+                    if (value.Consumable != null)
+                    {
+                        spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
+                    }
                 }
 
-            }
 
-            //draws the sell adventurer button
-            if (adventurerSelected is true)
-            {
-                sellAdventurerButton.Draw(spriteBatch);
+                //draws the sell adventurer button
+                if (adventurerSelected is true)
+                {
+                    sellAdventurerButton.Draw(spriteBatch);
+                }
             }
 
 
@@ -452,6 +467,7 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
+            drawSelectedAdventurer = true;
             Button button = (Button)sender;
             if (adventurersDic[button.Id].OnQuest == false)
             {

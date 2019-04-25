@@ -154,13 +154,7 @@ namespace Adventures_Guild_Simulator
                     assignedAdventurer.OnQuest = false;
                 }
             }
-            #region
-            if (previousMouse.RightButton == ButtonState.Pressed)
-            {
-                selected = false;
-                GameWorld.Instance.infoScreen.Clear();
-            }
-
+            #region            
             //"Inception"
             previousMouse = currentMouse;
             //Gets current position and "click info" from the mouse
