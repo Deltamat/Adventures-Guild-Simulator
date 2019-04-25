@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
-    class Equipment : Item
+    public class Equipment : Item
     {
         /// <summary>
         /// Constructor for generating equipment from the database (because it has the "id")

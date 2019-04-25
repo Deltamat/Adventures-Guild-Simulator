@@ -34,6 +34,7 @@ namespace Adventures_Guild_Simulator
         int adventurerToShowId;
         bool adventurerSelected;
         Button sellAdventurerButton;
+        public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
 
         //public List<string> 
 
@@ -97,6 +98,7 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
+            equipmentList = Controller.Instance.LoadEquipment();
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
 
@@ -126,11 +128,11 @@ namespace Adventures_Guild_Simulator
 
 
             //Buttons
-            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
+            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
                 TextForButton = "test",
             };
-            sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("Font"), new Vector2(1230, 500), "AB")
+            sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
                 TextForButton = "Sell selected adventurer",
             };
@@ -276,7 +278,27 @@ namespace Adventures_Guild_Simulator
             {
                 spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
                 spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
-                //spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
+                if (value.Helmet != null)
+                {
+                    spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
+                }
+                if (value.Chest != null)
+                {
+                    spriteBatch.Draw(value.Chest.Sprite, value.Chest.CollisionBox, Color.White);
+                }
+                if (value.Weapon != null)
+                {
+                    spriteBatch.Draw(value.Weapon.Sprite, value.Weapon.CollisionBox, Color.White);
+                }
+                if (value.Boot != null)
+                {
+                    spriteBatch.Draw(value.Boot.Sprite, value.Boot.CollisionBox, Color.White);
+                }
+                if (value.Consumable != null)
+                {
+                    spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
+                }
+
             }
 
             //draws the sell adventurer button
@@ -340,7 +362,7 @@ namespace Adventures_Guild_Simulator
             int line = 0;
             foreach (var item in adventurersDic)
             {
-                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("Font"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
+                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
                 {
                     TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
                     FontColor = Color.White,
