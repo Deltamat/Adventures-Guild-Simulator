@@ -24,6 +24,7 @@ namespace Adventures_Guild_Simulator
                 "rarity string, " +
                 "goldCost integer, " +
                 "skillRating integer, " +
+                "isEquipped bool, " +
                 "uses integer )";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
@@ -44,7 +45,7 @@ namespace Adventures_Guild_Simulator
         public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped, int uses)
         {
             Consumable temp = null;
-            cmd.CommandText = $"INSERT INTO Consumable (id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}', '{isEquipped}', '{uses}')";
+            cmd.CommandText = $"INSERT INTO Consumable (id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', {goldCost}, {skillRating}, {isEquipped}, {uses})";
             cmd.ExecuteNonQuery();
             cmd.CommandText = "select * from Consumable order by id desc limit 1";
             SQLiteDataReader chugchugchug = cmd.ExecuteReader();
