@@ -298,11 +298,11 @@ namespace Adventures_Guild_Simulator
 
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
-                Item.GenerateItem(new Vector2(300, 200));
-                Item.GenerateItem(new Vector2(300, 350));
-                Item.GenerateItem(new Vector2(300, 500));
-                Item.GenerateItem(new Vector2(300, 650));
-                Item.GenerateItem(new Vector2(300, 800));
+                Equipment.GenerateEquipment(new Vector2(300, 200));
+                Equipment.GenerateEquipment(new Vector2(300, 350));
+                Equipment.GenerateEquipment(new Vector2(300, 500));
+                Equipment.GenerateEquipment(new Vector2(300, 650));
+                Equipment.GenerateEquipment(new Vector2(300, 800));
                 delay = 0;
             }
 
@@ -450,7 +450,7 @@ namespace Adventures_Guild_Simulator
                 quest.Position = new Vector2(30, drawQuestVector);
                 quest.Draw(spriteBatch);
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
-                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.DarkOrange); //Writes how difficult the quest is
+                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.Red); //Writes how difficult the quest is
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Reward}", new Vector2(375, drawQuestVector + 25), Color.Gold); //Writes how much gold the reward is on
                 if (quest.Ongoing == false) //If the quest is NOT under way
                 {
