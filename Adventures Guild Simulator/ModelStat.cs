@@ -99,5 +99,11 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return completedQuests;
         }
+
+        public void UpdateStats()
+        {
+            cmd.CommandText = $"REPLACE INTO Stat (id, gold, deaths, completedQuests) VALUES ({1}, {GameWorld.Instance.gold}, {GameWorld.Instance.adventurerDeaths}, {GameWorld.Instance.questsCompleted})";
+            cmd.ExecuteNonQuery();
+        }
     }
 }

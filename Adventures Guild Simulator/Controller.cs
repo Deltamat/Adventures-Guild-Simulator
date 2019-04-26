@@ -83,9 +83,9 @@ namespace Adventures_Guild_Simulator
         #endregion
 
         #region Stat
-        public void SetGold(int gold)
+        public void UpdateStats()
         {
-            stat.SetGold(gold);
+            stat.UpdateStats();
         }
 
         public int LoadGold()
@@ -96,22 +96,13 @@ namespace Adventures_Guild_Simulator
         public int LoadDeaths()
         {
             return stat.LoadDeaths();
-        }
-
-        public void setDeaths(int deaths)
-        {
-            stat.SetDeaths(deaths);
-        }
+        }        
 
         public int LoadCompletedQuests()
         {
             return stat.LoadCompletedQuests();
         }
-
-        public void SetCompletedQuests(int quests)
-        {
-            stat.SetCompletedQuests(quests);
-        }
+        
         #endregion
 
         

@@ -156,24 +156,26 @@ namespace Adventures_Guild_Simulator
                     if (GameWorld.Instance.GenerateRandom(0, 101) >= failureChance) //Checks whether the quest was succesfully completed
                     {
                         GameWorld.Instance.gold += Reward; //Adds the gold reward to the player's stats
-                        Controller.Instance.SetGold(GameWorld.Instance.gold);
+                        Controller.Instance.UpdateStats();
 
                         GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level++;
                         GameWorld.Instance.UpdateAdventurerButtons();
-                        if (GameWorld.Instance.GenerateRandom(0,5) == 0)
+
+                        if (GameWorld.Instance.GenerateRandom(0,5) == 0) //Item gen
                         {
                             Item.GenerateItem(Vector2.Zero);
                             Inventory.AddToInventory();
                         }
+
                         GameWorld.Instance.questsCompleted++; //Adds one to total quests completed
-                        Controller.Instance.SetCompletedQuests(GameWorld.Instance.questsCompleted);
+                        Controller.Instance.UpdateStats();
                     }
                     else if ((GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.05)) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
                         Controller.Instance.RemoveAdventurer(assignedAdventurer.Id);
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                         GameWorld.Instance.adventurerDeaths++; //Adds one to total adventurer deaths
-                        Controller.Instance.setDeaths(GameWorld.Instance.adventurerDeaths);
+                        Controller.Instance.UpdateStats();
                         GameWorld.Instance.UpdateAdventurerButtons();
                     }
                 }
