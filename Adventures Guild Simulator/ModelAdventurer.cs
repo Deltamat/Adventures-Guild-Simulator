@@ -23,10 +23,10 @@ namespace Adventures_Guild_Simulator
                 "level integer, " +
                 "spriteName string," +
                 "consumable integer," +
-                "FOREIGN KEY(weapon) REFERENCES Equipment(id)" +
-                "FOREIGN KEY(chest) REFERENCES Equipment(id)" +
-                "FOREIGN KEY(helmet) REFERENCES Equipment(id)" +
-                "FOREIGN KEY(boot) REFERENCES Equipment(id)" +
+                "FOREIGN KEY(weapon) REFERENCES Equipment(id)," +
+                "FOREIGN KEY(chest) REFERENCES Equipment(id)," +
+                "FOREIGN KEY(helmet) REFERENCES Equipment(id)," +
+                "FOREIGN KEY(boot) REFERENCES Equipment(id)," +
                 "FOREIGN KEY(consumable) REFERENCES Consumable(id))";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;

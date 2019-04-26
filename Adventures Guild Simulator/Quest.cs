@@ -150,11 +150,17 @@ namespace Adventures_Guild_Simulator
                     if (GameWorld.Instance.GenerateRandom(0, 101) > failureChance) //Checks whether the quest was succesfully completed
                     {
                         GameWorld.Instance.gold += Reward; //Adds the gold reward to the player's stats
+                        Controller.Instance.SetGold(GameWorld.Instance.gold);
+
+                        GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level++;
+                        GameWorld.Instance.UpdateAdventurerButtons();
                         //random item
                     }
                     else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.1) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
+                        Controller.Instance.RemoveAdventurer(assignedAdventurer.Id);
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
+                        GameWorld.Instance.UpdateAdventurerButtons();
                     }
                 }
                 //else
@@ -182,11 +188,8 @@ namespace Adventures_Guild_Simulator
                 {
                     Click?.Invoke(this, new EventArgs());
                     selected = true;
-                    GameWorld.Instance.questSelected = true;
-                    foreach (Button item in GameWorld.Instance.adventurerButtons)
-                    {
-                        item.selected = false;
-                    }
+                    
+
                 }
             }
             #endregion

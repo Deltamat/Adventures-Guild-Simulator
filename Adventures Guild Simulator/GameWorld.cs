@@ -183,6 +183,12 @@ namespace Adventures_Guild_Simulator
             }
             infoScreen.Clear();
             infoScreen.Add("Select an adventurer to send on this quest!");
+            questSelected = true;
+            foreach (Button item in adventurerButtons)
+            {
+                item.selected = false;
+            }
+            drawSelectedAdventurer = false;
         }
 
         private void SellAdventurer(object sender, EventArgs e)
@@ -441,7 +447,7 @@ namespace Adventures_Guild_Simulator
             return value;
         }
 
-        private void UpdateAdventurerButtons()
+        public void UpdateAdventurerButtons()
         {
             adventurerButtons.RemoveRange(0, adventurerButtons.Count);
             int i = 0;
@@ -452,9 +458,12 @@ namespace Adventures_Guild_Simulator
                 {
                     TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
                     FontColor = Color.White,
-                    Id = item.Value.Id
+                    Id = item.Value.Id,
+                    questActive = item.Value.OnQuest
                 };
+
                 adventurerButtons.Add(AdventurerButton);
+
                 i++;
                 if (i == 9)
                 {
@@ -467,10 +476,11 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
-            drawSelectedAdventurer = true;
+            
             Button button = (Button)sender;
             if (adventurersDic[button.Id].OnQuest == false)
             {
+                drawSelectedAdventurer = true;
                 adventurerToShowId = button.Id;
                 foreach (Button item in adventurerButtons)
                 {
@@ -501,6 +511,7 @@ namespace Adventures_Guild_Simulator
                             item.Ongoing = true;
                             item.selected = false;
                             questSelected = false;
+                            infoScreen.Clear();
                         }
                     }
                 }
