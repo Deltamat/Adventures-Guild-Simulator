@@ -12,7 +12,7 @@ namespace Adventures_Guild_Simulator
         /// <summary>
         /// Constructor for generating equipment from the database (because it has the "id")
         /// </summary>
-        public Equipment(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating) : base(position, id, name, spriteName, type, rarity, goldCost, skillRating)
+        public Equipment(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped) : base(position, id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped)
         {
             
         }
@@ -20,7 +20,7 @@ namespace Adventures_Guild_Simulator
         /// <summary>
         /// Constructor for generating temporary equipment (because it doesn't need the "id")
         /// </summary>       
-        public Equipment(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name) : base(position, spriteName, rarity, skillRating, type, goldCost, name)
+        public Equipment(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name, bool isEquipped) : base(position, spriteName, rarity, skillRating, type, goldCost, name, isEquipped)
         {
             
         }
@@ -88,7 +88,7 @@ namespace Adventures_Guild_Simulator
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
 
-            GameWorld.itemList.Add(new Equipment(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType));
+            GameWorld.itemList.Add(new Equipment(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType, false));
         }
     }
 }

@@ -61,9 +61,9 @@ namespace Adventures_Guild_Simulator
         {
             return consumable.LoadConsumable();
         }
-        public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
+        public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped, int uses)
         {
-            return consumable.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, uses);
+            return consumable.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses);
         }
         #endregion
 
@@ -72,9 +72,9 @@ namespace Adventures_Guild_Simulator
         {
             return equipment.LoadEquipment();
         }
-        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
+        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped)
         {
-            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating);
+            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating, isEquipped);
         }
         #endregion
 

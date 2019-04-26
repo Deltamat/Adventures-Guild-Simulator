@@ -43,6 +43,7 @@ namespace Adventures_Guild_Simulator
         int adventurerToShowId;
         Button sellAdventurerButton;
         public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
+        public Dictionary<int, Consumable> consumableDic = new Dictionary<int, Consumable>();
         public bool questSelected;
         bool drawSelectedAdventurer;
 
@@ -109,6 +110,7 @@ namespace Adventures_Guild_Simulator
         protected override void Initialize()
         {
             equipmentDic = Controller.Instance.LoadEquipment();
+
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
             adventurerDeaths = Controller.Instance.LoadDeaths();
