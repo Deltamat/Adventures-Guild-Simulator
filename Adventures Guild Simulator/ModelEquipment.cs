@@ -10,7 +10,7 @@ namespace Adventures_Guild_Simulator
 {
     class ModelEquipment : Model
     {
-        SQLiteCommand cmd;
+        public static SQLiteCommand cmd;
 
         /// <summary>
         /// Creates the columns for the table, unless the table with the specified name "Equipment" already exists.
@@ -23,7 +23,8 @@ namespace Adventures_Guild_Simulator
                 "type string, " +
                 "rarity string, " +
                 "goldCost integer, " +
-                "skillRating integer)";
+                "skillRating integer," +
+                "isEquipped boolean)";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
             cmd.ExecuteNonQuery();
@@ -39,10 +40,10 @@ namespace Adventures_Guild_Simulator
         /// <param name="goldCost">base cost of the item</param>
         /// <param name="skillRating">how much power stat it gives to an adventurer when you equip it on said one</param>
         /// <returns>an object of the type Equipment with the specified attributes</returns>
-        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
+        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped)
         {
             Equipment temp = null;
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}')";
+            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}','{isEquipped}')";
             cmd.ExecuteNonQuery();
             cmd.CommandText = "SELECT * FROM Equipment ORDER BY id desc limit 1";
             SQLiteDataReader reader = cmd.ExecuteReader();
@@ -54,6 +55,12 @@ namespace Adventures_Guild_Simulator
             return temp;
         }
 
+        //Removes the item with the ID from the database equipment
+        public static void SellEquipment(int ID)
+        {
+            cmd.CommandText = $"DELETE FROM equipment WHERE id = {ID}";
+            cmd.ExecuteNonQuery();
+        }
         /// <summary>
         /// Adds all equipment from the database to a list
         /// </summary>

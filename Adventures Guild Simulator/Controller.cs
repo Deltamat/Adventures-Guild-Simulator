@@ -67,10 +67,12 @@ namespace Adventures_Guild_Simulator
         {
             return equipment.LoadEquipment();
         }
-        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
+        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped)
         {
-            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating);
+            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating,isEquipped);
         }
+
+
         #endregion
 
         #region Inventory

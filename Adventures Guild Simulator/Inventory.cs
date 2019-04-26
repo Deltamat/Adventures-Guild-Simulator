@@ -34,8 +34,10 @@ namespace Adventures_Guild_Simulator
                     {
                         GameWorld.Instance.inventoryList.Add(item);
                         GameWorld.toBeRemovedItem.Add(item);
+
                     }
                 }
+
             }
 
             //Turns the frames of the inventory into the rarity of the item in the frame
@@ -43,6 +45,11 @@ namespace Adventures_Guild_Simulator
             for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
             {
                 GameWorld.Instance.inventoryFrameList[i].Rarity = GameWorld.Instance.inventoryList[i].Rarity;
+            }
+
+            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            {
+                GameWorld.Instance.inventoryList[i].Position = GameWorld.Instance.inventoryFrameList[i].Position + new Vector2(10,10);
             }
 
         }

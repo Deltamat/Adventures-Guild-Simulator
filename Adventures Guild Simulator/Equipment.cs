@@ -87,7 +87,7 @@ namespace Adventures_Guild_Simulator
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
-
+        
             GameWorld.itemList.Add(new Equipment(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType));
         }
     }
