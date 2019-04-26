@@ -44,5 +44,10 @@ namespace Adventures_Guild_Simulator
             Boot = boot;
             Consumable = consumable;
         }
+
+        public override void Update(GameTime gameTime)
+        {
+            skill = level;
+        }
     }
 }

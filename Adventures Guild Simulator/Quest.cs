@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Adventures_Guild_Simulator
 {
@@ -118,6 +117,12 @@ namespace Adventures_Guild_Simulator
 
         public override void Update(GameTime gameTime)
         {
+            //Temp insta complete quest button
+            if (Keyboard.GetState().IsKeyDown(Keys.L))
+            {
+                ProgressTime = DurationTime - 1;
+            }
+
             if (Ongoing == false) //Whether any one is assinged to the quest
             {
                 //Counts down how much time before the quest expires
@@ -125,6 +130,7 @@ namespace Adventures_Guild_Simulator
                 if (TimeToExpire > ExpireTime)
                 {
                     GameWorld.Instance.questsToBeRemoved.Add(this);
+                    GameWorld.Instance.questSelected = false;
                 }
             }
             else
@@ -147,20 +153,32 @@ namespace Adventures_Guild_Simulator
                     //Every positive skill point difference between a quest's difficulty rating, and the adventurer's skill rating equals a 5% failure rate
                     //I.E. difficultyRating = 10, assignedAdventurer total skill = 5. 5 point difference equals 25% failure chance
                     failureChance = (DifficultyRating - (assignedAdventurer.Skill + assignedAdventurer.TempSkillBuff)) * 5; 
-                    if (GameWorld.Instance.GenerateRandom(0, 101) > failureChance) //Checks whether the quest was succesfully completed
+                    if (GameWorld.Instance.GenerateRandom(0, 101) >= failureChance) //Checks whether the quest was succesfully completed
                     {
                         GameWorld.Instance.gold += Reward; //Adds the gold reward to the player's stats
-                        //random item
+                        Controller.Instance.UpdateStats();
+
+                        GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level++;
+                        GameWorld.Instance.UpdateAdventurerButtons();
+                        Controller.Instance.SetAdventurerLevel(assignedAdventurer.Id, GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level);
+                        if (GameWorld.Instance.GenerateRandom(0,5) == 0) //Item gen
+                        {
+                            Item.GenerateItem(Vector2.Zero);
+                            Inventory.AddToInventory();
+                        }
+
+                        GameWorld.Instance.questsCompleted++; //Adds one to total quests completed
+                        Controller.Instance.UpdateStats();
                     }
-                    else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.1) > 50) //Quest failed, rolls chance for the adventurer to die
+                    else if ((GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.05)) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
+                        Controller.Instance.RemoveAdventurer(assignedAdventurer.Id);
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
+                        GameWorld.Instance.adventurerDeaths++; //Adds one to total adventurer deaths
+                        Controller.Instance.UpdateStats();
+                        GameWorld.Instance.UpdateAdventurerButtons();
                     }
                 }
-                //else
-                //{
-                //    assignedAdventurer.OnQuest = true;
-                //}
             }
             #region            
             //"Inception"
@@ -182,11 +200,8 @@ namespace Adventures_Guild_Simulator
                 {
                     Click?.Invoke(this, new EventArgs());
                     selected = true;
-                    GameWorld.Instance.questSelected = true;
-                    foreach (Button item in GameWorld.Instance.adventurerButtons)
-                    {
-                        item.selected = false;
-                    }
+                    
+
                 }
             }
             #endregion
@@ -197,6 +212,10 @@ namespace Adventures_Guild_Simulator
             if (isHovering || selected)
             {
                 spriteBatch.Draw(sprite, position, Color.Gray);
+            }
+            else if (ongoing)
+            {
+                spriteBatch.Draw(sprite, position, Color.PaleGreen);
             }
             else
             {

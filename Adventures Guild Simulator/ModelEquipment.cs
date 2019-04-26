@@ -49,7 +49,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                temp = new Equipment(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6));
+                temp = new Equipment(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7));
             }
             reader.Close();
             return temp;
@@ -62,7 +62,7 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
         /// <summary>
-        /// Adds all equipment from the database to a list
+        /// Adds all equipment from the database to a dictionary
         /// </summary>
         /// <returns></returns>
         public Dictionary<int, Equipment> LoadEquipment()
@@ -72,7 +72,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                equipmentItems.Add(reader.GetInt32(0), new Equipment(new Vector2(1000), reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6)));
+                equipmentItems.Add(reader.GetInt32(0), new Equipment(new Vector2(1000), reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7)));
             }
             reader.Close();
             return equipmentItems;

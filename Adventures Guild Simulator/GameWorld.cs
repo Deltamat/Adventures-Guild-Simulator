@@ -32,12 +32,18 @@ namespace Adventures_Guild_Simulator
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
         public int gold;
+        private Texture2D goldSprite;
+        public int adventurerDeaths;
+        private Texture2D skullSprite;
+        public int questsCompleted;
+        private Texture2D questionMarkSprite;
         //public List<Adventurer> adventurers;
         public Dictionary<int, Adventurer> adventurersDic;
         float delay = 0;
         int adventurerToShowId;
         Button sellAdventurerButton;
-        public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
+        public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
+        public Dictionary<int, Consumable> consumableDic = new Dictionary<int, Consumable>();
         public bool questSelected;
         bool drawSelectedAdventurer;
 
@@ -103,9 +109,12 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
-            equipmentList = Controller.Instance.LoadEquipment();
+            equipmentDic = Controller.Instance.LoadEquipment();
+
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
+            adventurerDeaths = Controller.Instance.LoadDeaths();
+            questsCompleted = Controller.Instance.LoadCompletedQuests();
 
             //UI
             UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
@@ -143,6 +152,9 @@ namespace Adventures_Guild_Simulator
             spriteBatch = new SpriteBatch(GraphicsDevice);
             font = Content.Load<SpriteFont>("font");
             fontCopperplate = Content.Load<SpriteFont>("fontCopperplate");
+            goldSprite = Content.Load<Texture2D>("gold"); //Gold sprite
+            skullSprite = Content.Load<Texture2D>("skull"); //Skull sprite
+            questionMarkSprite = Content.Load<Texture2D>("quest_complete"); //Question mark sprite
             UpdateAdventurerButtons();
 
             //Buttons
@@ -187,6 +199,11 @@ namespace Adventures_Guild_Simulator
             UpdateAdventurerButtons();
         }
 
+        /// <summary>
+        /// Looks for the click event for the button which this event was added to.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ShowQuestInfo(object sender, EventArgs e)
         {
             foreach (Quest quest in quests)
@@ -195,8 +212,19 @@ namespace Adventures_Guild_Simulator
             }
             infoScreen.Clear();
             infoScreen.Add("Select an adventurer to send on this quest!");
+            questSelected = true;
+            foreach (Button item in adventurerButtons)
+            {
+                item.selected = false;
+            }
+            drawSelectedAdventurer = false;
         }
 
+        /// <summary>
+        /// Looks for the click event for the button which this event was added to.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SellAdventurer(object sender, EventArgs e)
         {
             Button b = (Button)sender;
@@ -266,6 +294,11 @@ namespace Adventures_Guild_Simulator
             foreach (var item in adventurerButtons)
             {
                 item.Update(gameTime);
+            }
+
+            foreach (Adventurer adventurer in adventurersDic.Values)
+            {
+                adventurer.Update(gameTime);
             }
 
             // updates the sell button
@@ -368,6 +401,13 @@ namespace Adventures_Guild_Simulator
             {
                 UIelement.Draw(spriteBatch);
             }
+
+            spriteBatch.Draw(goldSprite, new Vector2(590, 25), Color.White);
+            spriteBatch.DrawString(fontCopperplate, $"{gold}", new Vector2(650, 35), Color.Gold);
+            spriteBatch.Draw(questionMarkSprite, new Vector2(900, 25), Color.White);
+            spriteBatch.DrawString(fontCopperplate, $"{questsCompleted}", new Vector2(960, 35), Color.Orange);
+            spriteBatch.Draw(skullSprite, new Vector2(1210, 25), Color.White);
+            spriteBatch.DrawString(fontCopperplate, $"{adventurerDeaths}", new Vector2(1270, 35), Color.Beige);
 
             // Draws the selected adventurer info
             Adventurer value;
@@ -491,13 +531,19 @@ namespace Adventures_Guild_Simulator
             base.Draw(gameTime);
         }
 
+        /// <summary>
+        /// Generates a random number between min- and maxValue
+        /// </summary>
+        /// <param name="minValue">Minimum value</param>
+        /// <param name="maxValue">Maximum value</param>
+        /// <returns></returns>
         public int GenerateRandom(int minValue, int maxValue)
         {
             int value = rng.Next(minValue, maxValue);
             return value;
         }
 
-        private void UpdateAdventurerButtons()
+        public void UpdateAdventurerButtons()
         {
             adventurerButtons.RemoveRange(0, adventurerButtons.Count);
             int i = 0;
@@ -508,9 +554,12 @@ namespace Adventures_Guild_Simulator
                 {
                     TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
                     FontColor = Color.White,
-                    Id = item.Value.Id
+                    Id = item.Value.Id,
+                    questActive = item.Value.OnQuest
                 };
+
                 adventurerButtons.Add(AdventurerButton);
+
                 i++;
                 if (i == 9)
                 {
@@ -523,10 +572,11 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
-            drawSelectedAdventurer = true;
+            
             Button button = (Button)sender;
             if (adventurersDic[button.Id].OnQuest == false)
             {
+                drawSelectedAdventurer = true;
                 adventurerToShowId = button.Id;
                 foreach (Button item in adventurerButtons)
                 {
@@ -547,6 +597,7 @@ namespace Adventures_Guild_Simulator
                             button.questActive = true;
                             button.selected = false;
                             drawSelectedAdventurer = false;
+                            infoScreen.Clear();
                         }
                     }
                     foreach (Quest item in quests)
@@ -557,6 +608,7 @@ namespace Adventures_Guild_Simulator
                             item.Ongoing = true;
                             item.selected = false;
                             questSelected = false;
+                            infoScreen.Clear();
                         }
                     }
                 }

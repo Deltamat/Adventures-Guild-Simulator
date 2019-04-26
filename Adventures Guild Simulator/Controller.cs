@@ -11,7 +11,6 @@ namespace Adventures_Guild_Simulator
         ModelAdventurer adventurer;
         ModelConsumable consumable;
         ModelEquipment equipment;
-        ModelInventory inventory;
         ModelNaming naming;
         ModelStat stat;
 
@@ -36,7 +35,6 @@ namespace Adventures_Guild_Simulator
             adventurer = new ModelAdventurer();
             consumable = new ModelConsumable();
             equipment = new ModelEquipment();
-            inventory = new ModelInventory();
             naming = new ModelNaming();
             stat = new ModelStat();
         }
@@ -56,10 +54,22 @@ namespace Adventures_Guild_Simulator
         {
             adventurer.DeleteAdventurerByID(id);
         }
+
+        public void SetAdventurerLevel(int id, int level)
+        {
+            adventurer.SetLevel(id, level);
+        }
         #endregion
 
         #region Consumable
-
+        public Dictionary<int, Consumable> LoadConsumable()
+        {
+            return consumable.LoadConsumable();
+        }
+        public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped, int uses)
+        {
+            return consumable.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses);
+        }
         #endregion
 
         #region Equipment
@@ -69,7 +79,7 @@ namespace Adventures_Guild_Simulator
         }
         public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped)
         {
-            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating,isEquipped);
+            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating, isEquipped);
         }
 
 
@@ -80,15 +90,26 @@ namespace Adventures_Guild_Simulator
         #endregion
 
         #region Stat
-        public void SetGold(int gold)
+        public void UpdateStats()
         {
-            stat.SetGold(gold);
+            stat.UpdateStats();
         }
 
         public int LoadGold()
         {
             return stat.LoadGold();
         }
+
+        public int LoadDeaths()
+        {
+            return stat.LoadDeaths();
+        }        
+
+        public int LoadCompletedQuests()
+        {
+            return stat.LoadCompletedQuests();
+        }
+        
         #endregion
 
         
