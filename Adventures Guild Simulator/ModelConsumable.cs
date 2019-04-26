@@ -41,7 +41,7 @@ namespace Adventures_Guild_Simulator
         /// <param name="skillRating">How much power stat it gives to an adventurer when you equip it on said one</param>
         /// <param name="uses">The amount times you can roll for better result before it's "useless"</param>
         /// <returns>an object of the type Consumable with the specified attributes</returns>
-        public Consumable CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
+        public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
         {
             Consumable temp = null;
             cmd.CommandText = $"INSERT INTO Consumable (id, name, spriteName, type, rarity, goldCost, skillRating, uses) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}', '{uses}')";
@@ -56,17 +56,17 @@ namespace Adventures_Guild_Simulator
         }
 
         /// <summary>
-        /// Adds all consumables from the database to a list
+        /// Adds all consumables from the database to a dictionary
         /// </summary>
         /// <returns></returns>
-        public List<Consumable> LoadConsumable()
+        public Dictionary<int, Consumable> LoadConsumable()
         {
-            List<Consumable> consumables = new List<Consumable>();
+            Dictionary<int, Consumable> consumables = new Dictionary<int, Consumable>();
             cmd.CommandText = "SELECT * FROM Consumable";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                consumables.Add(new Consumable(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7)));
+                consumables.Add(reader.GetInt32(0), new Consumable(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetInt32(7)));
             }
             reader.Close();
             return consumables;

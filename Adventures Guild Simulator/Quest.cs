@@ -155,18 +155,16 @@ namespace Adventures_Guild_Simulator
                         GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level++;
                         GameWorld.Instance.UpdateAdventurerButtons();
                         //random item
+                        GameWorld.Instance.questsCompleted++; //Adds one to total quests completed
                     }
-                    else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.1) > 50) //Quest failed, rolls chance for the adventurer to die
+                    else if (GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.05) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
                         Controller.Instance.RemoveAdventurer(assignedAdventurer.Id);
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
+                        GameWorld.Instance.adventurerDeaths++; //Adds one to total adventurer deaths
                         GameWorld.Instance.UpdateAdventurerButtons();
                     }
                 }
-                //else
-                //{
-                //    assignedAdventurer.OnQuest = true;
-                //}
             }
             #region            
             //"Inception"

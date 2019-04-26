@@ -59,7 +59,14 @@ namespace Adventures_Guild_Simulator
         #endregion
 
         #region Consumable
-
+        public Dictionary<int, Consumable> LoadConsumable()
+        {
+            return consumable.LoadConsumable();
+        }
+        public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, int uses)
+        {
+            return consumable.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, uses);
+        }
         #endregion
 
         #region Equipment
