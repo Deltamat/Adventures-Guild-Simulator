@@ -487,6 +487,9 @@ namespace Adventures_Guild_Simulator
             return value;
         }
 
+        /// <summary>
+        /// Updates the buttons for the adventurers, if an adventurer dies this gets called etc.
+        /// </summary>
         public void UpdateAdventurerButtons()
         {
             adventurerButtons.RemoveRange(0, adventurerButtons.Count);
@@ -514,6 +517,13 @@ namespace Adventures_Guild_Simulator
             }
         }
 
+        /// <summary>
+        /// The clickevent for the adventurer buttons.
+        /// selects the adventurer the button belongs to. 
+        /// also handles the code that sends the adventurer on a quest.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
             
