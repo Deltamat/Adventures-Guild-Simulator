@@ -130,7 +130,7 @@ namespace Adventures_Guild_Simulator
                 #region TryCatch
                 try
                 {
-                    e1 = GameWorld.Instance.equipmentList[reader.GetInt32(3)];
+                    e1 = GameWorld.Instance.equipmentDic[reader.GetInt32(3)];
                 }
                 catch (Exception)
                 {
@@ -139,7 +139,7 @@ namespace Adventures_Guild_Simulator
                 }
                 try
                 {
-                    e2 = GameWorld.Instance.equipmentList[reader.GetInt32(2)];
+                    e2 = GameWorld.Instance.equipmentDic[reader.GetInt32(2)];
                 }
                 catch (Exception)
                 {
@@ -148,7 +148,7 @@ namespace Adventures_Guild_Simulator
                 }
                 try
                 {
-                    e3 = GameWorld.Instance.equipmentList[reader.GetInt32(4)];
+                    e3 = GameWorld.Instance.equipmentDic[reader.GetInt32(4)];
                 }
                 catch (Exception)
                 {
@@ -157,7 +157,7 @@ namespace Adventures_Guild_Simulator
                 }
                 try
                 {
-                    e4 = GameWorld.Instance.equipmentList[reader.GetInt32(5)];
+                    e4 = GameWorld.Instance.equipmentDic[reader.GetInt32(5)];
                 }
                 catch (Exception)
                 {
@@ -166,7 +166,7 @@ namespace Adventures_Guild_Simulator
                 }
                 try
                 {
-                    e5 = GameWorld.Instance.equipmentList[reader.GetInt32(8)];
+                    e5 = GameWorld.Instance.equipmentDic[reader.GetInt32(8)];
                 }
                 catch (Exception)
                 {
