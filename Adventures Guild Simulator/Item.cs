@@ -33,7 +33,8 @@ namespace Adventures_Guild_Simulator
         /// Constructor for generating items from the database (because it has the "id")
         /// </summary>        
         public Item(Vector2 position, int id, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped) : base(position, spriteName)
-        {            
+        {
+            Id = id;
             Rarity = rarity;
             SkillRating = skillRating;
             Type = type;
