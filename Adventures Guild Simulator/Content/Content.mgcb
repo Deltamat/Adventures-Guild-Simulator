@@ -128,6 +128,13 @@
 /processorParam:TextureFormat=Compressed
 /build:font.spritefont
 
+#begin fontCopperplate.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fontCopperplate.spritefont
+
 #begin Frame.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -140,13 +147,6 @@
 /processorParam:TextureFormat=Color
 /build:Frame.png
 
-#begin fontCopperplate.spritefont
-/importer:FontDescriptionImporter
-/processor:FontDescriptionProcessor
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Compressed
-/build:fontCopperplate.spritefont
-
 #begin giantspider.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -158,6 +158,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:giantspider.png
+
+#begin gold.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:gold.png
 
 #begin Helmet.png
 /importer:TextureImporter
@@ -207,6 +219,18 @@
 /processorParam:TextureFormat=Color
 /build:orc.png
 
+#begin quest_complete.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:quest_complete.png
+
 #begin questPlank.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -254,6 +278,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:skeleton.png
+
+#begin skull.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:skull.png
 
 #begin statPlank.png
 /importer:TextureImporter
