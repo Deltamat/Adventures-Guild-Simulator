@@ -26,7 +26,7 @@ namespace Adventures_Guild_Simulator
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
-        public string Rarity { get => rarity; set => rarity = value; }
+        //public string Rarity { get => rarity; set => rarity = value; }
         public bool Owned { get => owned; set => owned = value; }
 
         /// <summary>
