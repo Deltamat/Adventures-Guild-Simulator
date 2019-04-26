@@ -55,7 +55,7 @@ namespace Adventures_Guild_Simulator
         }
 
         /// <summary>
-        /// Adds all equipment from the database to a list
+        /// Adds all equipment from the database to a dictionary
         /// </summary>
         /// <returns></returns>
         public Dictionary<int, Equipment> LoadEquipment()
