@@ -160,7 +160,7 @@ namespace Adventures_Guild_Simulator
 
                         GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level++;
                         GameWorld.Instance.UpdateAdventurerButtons();
-
+                        Controller.Instance.SetAdventurerLevel(assignedAdventurer.Id, GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level);
                         if (GameWorld.Instance.GenerateRandom(0,5) == 0) //Item gen
                         {
                             Item.GenerateItem(Vector2.Zero);

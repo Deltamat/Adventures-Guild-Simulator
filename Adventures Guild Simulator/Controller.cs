@@ -54,6 +54,11 @@ namespace Adventures_Guild_Simulator
         {
             adventurer.DeleteAdventurerByID(id);
         }
+
+        public void SetAdventurerLevel(int id, int level)
+        {
+            adventurer.SetLevel(id, level);
+        }
         #endregion
 
         #region Consumable

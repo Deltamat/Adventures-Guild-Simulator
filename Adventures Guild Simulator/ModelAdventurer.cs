@@ -180,5 +180,11 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return adventurers;
         }
+
+        public void SetLevel(int id, int level)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET level = {level} WHERE id = '{id.ToString()}'";
+            cmd.ExecuteNonQuery();
+        }
     }
 }
