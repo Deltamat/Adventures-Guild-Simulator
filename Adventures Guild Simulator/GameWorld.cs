@@ -113,6 +113,8 @@ namespace Adventures_Guild_Simulator
 
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
+            adventurerDeaths = Controller.Instance.LoadDeaths();
+            questsCompleted = Controller.Instance.LoadCompletedQuests();
 
             //UI
             UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
@@ -273,6 +275,16 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
+
+            //foreach (var item in adventurersDic)
+            //{
+
+            //}
+
+            //for (int i = 0; i < adventurersDic.Count - 1; i++)
+            //{
+            //    adventurersDic[i].Update(gameTime);
+            //}
 
             // updates the sell button
             if (drawSelectedAdventurer is true)
