@@ -23,7 +23,7 @@ namespace Adventures_Guild_Simulator
         /// <summary>
         /// Constructor for generating temporary consumables (because it doesn't need the "id")
         /// </summary>       
-        public Consumable(Vector2 position, string spriteName, string rarity, int skillRating, string type, int goldCost, string name, bool isEquipped, int uses) : base(position, spriteName, rarity, skillRating, type, goldCost, name, isEquipped)
+        public Consumable(Vector2 position, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped, int uses) : base(position, name, spriteName, type, rarity, goldCost, skillRating, isEquipped)
         {
             Uses = uses;
         }
@@ -91,7 +91,7 @@ namespace Adventures_Guild_Simulator
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
 
-            GameWorld.itemList.Add(new Consumable(itemPosition, tempItemType, tempRarity, tempSkillRating, tempItemType, tempGoldCost, tempItemType, false, 1));
+            GameWorld.itemList.Add(new Consumable(itemPosition, tempItemType, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false, 1));
         }
     }
 }

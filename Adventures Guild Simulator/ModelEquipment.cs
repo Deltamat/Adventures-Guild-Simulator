@@ -10,7 +10,7 @@ namespace Adventures_Guild_Simulator
 {
     class ModelEquipment : Model
     {
-        SQLiteCommand cmd;
+        public static SQLiteCommand cmd;
 
         /// <summary>
         /// Creates the columns for the table, unless the table with the specified name "Equipment" already exists.
@@ -23,7 +23,7 @@ namespace Adventures_Guild_Simulator
                 "type string, " +
                 "rarity string, " +
                 "goldCost integer, " +
-                "skillRating integer, " +
+                "skillRating integer," +
                 "isEquipped boolean)";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
@@ -55,6 +55,12 @@ namespace Adventures_Guild_Simulator
             return temp;
         }
 
+        //Removes the item with the ID from the database equipment
+        public static void SellEquipment(int ID)
+        {
+            cmd.CommandText = $"DELETE FROM equipment WHERE id = {ID}";
+            cmd.ExecuteNonQuery();
+        }
         /// <summary>
         /// Adds all equipment from the database to a dictionary
         /// </summary>

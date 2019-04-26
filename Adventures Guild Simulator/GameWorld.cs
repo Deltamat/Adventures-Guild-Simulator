@@ -126,6 +126,18 @@ namespace Adventures_Guild_Simulator
             UI.Add(new GameObject(new Vector2(1370, 10), "inventory"));
 
             Inventory.GenerateInventoryFrames();
+
+            //Adds all equipment list items to the inventory
+            foreach (var item in equipmentDic)
+            {
+                if (item.Value.IsEquipped == false)
+                {
+                    
+                    inventoryList.Add(item.Value);
+                }
+            }
+
+
             //ModelNaming.CreateNames();
 
             base.Initialize();
@@ -154,7 +166,7 @@ namespace Adventures_Guild_Simulator
             {
                 TextForButton = "Sell selected adventurer",
             };
-
+            
 
             //sets a click event for each Button
             testButton.Click += BuyAdventurer;
@@ -252,6 +264,10 @@ namespace Adventures_Guild_Simulator
                 quest.Click += ShowQuestInfo;
             }
 
+            equipmentDic = Controller.Instance.LoadEquipment();
+
+
+
             //Updates quests
             foreach (Quest quest in quests)
             {
@@ -270,6 +286,10 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
+            foreach (Item item in inventoryList)
+            {
+                item.Update(gameTime);
+            }
             //updates the adventurer buttons, it is its own list because the list have to be emptied sometimes
             foreach (var item in adventurerButtons)
             {
@@ -288,7 +308,7 @@ namespace Adventures_Guild_Simulator
             }
             foreach (Item item in toBeRemovedItem)
             {
-                itemList.Remove(item);
+                inventoryList.Remove(item);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
@@ -296,29 +316,53 @@ namespace Adventures_Guild_Simulator
                 sellAdventurerButton.Update(gameTime);
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.S) && delay > 1000)
+            {
+                Item.SellItem();
+            }
+
+            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            {
+                GameWorld.Instance.inventoryFrameList[i].Rarity = GameWorld.Instance.inventoryList[i].Rarity;
+            }
+
+            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            {
+                GameWorld.Instance.inventoryList[i].Position = GameWorld.Instance.inventoryFrameList[i].Position + new Vector2(10, 10);
+            }
+
+            //Generates an item into the equipment database + to the inventory
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
                 Item.GenerateItem(new Vector2(300, 200));
-                Item.GenerateItem(new Vector2(300, 350));
-                Item.GenerateItem(new Vector2(300, 500));
-                Item.GenerateItem(new Vector2(300, 650));
-                Item.GenerateItem(new Vector2(300, 800));
+                //Item.GenerateItem(new Vector2(300, 350));
+                //Item.GenerateItem(new Vector2(300, 500));
+                //Item.GenerateItem(new Vector2(300, 650));
+                //Item.GenerateItem(new Vector2(300, 800));
+
+                inventoryList.Clear();
+                foreach (var item in equipmentDic)
+                {
+                    if (item.Value.IsEquipped == false)
+                    {
+
+                        inventoryList.Add(item.Value);
+
+                    }
+                }
+
                 delay = 0;
             }
 
 
+            //Adds all temp items to the inventory list
             if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
             {
                 Inventory.AddToInventory();
                 delay = 0;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
-            {
-                Inventory.GenerateInventoryFrames();
-                delay = 0;
-            }
-
+            //Deletes the temp list
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
             {
                 itemList.Clear();
@@ -435,13 +479,14 @@ namespace Adventures_Guild_Simulator
             }
                 for (int i = 0; i < inventoryList.Count; i++)
                 {
-                    inventoryList[i].Draw(spriteBatch, inventoryFrameList[i].Position + new Vector2(10,10));
+                    inventoryList[i].Draw(spriteBatch, inventoryList[i].Position);
                 }
 
             foreach (Item item in itemList)
             {
                 item.Draw(spriteBatch);
             }
+
 
             spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
 
@@ -450,7 +495,7 @@ namespace Adventures_Guild_Simulator
                 quest.Position = new Vector2(30, drawQuestVector);
                 quest.Draw(spriteBatch);
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
-                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.DarkOrange); //Writes how difficult the quest is
+                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.Red); //Writes how difficult the quest is
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Reward}", new Vector2(375, drawQuestVector + 25), Color.Gold); //Writes how much gold the reward is on
                 if (quest.Ongoing == false) //If the quest is NOT under way
                 {
@@ -469,6 +514,17 @@ namespace Adventures_Guild_Simulator
             {
                 spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
                 infoScreenVector.Y += 25; //Moves the next string down by a margin
+            }
+
+            foreach (Item item in inventoryList)
+            {
+                if (item.selected == true)
+                {
+                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
+                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
+                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
+                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"GearScore: {item.SkillRating1}", new Vector2(800, 230), Color.White);
+                }
             }
 
             spriteBatch.End();

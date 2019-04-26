@@ -81,6 +81,8 @@ namespace Adventures_Guild_Simulator
         {
             return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating, isEquipped);
         }
+
+
         #endregion
 
         #region Inventory
