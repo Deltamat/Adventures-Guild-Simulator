@@ -20,14 +20,14 @@ namespace Adventures_Guild_Simulator
         public List<GameObject> UI = new List<GameObject>();
         public List<Item> inventoryList = new List<Item>();
         public List<GameObject> inventoryFrameList = new List<GameObject>();
-        public static List<Item> toBeRemovedItem = new List<Item>();
+        public List<Item> toBeRemovedItem = new List<Item>();
         public int inventoryRowList;
 
-        public static SpriteFont font;
-        public static SpriteFont fontCopperplate;
+        public SpriteFont font;
+        public SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
         public List<GameObject> adventurerButtons = new List<GameObject>();
-        public static List<Item> itemList = new List<Item>(); //Tempoary
+        public List<Item> itemList = new List<Item>(); //Tempoary
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
         public List<Quest> questsToBeRemoved = new List<Quest>();
@@ -349,12 +349,9 @@ namespace Adventures_Guild_Simulator
                 {
                     if (item.Value.IsEquipped == false)
                     {
-
                         inventoryList.Add(item.Value);
-
                     }
                 }
-
                 delay = 0;
             }
 
@@ -486,10 +483,10 @@ namespace Adventures_Guild_Simulator
             {
                 item.Draw(spriteBatch,true);
             }
-                for (int i = 0; i < inventoryList.Count; i++)
-                {
-                    inventoryList[i].Draw(spriteBatch, inventoryList[i].Position);
-                }
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                inventoryList[i].Draw(spriteBatch, inventoryList[i].Position);
+            }
 
             foreach (Item item in itemList)
             {
@@ -529,10 +526,10 @@ namespace Adventures_Guild_Simulator
             {
                 if (item.selected == true)
                 {
-                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
-                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
-                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
-                    spriteBatch.DrawString(GameWorld.fontCopperplate, $"GearScore: {item.SkillRating1}", new Vector2(800, 230), Color.White);
+                    spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
+                    spriteBatch.DrawString(fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
+                    spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
+                    spriteBatch.DrawString(fontCopperplate, $"GearScore: {item.SkillRating1}", new Vector2(800, 230), Color.White);
                 }
             }
 

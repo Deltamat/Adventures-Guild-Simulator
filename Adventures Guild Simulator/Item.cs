@@ -232,11 +232,9 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch.Draw(sprite, Position, Color.White);
 
-            spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
-            spriteBatch.DrawString(GameWorld.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
-            spriteBatch.DrawString(GameWorld.fontCopperplate, $"GearScore: {SkillRating1}", Position + new Vector2(100, 70), Color.White);
-
-            
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating1}", Position + new Vector2(100, 70), Color.White);            
         }
 
         //Code for drawing the information once the inventory item is selected
@@ -260,11 +258,9 @@ namespace Adventures_Guild_Simulator
                 {
                     GameWorld.Instance.inventoryFrameList[i].Rarity = "Common";
                     ModelEquipment.SellEquipment(GameWorld.Instance.inventoryList[i].Id);
-                    GameWorld.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]);
+                    GameWorld.Instance.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]);
                 }
             }
-            
-            
         }
     }
 }
