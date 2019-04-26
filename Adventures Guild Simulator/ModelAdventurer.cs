@@ -25,7 +25,7 @@ namespace Adventures_Guild_Simulator
                 "consumable integer," +
                 "FOREIGN KEY(weapon) REFERENCES Equipment(id)" +
                 "FOREIGN KEY(chest) REFERENCES Equipment(id)" +
-                "FOREIGN KEY(head) REFERENCES Equipment(id)" +
+                "FOREIGN KEY(helmet) REFERENCES Equipment(id)" +
                 "FOREIGN KEY(boot) REFERENCES Equipment(id)" +
                 "FOREIGN KEY(consumable) REFERENCES Consumable(id))";
             cmd = connection.CreateCommand();

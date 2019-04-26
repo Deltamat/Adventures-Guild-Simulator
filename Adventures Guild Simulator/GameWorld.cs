@@ -236,8 +236,7 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
-            // updates the sell button
-            if (adventurerSelected is true)
+            //Removes items from temp list
             foreach (Item item in toBeRemovedItem)
             {
                 itemList.Remove(item);
@@ -248,6 +247,7 @@ namespace Adventures_Guild_Simulator
                 sellAdventurerButton.Update(gameTime);
             }
 
+            //TEMP Generatess a set of items
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
                 Item.GenerateItem(new Vector2(300, 200));
@@ -259,16 +259,14 @@ namespace Adventures_Guild_Simulator
             }
 
 
+            //Adds all temp items to the inventory list
             if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
             {
                 Inventory.AddToInventory();
+                delay = 0;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Y) && delay > 2000)
-            {
-                Inventory.GenerateInventoryFrames();
-            }
-
+            //Deletes the temp list
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
             {
                 itemList.Clear();

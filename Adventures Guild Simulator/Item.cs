@@ -152,8 +152,8 @@ namespace Adventures_Guild_Simulator
                 spriteBatch.DrawString(GameWorld.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), Color.Orange);
             }
 
-            //spriteBatch.DrawString(GameWorld.font, $"Cost: {GoldCost}", Position + new Vector2(200, 0), Color.Gold);
-            spriteBatch.DrawString(GameWorld.font, $"GearScore: {skillRating}", Position + new Vector2(100, 100), Color.White);
+            spriteBatch.DrawString(GameWorld.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
+            spriteBatch.DrawString(GameWorld.fontCopperplate, $"GearScore: {skillRating}", Position + new Vector2(100, 70), Color.White);
 
         }
 
