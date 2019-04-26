@@ -92,6 +92,26 @@ namespace Adventures_Guild_Simulator
         {
             return stat.LoadGold();
         }
+
+        public int LoadDeaths()
+        {
+            return stat.LoadDeaths();
+        }
+
+        public void setDeaths(int deaths)
+        {
+            stat.SetDeaths(deaths);
+        }
+
+        public int LoadCompletedQuests()
+        {
+            return stat.LoadCompletedQuests();
+        }
+
+        public void SetCompletedQuests(int quests)
+        {
+            stat.SetCompletedQuests(quests);
+        }
         #endregion
 
         

@@ -166,12 +166,14 @@ namespace Adventures_Guild_Simulator
                             Inventory.AddToInventory();
                         }
                         GameWorld.Instance.questsCompleted++; //Adds one to total quests completed
+                        Controller.Instance.SetCompletedQuests(GameWorld.Instance.questsCompleted);
                     }
                     else if ((GameWorld.Instance.GenerateRandom(0, 101) * (failureChance * 0.05)) > 50) //Quest failed, rolls chance for the adventurer to die
                     {
                         Controller.Instance.RemoveAdventurer(assignedAdventurer.Id);
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                         GameWorld.Instance.adventurerDeaths++; //Adds one to total adventurer deaths
+                        Controller.Instance.setDeaths(GameWorld.Instance.adventurerDeaths);
                         GameWorld.Instance.UpdateAdventurerButtons();
                     }
                 }

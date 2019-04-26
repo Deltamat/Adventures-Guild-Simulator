@@ -42,7 +42,7 @@ namespace Adventures_Guild_Simulator
         float delay = 0;
         int adventurerToShowId;
         Button sellAdventurerButton;
-        public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
+        public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
         public bool questSelected;
         bool drawSelectedAdventurer;
 
@@ -108,9 +108,11 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
-            equipmentList = Controller.Instance.LoadEquipment();
+            equipmentDic = Controller.Instance.LoadEquipment();
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
+            adventurerDeaths = Controller.Instance.LoadDeaths();
+            questsCompleted = Controller.Instance.LoadCompletedQuests();
 
             //UI
             UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
