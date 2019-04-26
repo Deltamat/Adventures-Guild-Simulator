@@ -58,14 +58,14 @@ namespace Adventures_Guild_Simulator
         /// Adds all equipment from the database to a list
         /// </summary>
         /// <returns></returns>
-        public List<Equipment> LoadEquipment()
+        public Dictionary<int, Equipment> LoadEquipment()
         {
-            List<Equipment> equipmentItems = new List<Equipment>();
+            Dictionary<int, Equipment> equipmentItems = new Dictionary<int, Equipment>();
             cmd.CommandText = "SELECT * FROM Equipment";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                equipmentItems.Add(new Equipment(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6)));
+                equipmentItems.Add(reader.GetInt32(0), new Equipment(new Vector2(1000), reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6)));
             }
             reader.Close();
             return equipmentItems;

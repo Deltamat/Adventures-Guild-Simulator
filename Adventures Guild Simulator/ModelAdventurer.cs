@@ -46,7 +46,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                 a = new Adventurer(Vector2.Zero, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null);
+                 a = new Adventurer(Vector2.Zero, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
             }
             reader.Close();
             return a;
@@ -126,7 +126,56 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                adventurers.Add(reader.GetInt32(0), new Adventurer(new Vector2(700, 200), reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null));
+                Equipment e1 , e2 , e3, e4, e5;
+                #region TryCatch
+                try
+                {
+                    e1 = GameWorld.Instance.equipmentList[reader.GetInt32(3)];
+                }
+                catch (Exception)
+                {
+
+                    e1 = null;
+                }
+                try
+                {
+                    e2 = GameWorld.Instance.equipmentList[reader.GetInt32(2)];
+                }
+                catch (Exception)
+                {
+
+                    e2 = null;
+                }
+                try
+                {
+                    e3 = GameWorld.Instance.equipmentList[reader.GetInt32(4)];
+                }
+                catch (Exception)
+                {
+
+                    e3 = null;
+                }
+                try
+                {
+                    e4 = GameWorld.Instance.equipmentList[reader.GetInt32(5)];
+                }
+                catch (Exception)
+                {
+
+                    e4 = null;
+                }
+                try
+                {
+                    e5 = GameWorld.Instance.equipmentList[reader.GetInt32(8)];
+                }
+                catch (Exception)
+                {
+
+                    e5 = null;
+                }
+                #endregion
+
+                adventurers.Add(reader.GetInt32(0), new Adventurer(new Vector2(700, 200), reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
             }
             reader.Close();
             return adventurers;

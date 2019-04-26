@@ -21,7 +21,8 @@ namespace Adventures_Guild_Simulator
         float timeToExpire;
         string enemy;
         bool ongoing;
-        Adventurer assignedAdventurer;
+        public bool selected;
+        public Adventurer assignedAdventurer;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -132,6 +133,15 @@ namespace Adventures_Guild_Simulator
                 ProgressTime += (float)GameWorld.Instance.globalDeltaTime;
                 if (ProgressTime > DurationTime)
                 {
+                    foreach (Button item in GameWorld.Instance.adventurerButtons)
+                    {
+                        if (item.Id == assignedAdventurer.Id)
+                        {
+                            item.questActive = false;
+                        }
+                    }
+                    
+                    assignedAdventurer.OnQuest = false;
                     GameWorld.Instance.questsToBeRemoved.Add(this);
                     float failureChance;
                     //Every positive skill point difference between a quest's difficulty rating, and the adventurer's skill rating equals a 5% failure rate
@@ -147,8 +157,12 @@ namespace Adventures_Guild_Simulator
                         GameWorld.Instance.adventurersDic.Remove(assignedAdventurer.Id); //changed it to a dictionary
                     }
                 }
+                //else
+                //{
+                //    assignedAdventurer.OnQuest = true;
+                //}
             }
-            #region
+            #region            
             //"Inception"
             previousMouse = currentMouse;
             //Gets current position and "click info" from the mouse
@@ -167,6 +181,12 @@ namespace Adventures_Guild_Simulator
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
                     Click?.Invoke(this, new EventArgs());
+                    selected = true;
+                    GameWorld.Instance.questSelected = true;
+                    foreach (Button item in GameWorld.Instance.adventurerButtons)
+                    {
+                        item.selected = false;
+                    }
                 }
             }
             #endregion
@@ -174,7 +194,7 @@ namespace Adventures_Guild_Simulator
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (isHovering)
+            if (isHovering || selected)
             {
                 spriteBatch.Draw(sprite, position, Color.Gray);
             }

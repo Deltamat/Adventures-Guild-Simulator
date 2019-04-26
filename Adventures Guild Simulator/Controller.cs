@@ -63,7 +63,14 @@ namespace Adventures_Guild_Simulator
         #endregion
 
         #region Equipment
-
+        public Dictionary<int, Equipment> LoadEquipment()
+        {
+            return equipment.LoadEquipment();
+        }
+        public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating)
+        {
+            return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating);
+        }
         #endregion
 
         #region Inventory

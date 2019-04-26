@@ -26,7 +26,7 @@ namespace Adventures_Guild_Simulator
         public static SpriteFont font;
         public static SpriteFont fontCopperplate;
         private List<GameObject> userInterfaceObjects = new List<GameObject>();
-        private List<GameObject> adventurerButtons = new List<GameObject>();
+        public List<GameObject> adventurerButtons = new List<GameObject>();
         public static List<Item> itemList = new List<Item>(); //Tempoary
         public double globalDeltaTime;
         public List<Quest> quests = new List<Quest>();
@@ -36,8 +36,10 @@ namespace Adventures_Guild_Simulator
         public Dictionary<int, Adventurer> adventurersDic;
         float delay = 0;
         int adventurerToShowId;
-        bool adventurerSelected;
         Button sellAdventurerButton;
+        public Dictionary<int, Equipment> equipmentList = new Dictionary<int, Equipment>();
+        public bool questSelected;
+        bool drawSelectedAdventurer;
 
         public List<string> infoScreen = new List<string>();
 
@@ -101,6 +103,7 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
+            equipmentList = Controller.Instance.LoadEquipment();
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
 
@@ -131,11 +134,11 @@ namespace Adventures_Guild_Simulator
             UpdateAdventurerButtons();
 
             //Buttons
-            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("Font"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
+            var testButton = new Button(content.Load<Texture2D>("Button"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "Button")
             {
                 TextForButton = "test",
             };
-            sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("Font"), new Vector2(1230, 500), "AB")
+            sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
                 TextForButton = "Sell selected adventurer",
             };
@@ -163,23 +166,32 @@ namespace Adventures_Guild_Simulator
         /// <param name="e"></param>
         private void BuyAdventurer(object sender, EventArgs e)
         {
+            if (adventurersDic.Count >= 27)
+            {
+                return;
+            }
             Adventurer a = Controller.Instance.CreateAdventurer("Gert");
             adventurersDic.Add(a.Id, a);
             UpdateAdventurerButtons();
         }
 
         private void ShowQuestInfo(object sender, EventArgs e)
-        {            
+        {
+            foreach (Quest quest in quests)
+            {
+                quest.selected = false;
+            }
             infoScreen.Clear();
             infoScreen.Add("Select an adventurer to send on this quest!");
         }
+
         private void SellAdventurer(object sender, EventArgs e)
         {
             Button b = (Button)sender;
             Controller.Instance.RemoveAdventurer(adventurerToShowId);
             adventurersDic.Remove(adventurerToShowId);
             UpdateAdventurerButtons();
-            adventurerSelected = false;
+            drawSelectedAdventurer = false;
         }
 
         /// <summary>
@@ -236,7 +248,11 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
-            //Removes items from temp list
+            // updates the sell button
+            if (drawSelectedAdventurer is true)
+            {
+                sellAdventurerButton.Update(gameTime);
+            }
             foreach (Item item in toBeRemovedItem)
             {
                 itemList.Remove(item);
@@ -270,6 +286,22 @@ namespace Adventures_Guild_Simulator
             if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
             {
                 itemList.Clear();
+                delay = 0;
+            }
+
+            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            {
+                foreach (Quest quest in quests)
+                {
+                    quest.selected = false;
+                }
+                foreach (Button adventurer in adventurerButtons)
+                {
+                    adventurer.selected = false;
+                }
+                infoScreen.Clear();
+                drawSelectedAdventurer = false;
+                questSelected = false;
             }
 
             base.Update(gameTime);
@@ -283,10 +315,7 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
-
-
-
-
+            
             //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
             {
@@ -295,17 +324,40 @@ namespace Adventures_Guild_Simulator
 
             // Draws the selected adventurer info
             Adventurer value;
-            if (adventurersDic.TryGetValue(adventurerToShowId, out value))
+            if (drawSelectedAdventurer == true)
             {
-                spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
-                spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
-                //spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
-            }
+                if (adventurersDic.TryGetValue(adventurerToShowId, out value))
+                {
+                    spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
+                    spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
+                    if (value.Helmet != null)
+                    {
+                        spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
+                    }
+                    if (value.Chest != null)
+                    {
+                        spriteBatch.Draw(value.Chest.Sprite, value.Chest.CollisionBox, Color.White);
+                    }
+                    if (value.Weapon != null)
+                    {
+                        spriteBatch.Draw(value.Weapon.Sprite, value.Weapon.CollisionBox, Color.White);
+                    }
+                    if (value.Boot != null)
+                    {
+                        spriteBatch.Draw(value.Boot.Sprite, value.Boot.CollisionBox, Color.White);
+                    }
+                    if (value.Consumable != null)
+                    {
+                        spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
+                    }
+                }
 
-            //draws the sell adventurer button
-            if (adventurerSelected is true)
-            {
-                sellAdventurerButton.Draw(spriteBatch);
+
+                //draws the sell adventurer button
+                if (drawSelectedAdventurer is true)
+                {
+                    sellAdventurerButton.Draw(spriteBatch);
+                }
             }
 
 
@@ -373,7 +425,7 @@ namespace Adventures_Guild_Simulator
             foreach (string String in infoScreen)
             {
                 spriteBatch.DrawString(fontCopperplate, String, new Vector2(infoScreenVector.X, infoScreenVector.Y), Color.White); //Writes string
-                infoScreenVector.Y += 50; //Moves the next string down by a margin
+                infoScreenVector.Y += 25; //Moves the next string down by a margin
             }
 
             spriteBatch.End();
@@ -393,7 +445,7 @@ namespace Adventures_Guild_Simulator
             int line = 0;
             foreach (var item in adventurersDic)
             {
-                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("Font"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
+                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
                 {
                     TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
                     FontColor = Color.White,
@@ -412,14 +464,45 @@ namespace Adventures_Guild_Simulator
 
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
+            drawSelectedAdventurer = true;
             Button button = (Button)sender;
-            adventurerToShowId = button.Id;
-            adventurerSelected = true;
-            foreach (Button item in adventurerButtons)
+            if (adventurersDic[button.Id].OnQuest == false)
             {
-                item.selected = false;
+                adventurerToShowId = button.Id;
+                foreach (Button item in adventurerButtons)
+                {
+                    item.selected = false;
+                }
+                button.selected = true;
+
+
+                Adventurer adventurer = null;
+                if (questSelected == true)
+                {
+                    foreach (Button item in adventurerButtons)
+                    {
+                        if (item.selected == true)
+                        {
+                            adventurer = adventurersDic[item.Id];
+                            adventurer.OnQuest = true;
+                            button.questActive = true;
+                            button.selected = false;
+                            drawSelectedAdventurer = false;
+                        }
+                    }
+                    foreach (Quest item in quests)
+                    {
+                        if (item.selected == true)
+                        {
+                            item.assignedAdventurer = adventurer;
+                            item.Ongoing = true;
+                            item.selected = false;
+                            questSelected = false;
+                        }
+                    }
+                }
             }
-            button.selected = true;
+            
         }
     }
 }

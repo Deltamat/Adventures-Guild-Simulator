@@ -25,6 +25,8 @@ namespace Adventures_Guild_Simulator
         private Texture2D texture;
         private Vector2 positionButton;
         public bool selected = false;
+        public Color color;
+        public bool questActive;
         #endregion
 
         #region Properties
@@ -60,6 +62,7 @@ namespace Adventures_Guild_Simulator
             this.font = font;
             this.positionButton = position;
             FontColor = Color.Black;
+            color = Color.White;
         }
 
         /// <summary>
@@ -101,13 +104,21 @@ namespace Adventures_Guild_Simulator
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var color = Color.White;
+            
 
             //Pretty selfexplanatory, but it changes the button's color to gray from  
             //white if you hover over it with the mouse.
             if (isHovering || selected)
             {
                 color = Color.Gray;
+            }
+            else if (questActive)
+            {
+                color = Color.Red;
+            }
+            else
+            {
+                color = Color.White;
             }
             //Draws the button, without text.
             spriteBatch.Draw(texture, Rectangle, color);
