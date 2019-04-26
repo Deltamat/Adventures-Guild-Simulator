@@ -196,6 +196,7 @@ namespace Adventures_Guild_Simulator
             }
             Adventurer a = Controller.Instance.CreateAdventurer("Gert");
             adventurersDic.Add(a.Id, a);
+            drawSelectedAdventurer = false;
             UpdateAdventurerButtons();
         }
 
@@ -325,6 +326,7 @@ namespace Adventures_Guild_Simulator
             {
                 GameWorld.Instance.inventoryFrameList[i].Rarity = GameWorld.Instance.inventoryList[i].Rarity;
             }
+            
 
             for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
             {
