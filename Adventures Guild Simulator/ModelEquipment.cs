@@ -24,7 +24,7 @@ namespace Adventures_Guild_Simulator
                 "rarity string, " +
                 "goldCost integer, " +
                 "skillRating integer," +
-                "isEquipped boolean)";
+                "isEquipped bool)";
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
             cmd.ExecuteNonQuery();

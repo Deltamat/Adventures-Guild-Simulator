@@ -218,6 +218,10 @@ namespace Adventures_Guild_Simulator
             {
                 item.selected = false;
             }
+            foreach (Item item in inventoryList)
+            {
+                item.selected = false;
+            }
             drawSelectedAdventurer = false;
         }
 
@@ -381,9 +385,14 @@ namespace Adventures_Guild_Simulator
                 {
                     adventurer.selected = false;
                 }
+                foreach (Item item in inventoryList)
+                {
+                    item.selected = false;
+                }
                 infoScreen.Clear();
                 drawSelectedAdventurer = false;
                 questSelected = false;
+                
             }
 
             base.Update(gameTime);
@@ -595,7 +604,10 @@ namespace Adventures_Guild_Simulator
                     item.selected = false;
                 }
                 button.selected = true;
-
+                foreach (Item item in inventoryList)
+                {
+                    item.selected = false;
+                }
 
                 Adventurer adventurer = null;
                 if (questSelected == true)

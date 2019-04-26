@@ -123,6 +123,16 @@ namespace Adventures_Guild_Simulator
                 //(and release the mouse button while still inside the button's rectangle)
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    foreach (Quest quest in GameWorld.Instance.quests)
+                    {
+                        quest.selected = false;
+                    }
+                    foreach (Button button in GameWorld.Instance.adventurerButtons)
+                    {
+                        button.selected = false;
+                    }
+                    GameWorld.Instance.infoScreen.Clear();
+                    GameWorld.Instance.questSelected = false;
 
                     if (AnySelected == true)
                     {
