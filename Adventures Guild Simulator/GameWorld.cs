@@ -495,7 +495,7 @@ namespace Adventures_Guild_Simulator
                 quest.Position = new Vector2(30, drawQuestVector);
                 quest.Draw(spriteBatch);
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Enemy}", new Vector2(50, drawQuestVector + 25), Color.Cornsilk); //Writes which enemy is on this quest
-                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.DarkOrange); //Writes how difficult the quest is
+                spriteBatch.DrawString(fontCopperplate, $"{quest.DifficultyRating}", new Vector2(275, drawQuestVector + 25), Color.Red); //Writes how difficult the quest is
                 spriteBatch.DrawString(fontCopperplate, $"{quest.Reward}", new Vector2(375, drawQuestVector + 25), Color.Gold); //Writes how much gold the reward is on
                 if (quest.Ongoing == false) //If the quest is NOT under way
                 {
@@ -543,6 +543,9 @@ namespace Adventures_Guild_Simulator
             return value;
         }
 
+        /// <summary>
+        /// Updates the buttons for the adventurers, if an adventurer dies this gets called etc.
+        /// </summary>
         public void UpdateAdventurerButtons()
         {
             adventurerButtons.RemoveRange(0, adventurerButtons.Count);
@@ -570,6 +573,13 @@ namespace Adventures_Guild_Simulator
             }
         }
 
+        /// <summary>
+        /// The clickevent for the adventurer buttons.
+        /// selects the adventurer the button belongs to. 
+        /// also handles the code that sends the adventurer on a quest.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
         {
             

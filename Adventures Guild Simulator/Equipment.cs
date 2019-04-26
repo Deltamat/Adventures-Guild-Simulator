@@ -20,7 +20,7 @@ namespace Adventures_Guild_Simulator
         /// <summary>
         /// Constructor for generating temporary equipment (because it doesn't need the "id")
         /// </summary>       
-        public Equipment(Vector2 position, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped) : base(position, spriteName, rarity, skillRating, type, goldCost, name, isEquipped)
+        public Equipment(Vector2 position, string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped) : base(position, name, spriteName, type, rarity, goldCost, skillRating, isEquipped)
         {
             
         }
@@ -84,11 +84,13 @@ namespace Adventures_Guild_Simulator
                 tempItemType = "Boot";
             }
 
+            string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
 
-            GameWorld.itemList.Add(new Equipment(itemPosition, tempItemType, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false));
+            GameWorld.itemList.Add(new Equipment(itemPosition, tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false));
         }
     }
 }
