@@ -111,6 +111,8 @@ namespace Adventures_Guild_Simulator
             equipmentDic = Controller.Instance.LoadEquipment();
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
+            adventurerDeaths = Controller.Instance.LoadDeaths();
+            questsCompleted = Controller.Instance.LoadCompletedQuests();
 
             //UI
             UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
