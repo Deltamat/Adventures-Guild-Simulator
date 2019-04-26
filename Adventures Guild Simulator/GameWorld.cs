@@ -128,7 +128,7 @@ namespace Adventures_Guild_Simulator
             Inventory.GenerateInventoryFrames();
 
             //Adds all equipment list items to the inventory
-            foreach (var item in equipmentList)
+            foreach (var item in equipmentDic)
             {
                 if (item.Value.IsEquipped == false)
                 {
@@ -264,7 +264,7 @@ namespace Adventures_Guild_Simulator
                 quest.Click += ShowQuestInfo;
             }
 
-            equipmentList = Controller.Instance.LoadEquipment();
+            equipmentDic = Controller.Instance.LoadEquipment();
 
 
 
@@ -341,7 +341,7 @@ namespace Adventures_Guild_Simulator
                 //Item.GenerateItem(new Vector2(300, 800));
 
                 inventoryList.Clear();
-                foreach (var item in equipmentList)
+                foreach (var item in equipmentDic)
                 {
                     if (item.Value.IsEquipped == false)
                     {
