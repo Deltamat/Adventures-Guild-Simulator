@@ -25,7 +25,7 @@ namespace Adventures_Guild_Simulator
         /// <param name="gold">The new gold value</param>
         public void SetGold(int gold)
         {
-            cmd.CommandText = $"REPLACE INTO Stat (id, gold, deaths, completedQuests) VALUES ({1}, {gold}, deaths, completedQuests)";
+            cmd.CommandText = $"REPLACE INTO Stat (id, gold) VALUES ({1}, {gold})";
             cmd.ExecuteNonQuery();
         }
 
@@ -52,7 +52,7 @@ namespace Adventures_Guild_Simulator
         /// <param name="deaths">The new total deaths value</param>
         public void SetDeaths(int deaths)
         {
-            cmd.CommandText = $"REPLACE INTO Stat (id, gold, deaths, completedQuests) VALUES ({1}, gold, {deaths}, completedQuests)";
+            cmd.CommandText = $"REPLACE INTO Stat (id, deaths) VALUES ({1}, {deaths})";
             cmd.ExecuteNonQuery();
         }
 
@@ -79,7 +79,7 @@ namespace Adventures_Guild_Simulator
         /// <param name="completedQuests">The new gold value</param>
         public void SetCompletedQuests(int completedQuests)
         {
-            cmd.CommandText = $"REPLACE INTO Stat (id, gold, deaths, completedQuests) VALUES ({1}, gold, deaths, {completedQuests})";
+            cmd.CommandText = $"REPLACE INTO Stat (id, completedQuests) VALUES ({1}, {completedQuests})";
             cmd.ExecuteNonQuery();
         }
 

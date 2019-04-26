@@ -11,7 +11,6 @@ namespace Adventures_Guild_Simulator
         ModelAdventurer adventurer;
         ModelConsumable consumable;
         ModelEquipment equipment;
-        ModelInventory inventory;
         ModelNaming naming;
         ModelStat stat;
 
@@ -36,7 +35,6 @@ namespace Adventures_Guild_Simulator
             adventurer = new ModelAdventurer();
             consumable = new ModelConsumable();
             equipment = new ModelEquipment();
-            inventory = new ModelInventory();
             naming = new ModelNaming();
             stat = new ModelStat();
         }

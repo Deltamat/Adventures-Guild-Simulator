@@ -55,7 +55,6 @@
     <Compile Include="ModelAdventurer.cs" />
     <Compile Include="ModelEquipment.cs" />
     <Compile Include="ModelConsumable.cs" />
-    <Compile Include="ModelInventory.cs" />
     <Compile Include="ModelNaming.cs" />
     <Compile Include="ModelStat.cs" />
     <Compile Include="Program.cs" />

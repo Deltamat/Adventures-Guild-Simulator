@@ -272,6 +272,16 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
+            //foreach (var item in adventurersDic)
+            //{
+
+            //}
+
+            //for (int i = 0; i < adventurersDic.Count - 1; i++)
+            //{
+            //    adventurersDic[i].Update(gameTime);
+            //}
+
             // updates the sell button
             if (drawSelectedAdventurer is true)
             {
