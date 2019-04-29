@@ -161,10 +161,17 @@ namespace Adventures_Guild_Simulator
                         GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level++;
                         GameWorld.Instance.UpdateAdventurerButtons();
                         Controller.Instance.SetAdventurerLevel(assignedAdventurer.Id, GameWorld.Instance.adventurersDic[assignedAdventurer.Id].Level);
-                        if (GameWorld.Instance.GenerateRandom(0,5) == 0) //Item gen
-                        {
+                        if (GameWorld.Instance.GenerateRandom(0, 5) == 0) //Item gen
+                        {                            
                             Equipment.GenerateEquipment(Vector2.Zero);
-                            Inventory.AddToInventory();
+                            GameWorld.Instance.inventoryList.Clear();
+                            foreach (var item in GameWorld.Instance.equipmentDic)
+                            {
+                                if (item.Value.IsEquipped == false)
+                                {
+                                    GameWorld.Instance.inventoryList.Add(item.Value);
+                                }
+                            }
                         }
 
                         GameWorld.Instance.questsCompleted++; //Adds one to total quests completed
