@@ -10,7 +10,7 @@ namespace Adventures_Guild_Simulator
 {
     class ModelEquipment : Model
     {
-        public static SQLiteCommand cmd;
+        private SQLiteCommand cmd;
 
         /// <summary>
         /// Creates the columns for the table, unless the table with the specified name "Equipment" already exists.
@@ -56,7 +56,7 @@ namespace Adventures_Guild_Simulator
         }
 
         //Removes the item with the ID from the database equipment
-        public static void SellEquipment(int ID)
+        public void SellEquipment(int ID)
         {
             cmd.CommandText = $"DELETE FROM equipment WHERE id = {ID}";
             cmd.ExecuteNonQuery();
