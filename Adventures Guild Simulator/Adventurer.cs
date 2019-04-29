@@ -87,7 +87,13 @@ namespace Adventures_Guild_Simulator
 
         public override void Update(GameTime gameTime)
         {
-            skill = (int)((level + Weapon.SkillRating + Chest.SkillRating + Helmet.SkillRating + Boot.SkillRating) * 0.20 /*Consumable.SkillRating*/); //Might need to revise to use TempSkillBuff
+            Skill = level;
+            //Skill = (int)((level + Weapon.SkillRating + Chest.SkillRating + Helmet.SkillRating + Boot.SkillRating) * 0.2 + Consumable.SkillRating); //Might need to revise to use TempSkillBuff
+            if (Consumable != null)
+            {
+                Skill += Consumable.SkillRating;
+            }
+           
 
             Chest.Update(gameTime);
             Boot.Update(gameTime);
@@ -121,6 +127,7 @@ namespace Adventures_Guild_Simulator
             
            
             base.Draw(spriteBatch);
+            
         }
     }
 }

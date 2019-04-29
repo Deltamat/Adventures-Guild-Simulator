@@ -12,6 +12,8 @@ namespace Adventures_Guild_Simulator
     {
         SQLiteCommand cmd;
 
+        Vector2 adventurerPosition = new Vector2(650, 200);
+
         public ModelAdventurer()
         {
             string sqlexp = "CREATE TABLE IF NOT EXISTS Adventurer (id integer primary key, " +
@@ -53,42 +55,6 @@ namespace Adventures_Guild_Simulator
         }
 
         /// <summary>
-        /// Get the name of an adventurer
-        /// </summary>
-        /// <param name="id">The id of the adventurer</param>
-        /// <returns>The name of the adventurer</returns>
-        public string GetNameByID(int id)
-        {
-            string name = null;
-            cmd.CommandText = "SELECT name FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                name = reader.GetString(0);
-            }
-            reader.Close();
-            return name;
-        }
-
-        /// <summary>
-        /// Get the level of an adventurer
-        /// </summary>
-        /// <param name="id">The id of the adventurer</param>
-        /// <returns>The adventurers level</returns>
-        public int GetLevelByID(int id)
-        {
-            int level = 0;
-            cmd.CommandText = "SELECT level FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                level = reader.GetInt32(0);
-            }
-            reader.Close();
-            return level;
-        }
-
-        /// <summary>
         /// Delete an adventurer with specific id
         /// </summary>
         /// <param name="id">The id of the adventurer</param>
@@ -126,53 +92,53 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Equipment e1 , e2 , e3, e4;
-                Consumable e5;
+                Equipment helmet , weapon , chest, boot;
+                Consumable consumable;
                 #region TryCatch
                 try
                 {
-                    e1 = GameWorld.Instance.equipmentDic[reader.GetInt32(3)];
+                    helmet = GameWorld.Instance.equipmentDic[reader.GetInt32(3)];
                 }
                 catch (Exception)
                 {
 
-                    e1 = null;
+                    helmet = null;
                 }
                 try
                 {
-                    e2 = GameWorld.Instance.equipmentDic[reader.GetInt32(2)];
+                    weapon = GameWorld.Instance.equipmentDic[reader.GetInt32(2)];
                 }
                 catch (Exception)
                 {
 
-                    e2 = null;
+                    weapon = null;
                 }
                 try
                 {
-                    e3 = GameWorld.Instance.equipmentDic[reader.GetInt32(4)];
+                    chest = GameWorld.Instance.equipmentDic[reader.GetInt32(4)];
                 }
                 catch (Exception)
                 {
 
-                    e3 = null;
+                    chest = null;
                 }
                 try
                 {
-                    e4 = GameWorld.Instance.equipmentDic[reader.GetInt32(5)];
+                    boot = GameWorld.Instance.equipmentDic[reader.GetInt32(5)];
                 }
                 catch (Exception)
                 {
 
-                    e4 = null;
+                    boot = null;
                 }
                 try
                 {
-                    e5 = GameWorld.Instance.consumableDic[reader.GetInt32(8)];
+                    consumable = GameWorld.Instance.consumableDic[reader.GetInt32(8)];
                 }
                 catch (Exception)
                 {
 
-                    e5 = null;
+                    consumable = null;
                 }
                 #endregion
 
@@ -185,6 +151,20 @@ namespace Adventures_Guild_Simulator
         public void SetLevel(int id, int level)
         {
             cmd.CommandText = $"UPDATE adventurer SET level = {level} WHERE id = '{id.ToString()}'";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateEquipment(int weaponId, int helmetId, int chestId, int bootId, int consumableId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot, consumable) = ({weaponId}, {helmetId}, {chestId}, {bootId}, {consumableId})";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void Reset()
+        {
+            cmd.CommandText = "DELETE FROM Adventurer";
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, 'Carolus Rex', 1, 'defaultSprite')";
             cmd.ExecuteNonQuery();
         }
     }

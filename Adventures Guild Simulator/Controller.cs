@@ -59,6 +59,10 @@ namespace Adventures_Guild_Simulator
         {
             adventurer.SetLevel(id, level);
         }
+        public void UpdateAdventurerEquipment(int weaponId, int helmetId, int chestId, int bootId, int consumableId)
+        {
+            adventurer.UpdateEquipment(weaponId, helmetId, chestId, bootId, consumableId);
+        }
         #endregion
 
         #region Consumable
@@ -69,6 +73,14 @@ namespace Adventures_Guild_Simulator
         public Consumable CreateConsumable(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped, int uses)
         {
             return consumable.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses);
+        }
+        public void DeleteConsumable(int id)
+        {
+            consumable.Delete(id);
+        }
+        public void UpdateConsumable(int id, int newUses)
+        {
+            consumable.UpdateUses(id, newUses);
         }
         #endregion
 
@@ -112,6 +124,22 @@ namespace Adventures_Guild_Simulator
         
         #endregion
 
+        public void Reset()
+        {
+            adventurer.Reset();
+            stat.UpdateStats();
+            equipment.Reset();
+            consumable.Reset();
+
+        }
+
+        public void Naming()
+        {
+            if (!naming.NamesCreated())
+            {
+                naming.CreateNames();
+            }
+        }
         
 
     }

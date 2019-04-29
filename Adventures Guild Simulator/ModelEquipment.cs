@@ -43,7 +43,7 @@ namespace Adventures_Guild_Simulator
         public Equipment CreateEquipment(string name, string spriteName, string type, string rarity, int goldCost, int skillRating, bool isEquipped)
         {
             Equipment temp = null;
-            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', '{goldCost}', '{skillRating}',{isEquipped})";
+            cmd.CommandText = $"INSERT INTO Equipment (id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', {goldCost}, {skillRating},{isEquipped})";
             cmd.ExecuteNonQuery();
             cmd.CommandText = "SELECT * FROM Equipment ORDER BY id desc limit 1";
             SQLiteDataReader reader = cmd.ExecuteReader();
@@ -76,6 +76,12 @@ namespace Adventures_Guild_Simulator
             }
             reader.Close();
             return equipmentItems;
+        }
+
+        public void Reset()
+        {
+            cmd.CommandText = "DELETE FROM equipment";
+            cmd.ExecuteNonQuery();
         }
     }
 }

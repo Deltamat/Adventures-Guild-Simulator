@@ -94,5 +94,80 @@ namespace Adventures_Guild_Simulator
 
             Controller.Instance.CreateEquipment(tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false); //Generate object
         }
+
+        public static Equipment ReturnEquipment(Vector2 itemPosition)
+        {
+            int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
+            int tempSkillRating;
+            string tempRarity;
+
+            //Weapon rarity
+            if (tempRarityGenerator == 99)
+            {
+                tempRarity = "Legendary";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
+            }
+
+            else if (tempRarityGenerator > 90)
+            {
+                tempRarity = "Epic";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
+            }
+
+            else if (tempRarityGenerator > 75)
+            {
+                tempRarity = "Rare";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
+            }
+
+            else if (tempRarityGenerator > 50)
+            {
+                tempRarity = "Uncommon";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
+            }
+
+            else
+            {
+                tempRarity = "Common";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 1;
+            }
+
+            string tempItemType = "Weapon";
+            int tempItemTypeGenerate = GameWorld.Instance.GenerateRandom(0, 4);
+
+            //Weapon type
+            if (tempItemTypeGenerate == 0)
+            {
+                tempItemType = "Weapon";
+            }
+
+            else if (tempItemTypeGenerate == 1)
+            {
+                tempItemType = "Chest";
+            }
+
+            else if (tempItemTypeGenerate == 2)
+            {
+                tempItemType = "helmet";
+            }
+
+            else if (tempItemTypeGenerate == 3)
+            {
+                tempItemType = "Boot";
+            }
+
+            //Random name generating
+            string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+
+            double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
+            int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
+
+            return new Equipment(itemPosition, tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
     }
 }

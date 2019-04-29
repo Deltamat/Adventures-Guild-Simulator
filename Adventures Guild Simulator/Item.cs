@@ -42,15 +42,14 @@ namespace Adventures_Guild_Simulator
         public bool selected;
 
         public int Id { get => id; set => id = value; }
-        public int SkillRating { get => SkillRating1; set => SkillRating1 = value; }
+        public int SkillRating { get => skillRating; set => skillRating = value; }
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
-        //public string Rarity { get => rarity; set => rarity = value; }
+        public string Rarity { get => rarity; set => rarity = value; }
         public bool Owned { get => owned; set => owned = value; }
         public static bool AnySelected { get => anySelected; set => anySelected = value; }
         public Color RarityColor { get => rarityColor; set => rarityColor = value; }
-        public int SkillRating1 { get => skillRating; set => skillRating = value; }
         public bool IsInInventory { get => isInInventory; set => isInInventory = value; }
         public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
         public static int SelectedID { get => selectedID; set => selectedID = value; }
@@ -151,7 +150,21 @@ namespace Adventures_Guild_Simulator
                     selected = true;
                     SelectedID = id;
                     AnySelected = true;
-                   
+
+                    if (GameWorld.Instance.shop.Contains(this) && GameWorld.Instance.gold >= GoldCost)
+                    {
+                        GameWorld.Instance.gold -= GoldCost;
+                        if (this.GetType() == typeof(Equipment))
+                        {
+                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false);
+                        }
+                        else if (this.GetType() == typeof(Consumable))
+                        {
+                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4));
+                        }
+                        GameWorld.Instance.boughtItems.Add(this);
+                        GameWorld.Instance.inventoryList.Add(this);
+                    }
                 }
 
                 if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed)
@@ -288,9 +301,28 @@ namespace Adventures_Guild_Simulator
         {
             spriteBatch.Draw(sprite, Position, Color.White);
 
+            switch (Rarity)
+            {
+                case "Common":
+                    RarityColor = Color.White;
+                    break;
+                case "Uncommon":
+                    RarityColor = Color.Green;
+                    break;
+                case "Rare":
+                    RarityColor = Color.Blue;
+                    break;
+                case "Epic":
+                    RarityColor = Color.Purple;
+                    break;
+                case "Legendary":
+                    RarityColor = Color.Orange;
+                    break;
+            }
+
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
-            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating1}", Position + new Vector2(100, 70), Color.White);            
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);            
         }
 
         //Code for drawing the information once the inventory item is selected
