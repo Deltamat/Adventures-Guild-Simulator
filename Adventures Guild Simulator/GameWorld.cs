@@ -531,7 +531,7 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
                     spriteBatch.DrawString(fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
                     spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
-                    spriteBatch.DrawString(fontCopperplate, $"GearScore: {item.SkillRating1}", new Vector2(800, 230), Color.White);
+                    spriteBatch.DrawString(fontCopperplate, $"GearScore: {item.SkillRating}", new Vector2(800, 230), Color.White);
                 }
             }
 

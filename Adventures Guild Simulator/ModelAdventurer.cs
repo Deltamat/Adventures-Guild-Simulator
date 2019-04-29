@@ -128,7 +128,8 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Equipment e1 , e2 , e3, e4, e5;
+                Equipment e1 , e2 , e3, e4;
+                Consumable e5;
                 #region TryCatch
                 try
                 {
@@ -168,7 +169,7 @@ namespace Adventures_Guild_Simulator
                 }
                 try
                 {
-                    e5 = GameWorld.Instance.equipmentDic[reader.GetInt32(8)];
+                    e5 = GameWorld.Instance.consumableDic[reader.GetInt32(8)];
                 }
                 catch (Exception)
                 {
