@@ -257,7 +257,7 @@ namespace Adventures_Guild_Simulator
                 if (GameWorld.Instance.inventoryList[i].selected == true)
                 {
                     //GameWorld.Instance.inventoryFrameList[i].Rarity = "Common";
-                    ModelEquipment.SellEquipment(GameWorld.Instance.inventoryList[i].Id);
+                    Controller.Instance.SellEquipement(GameWorld.Instance.inventoryList[i].Id);
                     GameWorld.Instance.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]);
                 }
             }
