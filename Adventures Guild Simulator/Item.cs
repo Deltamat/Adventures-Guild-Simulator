@@ -145,19 +145,21 @@ namespace Adventures_Guild_Simulator
                     selected = true;
                     AnySelected = true;
 
+                    //If the item is in the shop
                     if (GameWorld.Instance.shop.Contains(this) && GameWorld.Instance.gold >= GoldCost)
                     {
                         GameWorld.Instance.gold -= GoldCost;
+                        Controller.Instance.UpdateStats();
                         if (this.GetType() == typeof(Equipment))
                         {
-                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false);
+                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false); //Adds the equipment to the database
                         }
                         else if (this.GetType() == typeof(Consumable))
                         {
-                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4));
+                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4)); //Adds the consumable to the database
                         }
-                        GameWorld.Instance.boughtItems.Add(this);
-                        GameWorld.Instance.inventoryList.Add(this);
+                        GameWorld.Instance.boughtItems.Add(this); //Removes the item from the shop
+                        GameWorld.Instance.inventoryList.Add(this); //Adds the item to the inventory
                     }
                 }
             }
@@ -298,7 +300,6 @@ namespace Adventures_Guild_Simulator
             {
                 item.Rarity = "Common";
             }
-
         }
     }
 }
