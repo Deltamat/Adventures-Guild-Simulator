@@ -90,8 +90,72 @@ namespace Adventures_Guild_Simulator
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
 
-
             GameWorld.Instance.itemList.Add(new Consumable(itemPosition, tempItemType, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false, 1));
+        }
+
+        public static Consumable ReturnConsumable(Vector2 itemPosition)
+        {
+            int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
+            int tempSkillRating;
+            string tempRarity;
+
+            if (tempRarityGenerator == 99)
+            {
+                tempRarity = "Legendary";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
+            }
+
+            else if (tempRarityGenerator > 90)
+            {
+                tempRarity = "Epic";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
+            }
+
+            else if (tempRarityGenerator > 75)
+            {
+                tempRarity = "Rare";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
+            }
+
+            else if (tempRarityGenerator > 50)
+            {
+                tempRarity = "Uncommon";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
+            }
+
+            else
+            {
+                tempRarity = "Common";
+                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 1;
+            }
+
+            string tempItemType = "Potion";
+            int tempItemTypeGenerate = GameWorld.Instance.GenerateRandom(0, 4);
+
+            if (tempItemTypeGenerate == 0)
+            {
+                tempItemType = "Potion";
+            }
+
+            else if (tempItemTypeGenerate == 1)
+            {
+                tempItemType = "Potion";
+            }
+
+            else if (tempItemTypeGenerate == 2)
+            {
+                tempItemType = "Potion";
+            }
+
+            else if (tempItemTypeGenerate == 3)
+            {
+                tempItemType = "Potion";
+            }
+
+            double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
+            int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
+            
+            return new Consumable(itemPosition, tempItemType, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false, 1);
         }
     }
 }

@@ -37,7 +37,6 @@ namespace Adventures_Guild_Simulator
         private Texture2D skullSprite;
         public int questsCompleted;
         private Texture2D questionMarkSprite;
-        //public List<Adventurer> adventurers;
         public Dictionary<int, Adventurer> adventurersDic;
         float delay = 0;
         int adventurerToShowId;
@@ -46,6 +45,7 @@ namespace Adventures_Guild_Simulator
         public Dictionary<int, Consumable> consumableDic = new Dictionary<int, Consumable>();
         public bool questSelected;
         bool drawSelectedAdventurer;
+        private List<Item> shop = new List<Item>();
 
         Button ResetButton;
 
@@ -143,7 +143,7 @@ namespace Adventures_Guild_Simulator
             Controller.Instance.Naming();
 
             base.Initialize();
-        }
+        }        
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -178,7 +178,6 @@ namespace Adventures_Guild_Simulator
             testButton.Click += BuyAdventurer;
             sellAdventurerButton.Click += SellAdventurer;
             ResetButton.Click += Reset;
-
 
             //List of our buttons
             userInterfaceObjects = new List<GameObject>()
@@ -280,8 +279,6 @@ namespace Adventures_Guild_Simulator
 
             equipmentDic = Controller.Instance.LoadEquipment();
 
-
-
             //Updates quests
             foreach (Quest quest in quests)
             {
@@ -295,9 +292,9 @@ namespace Adventures_Guild_Simulator
             questsToBeRemoved.Clear();
 
             //updates our click-events for the UI
-            foreach (var item in userInterfaceObjects)
+            foreach (GameObject ui in userInterfaceObjects)
             {
-                item.Update(gameTime);
+                ui.Update(gameTime);
             }
 
             foreach (Item item in inventoryList)
@@ -305,9 +302,9 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
             //updates the adventurer buttons, it is its own list because the list have to be emptied sometimes
-            foreach (var item in adventurerButtons)
+            foreach (GameObject button in adventurerButtons)
             {
-                item.Update(gameTime);
+                button.Update(gameTime);
             }
 
             foreach (Adventurer adventurer in adventurersDic.Values)
@@ -335,25 +332,26 @@ namespace Adventures_Guild_Simulator
                 Item.SellItem();
             }
 
-            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            //Makes sure the inventory amount isn't exceeded
+            while (inventoryList.Count > 28)
             {
-                GameWorld.Instance.inventoryFrameList[i].Rarity = GameWorld.Instance.inventoryList[i].Rarity;
+                inventoryList.Remove(inventoryList[28]);
             }
-            
 
-            for (int i = 0; i < GameWorld.Instance.inventoryList.Count; i++)
+            for (int i = 0; i < inventoryList.Count; i++)
             {
-                GameWorld.Instance.inventoryList[i].Position = GameWorld.Instance.inventoryFrameList[i].Position + new Vector2(10, 10);
+                inventoryFrameList[i].Rarity = inventoryList[i].Rarity;
+            }
+
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                inventoryList[i].Position = inventoryFrameList[i].Position + new Vector2(10, 10);
             }
 
             //Generates an item into the equipment database + to the inventory
             if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
             {
                 Item.GenerateItem(new Vector2(300, 200));
-                //Item.GenerateItem(new Vector2(300, 350));
-                //Item.GenerateItem(new Vector2(300, 500));
-                //Item.GenerateItem(new Vector2(300, 650));
-                //Item.GenerateItem(new Vector2(300, 800));
 
                 inventoryList.Clear();
                 foreach (var item in equipmentDic)
@@ -366,6 +364,18 @@ namespace Adventures_Guild_Simulator
                 delay = 0;
             }
 
+            while (shop.Count < 4)
+            {
+                int rng = GenerateRandom(0, 5);
+                if (rng == 0)
+                {
+                    shop.Add(Consumable.ReturnConsumable(Vector2.Zero));
+                }
+                else
+                {
+                    shop.Add(Equipment.ReturnEquipment(Vector2.Zero));
+                }
+            }
 
             //Adds all temp items to the inventory list
             if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
@@ -420,6 +430,7 @@ namespace Adventures_Guild_Simulator
                 UIelement.Draw(spriteBatch);
             }
 
+            //Stats
             spriteBatch.Draw(goldSprite, new Vector2(590, 25), Color.White);
             spriteBatch.DrawString(fontCopperplate, $"{gold}", new Vector2(650, 35), Color.Gold);
             spriteBatch.Draw(questionMarkSprite, new Vector2(900, 25), Color.White);
@@ -457,7 +468,6 @@ namespace Adventures_Guild_Simulator
                     }
                 }
 
-
                 //draws the sell adventurer button
                 if (drawSelectedAdventurer is true)
                 {
@@ -465,49 +475,33 @@ namespace Adventures_Guild_Simulator
                 }
             }
 
-
-            foreach (var item in itemList)
-            {
-                item.Draw(spriteBatch);
-            }
-
-            //Draws all the buttons of the UI
-            foreach (var item in userInterfaceObjects)
-            {
-                item.Draw(spriteBatch);
-            }
-
-            foreach (var item in adventurerButtons)
-            {
-                item.Draw(spriteBatch);
-            }
-
-            int tmpDrawQuestVector = 575;
-            //Draws quests
-            int drawQuestVector = 540;
-            foreach (Quest quest in quests)
-            {
-                spriteBatch.DrawString(font, $"{quest.ExpireTime - Math.Round(quest.TimeToExpire, 0)}", new Vector2(50, tmpDrawQuestVector), Color.Red);
-                tmpDrawQuestVector += 90;
-            }
-
-            foreach (GameObject item in inventoryFrameList)
-            {
-                item.Draw(spriteBatch,true);
-            }
-            for (int i = 0; i < inventoryList.Count; i++)
-            {
-                inventoryList[i].Draw(spriteBatch, inventoryList[i].Position);
-            }
-
             foreach (Item item in itemList)
             {
                 item.Draw(spriteBatch);
             }
 
+            //Draws all the buttons of the UI
+            foreach (GameObject ui in userInterfaceObjects)
+            {
+                ui.Draw(spriteBatch);
+            }
 
-            spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
+            foreach (GameObject button in adventurerButtons)
+            {
+                button.Draw(spriteBatch);
+            }
 
+            //Draws shop
+            Vector2 shopVector = new Vector2(30);
+            foreach (Item item in shop)
+            {
+                item.Position = shopVector;
+                item.Draw(spriteBatch);
+                shopVector.Y += 110;
+            }
+
+            //Draws quests
+            int drawQuestVector = 540;
             foreach (Quest quest in quests)
             {
                 quest.Position = new Vector2(30, drawQuestVector);
@@ -525,6 +519,22 @@ namespace Adventures_Guild_Simulator
                 }
                 drawQuestVector += 90; //Moves the next quest down by a margin
             }
+
+            foreach (GameObject item in inventoryFrameList)
+            {
+                item.Draw(spriteBatch,true);
+            }
+            for (int i = 0; i < inventoryList.Count; i++)
+            {
+                inventoryList[i].Draw(spriteBatch, inventoryList[i].Position);
+            }
+
+            foreach (Item item in itemList)
+            {
+                item.Draw(spriteBatch);
+            }
+
+            spriteBatch.DrawString(font, $"{inventoryList.Count}", new Vector2(1000, 500), Color.White);
 
             //Writes to info screen
             Vector2 infoScreenVector = new Vector2(600, 120); //Top left of info screen
@@ -573,7 +583,7 @@ namespace Adventures_Guild_Simulator
             int line = 0;
             foreach (var item in adventurersDic)
             {
-                var AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
+                Button AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
                 {
                     TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
                     FontColor = Color.White,
@@ -601,16 +611,15 @@ namespace Adventures_Guild_Simulator
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void AdventurerButtonClickEvent(object sender, EventArgs e)
-        {
-            
+        {            
             Button button = (Button)sender;
             if (adventurersDic[button.Id].OnQuest == false)
             {
                 drawSelectedAdventurer = true;
                 adventurerToShowId = button.Id;
-                foreach (Button item in adventurerButtons)
+                foreach (Button advButton in adventurerButtons)
                 {
-                    item.selected = false;
+                    advButton.selected = false;
                 }
                 button.selected = true;
                 foreach (Item item in inventoryList)
@@ -643,10 +652,9 @@ namespace Adventures_Guild_Simulator
                             questSelected = false;
                             infoScreen.Clear();
                         }
-                    }
+                    }                    
                 }
-            }
-            
+            }            
         }
 
         private void Reset(object sender, EventArgs e)

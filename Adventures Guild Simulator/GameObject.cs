@@ -21,7 +21,8 @@ namespace Adventures_Guild_Simulator
         /// Get-set property for the position
         /// </summary>
         public Vector2 Position { get => position; set => position = value; }
-        
+        public string Rarity { get => rarity; set => rarity = value; }
+
         public GameObject()
         {
 
@@ -49,12 +50,11 @@ namespace Adventures_Guild_Simulator
             }
         }
 
-        public string Rarity { get => rarity; set => rarity = value; }
-
         public virtual void Update(GameTime gameTime)
         {   
 
         }
+
         public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, position, Color.White);
