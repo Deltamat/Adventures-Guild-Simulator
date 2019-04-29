@@ -40,7 +40,7 @@ namespace Adventures_Guild_Simulator
         public bool selected;
 
         public int Id { get => id; set => id = value; }
-        public int SkillRating { get => SkillRating1; set => SkillRating1 = value; }
+        public int SkillRating { get => skillRating; set => skillRating = value; }
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
@@ -48,7 +48,6 @@ namespace Adventures_Guild_Simulator
         public bool Owned { get => owned; set => owned = value; }
         public static bool AnySelected { get => anySelected; set => anySelected = value; }
         public Color RarityColor { get => rarityColor; set => rarityColor = value; }
-        public int SkillRating1 { get => skillRating; set => skillRating = value; }
         public bool IsInInventory { get => isInInventory; set => isInInventory = value; }
         public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
 
@@ -234,7 +233,7 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
-            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating1}", Position + new Vector2(100, 70), Color.White);            
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);            
         }
 
         //Code for drawing the information once the inventory item is selected
