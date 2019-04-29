@@ -23,8 +23,9 @@ namespace Adventures_Guild_Simulator
         private bool isInInventory = false;
         private bool isEquipped = false;
         private Color rarityColor = Color.White;
-      
-
+        private static int selectedID;
+        bool selectedSwitch = false;
+        bool previousSelectedSwitch = false;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -52,6 +53,10 @@ namespace Adventures_Guild_Simulator
         public int SkillRating1 { get => skillRating; set => skillRating = value; }
         public bool IsInInventory { get => isInInventory; set => isInInventory = value; }
         public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
+        public static int SelectedID { get => selectedID; set => selectedID = value; }
+        public bool SelectedSwitch { get => selectedSwitch; set => selectedSwitch = value; }
+        public bool PreviousSelectedSwitch { get => previousSelectedSwitch; set => previousSelectedSwitch = value; }
+
 
         /// <summary>
         /// Constructor for generating items from the database (because it has the "id")
@@ -144,8 +149,58 @@ namespace Adventures_Guild_Simulator
                     }
 
                     selected = true;
+                    SelectedID = id;
                     AnySelected = true;
                    
+                }
+
+                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed)
+                {
+                    foreach (Button adventurer in GameWorld.Instance.adventurerButtons)
+                    {
+                        if (adventurer.selected)
+                        {
+                            Adventurer A = GameWorld.Instance.adventurersDic[adventurer.Id];
+                            
+                            if (type == "Helmet")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
+                                A.Helmet = (Equipment)this;
+                                A.HelmetFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+                            if (type == "Weapon")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
+                                A.Weapon = (Equipment)this;
+                                A.WeaponFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+                            if (type == "Boot")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Boot);
+                                A.Boot = (Equipment)this;
+                                A.BootFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+                            if (type == "Chest")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Chest);
+                                A.Chest = (Equipment)this;
+                                A.ChestFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+
+                            A.Weapon.Position = A.Position + new Vector2(150, 0);
+                            A.Helmet.Position = A.Position + new Vector2(300, 0);
+                            A.Chest.Position = A.Position + new Vector2(450, 0);
+                            A.Boot.Position = A.Position + new Vector2(600, 0);
+                        }
+                    }
                 }
             }
             #endregion
