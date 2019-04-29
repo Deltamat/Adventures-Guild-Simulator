@@ -92,57 +92,57 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Equipment e1 , e2 , e3, e4;
-                Consumable e5;
+                Equipment helmet , weapon , chest, boot;
+                Consumable consumable;
                 #region TryCatch
                 try
                 {
-                    e1 = GameWorld.Instance.equipmentDic[reader.GetInt32(3)];
+                    helmet = GameWorld.Instance.equipmentDic[reader.GetInt32(3)];
                 }
                 catch (Exception)
                 {
 
-                    e1 = null;
+                    helmet = null;
                 }
                 try
                 {
-                    e2 = GameWorld.Instance.equipmentDic[reader.GetInt32(2)];
+                    weapon = GameWorld.Instance.equipmentDic[reader.GetInt32(2)];
                 }
                 catch (Exception)
                 {
 
-                    e2 = null;
+                    weapon = null;
                 }
                 try
                 {
-                    e3 = GameWorld.Instance.equipmentDic[reader.GetInt32(4)];
+                    chest = GameWorld.Instance.equipmentDic[reader.GetInt32(4)];
                 }
                 catch (Exception)
                 {
 
-                    e3 = null;
+                    chest = null;
                 }
                 try
                 {
-                    e4 = GameWorld.Instance.equipmentDic[reader.GetInt32(5)];
+                    boot = GameWorld.Instance.equipmentDic[reader.GetInt32(5)];
                 }
                 catch (Exception)
                 {
 
-                    e4 = null;
+                    boot = null;
                 }
                 try
                 {
-                    e5 = GameWorld.Instance.consumableDic[reader.GetInt32(8)];
+                    consumable = GameWorld.Instance.consumableDic[reader.GetInt32(8)];
                 }
                 catch (Exception)
                 {
 
-                    e5 = null;
+                    consumable = null;
                 }
                 #endregion
 
-                adventurers.Add(reader.GetInt32(0), new Adventurer(adventurerPosition, reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
+                adventurers.Add(reader.GetInt32(0), new Adventurer(adventurerPosition, reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), weapon, chest, helmet, boot, consumable));
             }
             reader.Close();
             return adventurers;
