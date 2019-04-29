@@ -81,11 +81,11 @@ namespace Adventures_Guild_Simulator
         {
             return equipment.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating, isEquipped);
         }
+        public void SellEquipement(int id)
+        {
+            equipment.SellEquipment(id);
+        }
 
-
-        #endregion
-
-        #region Inventory
 
         #endregion
 
