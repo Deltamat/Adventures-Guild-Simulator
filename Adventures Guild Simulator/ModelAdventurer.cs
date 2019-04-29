@@ -159,5 +159,13 @@ namespace Adventures_Guild_Simulator
             cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot, consumable) = ({weaponId}, {helmetId}, {chestId}, {bootId}, {consumableId})";
             cmd.ExecuteNonQuery();
         }
+
+        public void Reset()
+        {
+            cmd.CommandText = "DELETE FROM Adventurer";
+            cmd.ExecuteNonQuery();
+            cmd.CommandText = "INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, 'Carolus Rex', 1, 'defaultSprite')";
+            cmd.ExecuteNonQuery();
+        }
     }
 }
