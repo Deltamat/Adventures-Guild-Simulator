@@ -39,6 +39,13 @@ namespace Adventures_Guild_Simulator
             Sprite = GameWorld.ContentManager.Load<Texture2D>(spriteName);
         }
 
+        public GameObject(Vector2 position, string spriteName, string rarity)
+        {
+            Rarity = rarity;
+            this.Position = position;
+            Sprite = GameWorld.ContentManager.Load<Texture2D>(spriteName);
+        }
+
         /// <summary>
         /// Get property that returns a collisionbox
         /// </summary>

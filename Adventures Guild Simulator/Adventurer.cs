@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,10 @@ namespace Adventures_Guild_Simulator
         Equipment helmet;
         Equipment boot;
         Consumable consumable;
+        GameObject helmetFrame;
+        GameObject bootFrame;
+        GameObject weaponFrame;
+        GameObject chestFrame;
         bool onQuest = false;        
        
         public int Id { get => id; set => id = value; }
@@ -32,6 +37,10 @@ namespace Adventures_Guild_Simulator
         public Equipment Boot { get => boot; set => boot = value; }
         public Consumable Consumable { get => consumable; set => consumable = value; }
         public bool OnQuest { get => onQuest; set => onQuest = value; }
+        public GameObject HelmetFrame { get => helmetFrame; set => helmetFrame = value; }
+        public GameObject BootFrame { get => bootFrame; set => bootFrame = value; }
+        public GameObject WeaponFrame { get => weaponFrame; set => weaponFrame = value; }
+        public GameObject ChestFrame { get => chestFrame; set => chestFrame = value; }
 
         public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Equipment weapon, Equipment chest, Equipment helmet, Equipment boot, Consumable consumable) : base(position, spriteName)
         {
@@ -43,6 +52,37 @@ namespace Adventures_Guild_Simulator
             Helmet = helmet;
             Boot = boot;
             Consumable = consumable;
+
+            if (weapon == null)
+            {
+               Weapon = new Equipment(Position, "Training Sword", "Weapon", "weapon", "Common", 0, 1, true);
+            }
+
+            if (helmet == null)
+            {
+               Helmet = new Equipment(Position, "Training Helmet", "Helmet", "helmet", "Common", 0, 10, true);
+            }
+
+            if (chest == null)
+            {
+               Chest = new Equipment(Position, "Training Chest", "Chest", "chest", "Common", 0, 1, true);
+            }
+
+            if (boot == null)
+            {
+               Boot = new Equipment(Position, "Training Boot", "Boot", "boot", "Common", 0, 1, true);
+            }
+
+            Weapon.Position = position + new Vector2(150, 0);
+            Helmet.Position = position + new Vector2(300, 0);
+            Chest.Position = position + new Vector2(450, 0);
+            Boot.Position = position + new Vector2(600, 0);
+
+            ChestFrame = new GameObject(Chest.Position + new Vector2(-60,-60), "Frame", Chest.Rarity);
+            BootFrame = new GameObject(Boot.Position + new Vector2(-60, -60), "Frame", Boot.Rarity);
+            WeaponFrame = new GameObject(Weapon.Position + new Vector2(-60, -60), "Frame", Weapon.Rarity);
+            HelmetFrame = new GameObject(Helmet.Position + new Vector2(-60, -60), "Frame", Helmet.Rarity);
+
         }
 
         public override void Update(GameTime gameTime)
@@ -53,6 +93,41 @@ namespace Adventures_Guild_Simulator
             {
                 Skill += Consumable.SkillRating;
             }
+           
+
+            Chest.Update(gameTime);
+            Boot.Update(gameTime);
+            Weapon.Update(gameTime);
+            Helmet.Update(gameTime);
+
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (Chest.selected == true)
+            {
+                Chest.Draw(spriteBatch);
+            }
+
+            if (Helmet.selected == true)
+            {
+                Helmet.Draw(spriteBatch);
+            }
+
+            if (Boot.selected == true)
+            {
+                Boot.Draw(spriteBatch);
+            }
+
+            if (Weapon.selected == true)
+            {
+                Weapon.Draw(spriteBatch);
+            }
+            
+            
+           
+            base.Draw(spriteBatch);
+            
         }
     }
 }
