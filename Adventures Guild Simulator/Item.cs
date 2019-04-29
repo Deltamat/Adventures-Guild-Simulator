@@ -23,6 +23,7 @@ namespace Adventures_Guild_Simulator
         private bool isInInventory = false;
         private bool isEquipped = false;
         private Color rarityColor = Color.White;
+      
 
 
         private MouseState currentMouse;
