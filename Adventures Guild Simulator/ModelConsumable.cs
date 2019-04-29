@@ -72,5 +72,17 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return consumables;
         }
+
+        public void UpdateUses(int id, int newUses)
+        {
+            cmd.CommandText = $"UPDATE consumable SET uses={newUses} WHERE id={id}";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void Delete(int id)
+        {
+            cmd.CommandText = $"DELETE FROM consumable WHERE id={id}";
+            cmd.ExecuteNonQuery();
+        }
     }
 }

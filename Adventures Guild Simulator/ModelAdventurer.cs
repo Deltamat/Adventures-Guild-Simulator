@@ -12,6 +12,8 @@ namespace Adventures_Guild_Simulator
     {
         SQLiteCommand cmd;
 
+        Vector2 adventurerPosition = new Vector2(650, 200);
+
         public ModelAdventurer()
         {
             string sqlexp = "CREATE TABLE IF NOT EXISTS Adventurer (id integer primary key, " +
@@ -46,46 +48,10 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                 a = new Adventurer(Vector2.Zero, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
+                 a = new Adventurer(adventurerPosition, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
             }
             reader.Close();
             return a;
-        }
-
-        /// <summary>
-        /// Get the name of an adventurer
-        /// </summary>
-        /// <param name="id">The id of the adventurer</param>
-        /// <returns>The name of the adventurer</returns>
-        public string GetNameByID(int id)
-        {
-            string name = null;
-            cmd.CommandText = "SELECT name FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                name = reader.GetString(0);
-            }
-            reader.Close();
-            return name;
-        }
-
-        /// <summary>
-        /// Get the level of an adventurer
-        /// </summary>
-        /// <param name="id">The id of the adventurer</param>
-        /// <returns>The adventurers level</returns>
-        public int GetLevelByID(int id)
-        {
-            int level = 0;
-            cmd.CommandText = "SELECT level FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                level = reader.GetInt32(0);
-            }
-            reader.Close();
-            return level;
         }
 
         /// <summary>
@@ -176,7 +142,7 @@ namespace Adventures_Guild_Simulator
                 }
                 #endregion
 
-                adventurers.Add(reader.GetInt32(0), new Adventurer(new Vector2(700, 200), reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
+                adventurers.Add(reader.GetInt32(0), new Adventurer(adventurerPosition, reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
             }
             reader.Close();
             return adventurers;
@@ -185,6 +151,12 @@ namespace Adventures_Guild_Simulator
         public void SetLevel(int id, int level)
         {
             cmd.CommandText = $"UPDATE adventurer SET level = {level} WHERE id = '{id.ToString()}'";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateEquipment(int weaponId, int helmetId, int chestId, int bootId, int consumableId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot, consumable) = ({weaponId}, {helmetId}, {chestId}, {bootId}, {consumableId})";
             cmd.ExecuteNonQuery();
         }
     }
