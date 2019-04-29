@@ -23,8 +23,9 @@ namespace Adventures_Guild_Simulator
         private bool isInInventory = false;
         private bool isEquipped = false;
         private Color rarityColor = Color.White;
-      
-
+        private static int selectedID;
+        bool selectedSwitch = false;
+        bool previousSelectedSwitch = false;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -45,12 +46,16 @@ namespace Adventures_Guild_Simulator
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
-        //public string Rarity { get => rarity; set => rarity = value; }
+        public string Rarity { get => rarity; set => rarity = value; }
         public bool Owned { get => owned; set => owned = value; }
         public static bool AnySelected { get => anySelected; set => anySelected = value; }
         public Color RarityColor { get => rarityColor; set => rarityColor = value; }
         public bool IsInInventory { get => isInInventory; set => isInInventory = value; }
         public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
+        public static int SelectedID { get => selectedID; set => selectedID = value; }
+        public bool SelectedSwitch { get => selectedSwitch; set => selectedSwitch = value; }
+        public bool PreviousSelectedSwitch { get => previousSelectedSwitch; set => previousSelectedSwitch = value; }
+
 
         /// <summary>
         /// Constructor for generating items from the database (because it has the "id")
@@ -143,8 +148,72 @@ namespace Adventures_Guild_Simulator
                     }
 
                     selected = true;
+                    SelectedID = id;
                     AnySelected = true;
-                   
+
+                    if (GameWorld.Instance.shop.Contains(this) && GameWorld.Instance.gold >= GoldCost)
+                    {
+                        GameWorld.Instance.gold -= GoldCost;
+                        if (this.GetType() == typeof(Equipment))
+                        {
+                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false);
+                        }
+                        else if (this.GetType() == typeof(Consumable))
+                        {
+                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4));
+                        }
+                        GameWorld.Instance.boughtItems.Add(this);
+                        GameWorld.Instance.inventoryList.Add(this);
+                    }
+                }
+
+                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed)
+                {
+                    foreach (Button adventurer in GameWorld.Instance.adventurerButtons)
+                    {
+                        if (adventurer.selected)
+                        {
+                            Adventurer A = GameWorld.Instance.adventurersDic[adventurer.Id];
+                            
+                            if (type == "Helmet")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
+                                A.Helmet = (Equipment)this;
+                                A.HelmetFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+                            if (type == "Weapon")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
+                                A.Weapon = (Equipment)this;
+                                A.WeaponFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+                            if (type == "Boot")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Boot);
+                                A.Boot = (Equipment)this;
+                                A.BootFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+                            if (type == "Chest")
+                            {
+                                GameWorld.Instance.toBeAddedItem.Add(A.Chest);
+                                A.Chest = (Equipment)this;
+                                A.ChestFrame.Rarity = this.Rarity;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+                            }
+
+
+                            A.Weapon.Position = A.Position + new Vector2(150, 0);
+                            A.Helmet.Position = A.Position + new Vector2(300, 0);
+                            A.Chest.Position = A.Position + new Vector2(450, 0);
+                            A.Boot.Position = A.Position + new Vector2(600, 0);
+                        }
+                    }
                 }
             }
             #endregion
@@ -231,6 +300,25 @@ namespace Adventures_Guild_Simulator
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, Position, Color.White);
+
+            switch (Rarity)
+            {
+                case "Common":
+                    RarityColor = Color.White;
+                    break;
+                case "Uncommon":
+                    RarityColor = Color.Green;
+                    break;
+                case "Rare":
+                    RarityColor = Color.Blue;
+                    break;
+                case "Epic":
+                    RarityColor = Color.Purple;
+                    break;
+                case "Legendary":
+                    RarityColor = Color.Orange;
+                    break;
+            }
 
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);

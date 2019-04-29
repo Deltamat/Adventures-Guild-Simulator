@@ -21,6 +21,7 @@ namespace Adventures_Guild_Simulator
         public List<Item> inventoryList = new List<Item>();
         public List<GameObject> inventoryFrameList = new List<GameObject>();
         public List<Item> toBeRemovedItem = new List<Item>();
+        public List<Item> toBeAddedItem = new List<Item>();
         public int inventoryRowList;
 
         public SpriteFont font;
@@ -39,13 +40,14 @@ namespace Adventures_Guild_Simulator
         private Texture2D questionMarkSprite;
         public Dictionary<int, Adventurer> adventurersDic;
         float delay = 0;
-        int adventurerToShowId;
+        public int adventurerToShowId;
         Button sellAdventurerButton;
         public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
         public Dictionary<int, Consumable> consumableDic = new Dictionary<int, Consumable>();
         public bool questSelected;
         bool drawSelectedAdventurer;
-        private List<Item> shop = new List<Item>();
+        public List<Item> shop = new List<Item>();
+        public List<Item> boughtItems = new List<Item>();
 
         Button ResetButton;
 
@@ -133,8 +135,16 @@ namespace Adventures_Guild_Simulator
             foreach (var item in equipmentDic)
             {
                 if (item.Value.IsEquipped == false)
+                {                    
+                    inventoryList.Add(item.Value);
+                }
+            }
+
+            //Adds all consumable list items to the inventory
+            foreach (var item in consumableDic)
+            {
+                if (item.Value.IsEquipped == false)
                 {
-                    
                     inventoryList.Add(item.Value);
                 }
             }
@@ -279,6 +289,13 @@ namespace Adventures_Guild_Simulator
 
             equipmentDic = Controller.Instance.LoadEquipment();
 
+
+            foreach (Item item in toBeAddedItem)
+            {
+                inventoryList.Add(item);
+            }
+
+            toBeAddedItem.Clear();
             //Updates quests
             foreach (Quest quest in quests)
             {
@@ -364,6 +381,7 @@ namespace Adventures_Guild_Simulator
                 delay = 0;
             }
 
+            //Shop
             while (shop.Count < 4)
             {
                 int rng = GenerateRandom(0, 5);
@@ -375,6 +393,14 @@ namespace Adventures_Guild_Simulator
                 {
                     shop.Add(Equipment.ReturnEquipment(Vector2.Zero));
                 }
+            }
+            foreach (Item item in shop)
+            {
+                item.Update(gameTime);
+            }
+            foreach (Item item in boughtItems)
+            {
+                shop.Remove(item);
             }
 
             //Adds all temp items to the inventory list
@@ -391,7 +417,7 @@ namespace Adventures_Guild_Simulator
                 delay = 0;
             }
 
-            if (Mouse.GetState().RightButton == ButtonState.Pressed)
+            if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
             {
                 foreach (Quest quest in quests)
                 {
@@ -446,27 +472,55 @@ namespace Adventures_Guild_Simulator
                 {
                     spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
                     spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
+                    spriteBatch.DrawString(GameWorld.instance.fontCopperplate, $"SR:{value.Skill}", value.Position + new Vector2(-50, 70), Color.White);
+
                     if (value.Helmet != null)
                     {
                         spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
+                        spriteBatch.DrawString(GameWorld.instance.fontCopperplate, $"SR:{value.Helmet.SkillRating}", value.Helmet.Position + new Vector2(-50, 70), Color.White);
                     }
                     if (value.Chest != null)
                     {
                         spriteBatch.Draw(value.Chest.Sprite, value.Chest.CollisionBox, Color.White);
+                        spriteBatch.DrawString(GameWorld.instance.fontCopperplate, $"SR:{value.Chest.SkillRating}", value.Chest.Position + new Vector2(-50, 70), Color.White);
                     }
                     if (value.Weapon != null)
                     {
                         spriteBatch.Draw(value.Weapon.Sprite, value.Weapon.CollisionBox, Color.White);
+                        spriteBatch.DrawString(GameWorld.instance.fontCopperplate, $"SR:{value.Weapon.SkillRating}", value.Weapon.Position + new Vector2(-50, 70), Color.White);
                     }
                     if (value.Boot != null)
                     {
                         spriteBatch.Draw(value.Boot.Sprite, value.Boot.CollisionBox, Color.White);
+                        spriteBatch.DrawString(GameWorld.instance.fontCopperplate, $"SR:{value.Boot.SkillRating}", value.Boot.Position + new Vector2(-50, 70), Color.White);
                     }
                     if (value.Consumable != null)
                     {
                         spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
                     }
+
+                    if (value.BootFrame != null)
+                    {
+                        value.BootFrame.Draw(spriteBatch, true);
+                    }
+
+                    if (value.WeaponFrame != null)
+                    {
+                        value.WeaponFrame.Draw(spriteBatch, true);
+                    }
+
+                    if (value.ChestFrame != null)
+                    {
+                        value.ChestFrame.Draw(spriteBatch, true);
+                    }
+          
+                    if (value.HelmetFrame != null)
+                    {
+                        value.HelmetFrame.Draw(spriteBatch, true);
+                    }
+                   
                 }
+
 
                 //draws the sell adventurer button
                 if (drawSelectedAdventurer is true)
