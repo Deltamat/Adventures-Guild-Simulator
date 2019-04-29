@@ -77,5 +77,11 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return equipmentItems;
         }
+
+        public void Reset()
+        {
+            cmd.CommandText = "DELETE FROM equipment";
+            cmd.ExecuteNonQuery();
+        }
     }
 }

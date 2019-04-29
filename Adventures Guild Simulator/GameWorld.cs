@@ -48,6 +48,8 @@ namespace Adventures_Guild_Simulator
         public List<Item> shop = new List<Item>();
         public List<Item> boughtItems = new List<Item>();
 
+        Button ResetButton;
+
         public List<string> infoScreen = new List<string>();
 
         private static ContentManager content;
@@ -146,7 +148,8 @@ namespace Adventures_Guild_Simulator
                 }
             }
 
-            //ModelNaming.CreateNames();
+
+            Controller.Instance.Naming();
 
             base.Initialize();
         }        
@@ -174,10 +177,16 @@ namespace Adventures_Guild_Simulator
             {
                 TextForButton = "Sell selected adventurer",
             };
-            
+            ResetButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(100, 100), "AB")
+            {
+                TextForButton = "Reset",
+            };
+
+
             //sets a click event for each Button
             testButton.Click += BuyAdventurer;
             sellAdventurerButton.Click += SellAdventurer;
+            ResetButton.Click += Reset;
 
             //List of our buttons
             userInterfaceObjects = new List<GameObject>()
@@ -266,6 +275,8 @@ namespace Adventures_Guild_Simulator
 
             delay += gameTime.ElapsedGameTime.Milliseconds;
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
+
+            ResetButton.Update(gameTime);
 
             //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
@@ -429,6 +440,7 @@ namespace Adventures_Guild_Simulator
         {
             GraphicsDevice.Clear(Color.DarkBlue);
             spriteBatch.Begin();
+
             
             //Draws backgrounds for the UI
             foreach (GameObject UIelement in UI)
@@ -561,6 +573,8 @@ namespace Adventures_Guild_Simulator
                 }
             }
 
+            ResetButton.Draw(spriteBatch);
+
             spriteBatch.End();
             base.Draw(gameTime);
         }
@@ -659,6 +673,29 @@ namespace Adventures_Guild_Simulator
                     }                    
                 }
             }            
+        }
+
+        private void Reset(object sender, EventArgs e)
+        {
+            gold = 50;
+            questsCompleted = 0;
+            adventurerDeaths = 0;
+            inventoryList = new List<Item>();
+            foreach (var item in GameWorld.Instance.inventoryFrameList)
+            {
+                item.Rarity = "Common";
+            }
+
+            Controller.Instance.Reset();
+
+            equipmentDic = Controller.Instance.LoadEquipment();
+            consumableDic = Controller.Instance.LoadConsumable();
+            adventurersDic = Controller.Instance.LoadAdventurers();
+            gold = Controller.Instance.LoadGold();
+            adventurerDeaths = Controller.Instance.LoadDeaths();
+            questsCompleted = Controller.Instance.LoadCompletedQuests();
+
+            UpdateAdventurerButtons();
         }
     }
 }

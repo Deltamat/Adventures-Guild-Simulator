@@ -124,6 +124,22 @@ namespace Adventures_Guild_Simulator
         
         #endregion
 
+        public void Reset()
+        {
+            adventurer.Reset();
+            stat.UpdateStats();
+            equipment.Reset();
+            consumable.Reset();
+
+        }
+
+        public void Naming()
+        {
+            if (!naming.NamesCreated())
+            {
+                naming.CreateNames();
+            }
+        }
         
 
     }

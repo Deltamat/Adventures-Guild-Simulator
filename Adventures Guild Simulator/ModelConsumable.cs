@@ -85,5 +85,11 @@ namespace Adventures_Guild_Simulator
             cmd.CommandText = $"DELETE FROM consumable WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
+
+        public void Reset()
+        {
+            cmd.CommandText = "DELETE FROM consumable";
+            cmd.ExecuteNonQuery();
+        }
     }
 }

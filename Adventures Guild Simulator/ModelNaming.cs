@@ -24,7 +24,7 @@ namespace Adventures_Guild_Simulator
         }
 
         //Adds all of the suffixes and prefixes, should only be done once
-        public static void CreateNames()
+        public void CreateNames()
         {
             cmd.CommandText = $"INSERT INTO naming (id, name, type) VALUES (null, 'Stamina', 'suffix')";
             cmd.ExecuteNonQuery();
@@ -241,6 +241,22 @@ namespace Adventures_Guild_Simulator
             }
             sqlite_datareader.Close();
             return Value;
+        }
+
+        public bool NamesCreated()
+        {
+            bool b = true;
+            cmd.CommandText = "SELECT COUNT(*) FROM naming";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                if (reader.GetInt32(0) < 1)
+                {
+                    b = false;
+                }
+            }
+            reader.Close();
+            return b;
         }
     }
 }
