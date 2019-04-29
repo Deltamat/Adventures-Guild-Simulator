@@ -12,6 +12,8 @@ namespace Adventures_Guild_Simulator
     {
         SQLiteCommand cmd;
 
+        Vector2 adventurerPosition = new Vector2(650, 200);
+
         public ModelAdventurer()
         {
             string sqlexp = "CREATE TABLE IF NOT EXISTS Adventurer (id integer primary key, " +
@@ -46,7 +48,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                 a = new Adventurer(Vector2.Zero, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
+                 a = new Adventurer(adventurerPosition, "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
             }
             reader.Close();
             return a;
@@ -175,7 +177,7 @@ namespace Adventures_Guild_Simulator
                 }
                 #endregion
 
-                adventurers.Add(reader.GetInt32(0), new Adventurer(new Vector2(700, 200), reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
+                adventurers.Add(reader.GetInt32(0), new Adventurer(adventurerPosition, reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
             }
             reader.Close();
             return adventurers;
