@@ -142,7 +142,7 @@ namespace Adventures_Guild_Simulator
                 }
                 #endregion
 
-                adventurers.Add(reader.GetInt32(0), new Adventurer(new Vector2(650, 200), reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), e2, e3, e1, e4, e5));
+                adventurers.Add(reader.GetInt32(0), new Adventurer(adventurerPosition, reader.GetString(7), reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), weapon, chest, helmet, boot, consumable));
             }
             reader.Close();
             return adventurers;
