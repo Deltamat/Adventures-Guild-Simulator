@@ -110,7 +110,7 @@ namespace Adventures_Guild_Simulator
         protected override void Initialize()
         {
             equipmentDic = Controller.Instance.LoadEquipment();
-
+            consumableDic = Controller.Instance.LoadConsumable();
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
             adventurerDeaths = Controller.Instance.LoadDeaths();

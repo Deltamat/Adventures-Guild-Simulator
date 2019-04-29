@@ -53,42 +53,6 @@ namespace Adventures_Guild_Simulator
         }
 
         /// <summary>
-        /// Get the name of an adventurer
-        /// </summary>
-        /// <param name="id">The id of the adventurer</param>
-        /// <returns>The name of the adventurer</returns>
-        public string GetNameByID(int id)
-        {
-            string name = null;
-            cmd.CommandText = "SELECT name FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                name = reader.GetString(0);
-            }
-            reader.Close();
-            return name;
-        }
-
-        /// <summary>
-        /// Get the level of an adventurer
-        /// </summary>
-        /// <param name="id">The id of the adventurer</param>
-        /// <returns>The adventurers level</returns>
-        public int GetLevelByID(int id)
-        {
-            int level = 0;
-            cmd.CommandText = "SELECT level FROM Adventurer WHERE id='" + id.ToString() + "'";
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                level = reader.GetInt32(0);
-            }
-            reader.Close();
-            return level;
-        }
-
-        /// <summary>
         /// Delete an adventurer with specific id
         /// </summary>
         /// <param name="id">The id of the adventurer</param>
@@ -126,7 +90,8 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Equipment e1 , e2 , e3, e4, e5;
+                Equipment e1 , e2 , e3, e4;
+                Consumable e5;
                 #region TryCatch
                 try
                 {
@@ -166,7 +131,7 @@ namespace Adventures_Guild_Simulator
                 }
                 try
                 {
-                    e5 = GameWorld.Instance.equipmentDic[reader.GetInt32(8)];
+                    e5 = GameWorld.Instance.consumableDic[reader.GetInt32(8)];
                 }
                 catch (Exception)
                 {
@@ -184,6 +149,12 @@ namespace Adventures_Guild_Simulator
         public void SetLevel(int id, int level)
         {
             cmd.CommandText = $"UPDATE adventurer SET level = {level} WHERE id = '{id.ToString()}'";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateEquipment(int weaponId, int helmetId, int chestId, int bootId, int consumableId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot, consumable) = ({weaponId}, {helmetId}, {chestId}, {bootId}, {consumableId})";
             cmd.ExecuteNonQuery();
         }
     }
