@@ -45,7 +45,8 @@ namespace Adventures_Guild_Simulator
         public Dictionary<int, Consumable> consumableDic = new Dictionary<int, Consumable>();
         public bool questSelected;
         bool drawSelectedAdventurer;
-        private List<Item> shop = new List<Item>();
+        public List<Item> shop = new List<Item>();
+        public List<Item> boughtItems = new List<Item>();
 
         public List<string> infoScreen = new List<string>();
 
@@ -131,8 +132,16 @@ namespace Adventures_Guild_Simulator
             foreach (var item in equipmentDic)
             {
                 if (item.Value.IsEquipped == false)
+                {                    
+                    inventoryList.Add(item.Value);
+                }
+            }
+
+            //Adds all consumable list items to the inventory
+            foreach (var item in consumableDic)
+            {
+                if (item.Value.IsEquipped == false)
                 {
-                    
                     inventoryList.Add(item.Value);
                 }
             }
@@ -353,6 +362,7 @@ namespace Adventures_Guild_Simulator
                 delay = 0;
             }
 
+            //Shop
             while (shop.Count < 4)
             {
                 int rng = GenerateRandom(0, 5);
@@ -364,6 +374,14 @@ namespace Adventures_Guild_Simulator
                 {
                     shop.Add(Equipment.ReturnEquipment(Vector2.Zero));
                 }
+            }
+            foreach (Item item in shop)
+            {
+                item.Update(gameTime);
+            }
+            foreach (Item item in boughtItems)
+            {
+                shop.Remove(item);
             }
 
             //Adds all temp items to the inventory list

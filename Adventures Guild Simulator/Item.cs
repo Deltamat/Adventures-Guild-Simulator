@@ -45,7 +45,7 @@ namespace Adventures_Guild_Simulator
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
-        //public string Rarity { get => rarity; set => rarity = value; }
+        public string Rarity { get => rarity; set => rarity = value; }
         public bool Owned { get => owned; set => owned = value; }
         public static bool AnySelected { get => anySelected; set => anySelected = value; }
         public Color RarityColor { get => rarityColor; set => rarityColor = value; }
@@ -144,7 +144,21 @@ namespace Adventures_Guild_Simulator
 
                     selected = true;
                     AnySelected = true;
-                   
+
+                    if (GameWorld.Instance.shop.Contains(this) && GameWorld.Instance.gold >= GoldCost)
+                    {
+                        GameWorld.Instance.gold -= GoldCost;
+                        if (this.GetType() == typeof(Equipment))
+                        {
+                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false);
+                        }
+                        else if (this.GetType() == typeof(Consumable))
+                        {
+                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4));
+                        }
+                        GameWorld.Instance.boughtItems.Add(this);
+                        GameWorld.Instance.inventoryList.Add(this);
+                    }
                 }
             }
             #endregion
@@ -231,6 +245,25 @@ namespace Adventures_Guild_Simulator
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(sprite, Position, Color.White);
+
+            switch (Rarity)
+            {
+                case "Common":
+                    RarityColor = Color.White;
+                    break;
+                case "Uncommon":
+                    RarityColor = Color.Green;
+                    break;
+                case "Rare":
+                    RarityColor = Color.Blue;
+                    break;
+                case "Epic":
+                    RarityColor = Color.Purple;
+                    break;
+                case "Legendary":
+                    RarityColor = Color.Orange;
+                    break;
+            }
 
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);

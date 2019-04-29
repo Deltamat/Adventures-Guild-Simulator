@@ -48,11 +48,12 @@ namespace Adventures_Guild_Simulator
             cmd.CommandText = $"INSERT INTO Consumable (id, name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses) VALUES (null, '{name}', '{spriteName}', '{type}', '{rarity}', {goldCost}, {skillRating}, {isEquipped}, {uses})";
             cmd.ExecuteNonQuery();
             cmd.CommandText = "select * from Consumable order by id desc limit 1";
-            SQLiteDataReader chugchugchug = cmd.ExecuteReader();
-            while (chugchugchug.Read())
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                temp = new Consumable(Vector2.Zero, chugchugchug.GetInt32(0), chugchugchug.GetString(1), chugchugchug.GetString(2), chugchugchug.GetString(3), chugchugchug.GetString(4), chugchugchug.GetInt32(5), chugchugchug.GetInt32(6), chugchugchug.GetBoolean(7), chugchugchug.GetInt32(8));
+                temp = new Consumable(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetInt32(8));
             }
+            reader.Close();
             return temp;
         }
 
