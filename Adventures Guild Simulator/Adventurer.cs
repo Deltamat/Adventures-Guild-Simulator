@@ -14,26 +14,26 @@ namespace Adventures_Guild_Simulator
         int level;
         int skill;
         int tempSkillBuff;
-        Item weapon;
-        Item chest;
-        Item helmet;
-        Item boot;
-        bool onQuest = false;
-        
+        Equipment weapon;
+        Equipment chest;
+        Equipment helmet;
+        Equipment boot;
+        Consumable consumable;
+        bool onQuest = false;        
        
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public int Level { get => level; set => level = value; }
         public int Skill { get => skill; set => skill = value; }
         public int TempSkillBuff { get => tempSkillBuff; set => tempSkillBuff = value; }
-        public Item Weapon { get => weapon; set => weapon = value; }
-        public Item Chest { get => chest; set => chest = value; }
-        public Item Helmet { get => helmet; set => helmet = value; }
-        public Item Boot { get => boot; set => boot = value; }
-        public Item Consumable { get => boot; set => boot = value; }
+        public Equipment Weapon { get => weapon; set => weapon = value; }
+        public Equipment Chest { get => chest; set => chest = value; }
+        public Equipment Helmet { get => helmet; set => helmet = value; }
+        public Equipment Boot { get => boot; set => boot = value; }
+        public Consumable Consumable { get => consumable; set => consumable = value; }
         public bool OnQuest { get => onQuest; set => onQuest = value; }
 
-        public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Item weapon, Item chest, Item helmet, Item boot, Item consumable) : base(position, spriteName)
+        public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Equipment weapon, Equipment chest, Equipment helmet, Equipment boot, Consumable consumable) : base(position, spriteName)
         {
             Id = id;
             Name = name;
