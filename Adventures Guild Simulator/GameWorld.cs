@@ -171,9 +171,10 @@ namespace Adventures_Guild_Simulator
             UpdateAdventurerButtons();
 
             //Buttons
-            var buyAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width * 0.5 - 10), 1020), "AB")
+            var buyAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "AB")
             {
-                TextForButton = "Buy adv.",
+                TextForButton = "Buy Adventurer",
+                FontColor = Color.White
             };
             sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
@@ -213,19 +214,19 @@ namespace Adventures_Guild_Simulator
         /// <param name="e"></param>
         private void BuyAdventurer(object sender, EventArgs e)
         {
-            if (gold >= 25)
+            if (gold >= 20)
             {
-                gold -= 25;
-                Controller.Instance.UpdateStats();
                 if (adventurersDic.Count >= 27)
                 {
                     return;
                 }
-                Adventurer a = Controller.Instance.CreateAdventurer(Controller.Instance.GetName(100, 120));
+                Adventurer a = Controller.Instance.CreateAdventurer("Gert");
                 adventurersDic.Add(a.Id, a);
                 drawSelectedAdventurer = false;
                 UpdateAdventurerButtons();
+                gold -= 20;
             }
+            
         }
 
         /// <summary>
@@ -262,6 +263,37 @@ namespace Adventures_Guild_Simulator
         private void SellAdventurer(object sender, EventArgs e)
         {
             Button b = (Button)sender;
+            gold += adventurersDic[adventurerToShowId].Level;
+
+            if (adventurersDic[adventurerToShowId].Weapon.GoldCost > 1)
+            {
+                adventurersDic[adventurerToShowId].Weapon.IsEquipped = false;
+                Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Weapon.Id);
+                inventoryList.Add(adventurersDic[adventurerToShowId].Weapon);
+            }
+            if (adventurersDic[adventurerToShowId].Chest.GoldCost > 1)
+            {
+                adventurersDic[adventurerToShowId].Chest.IsEquipped = false;
+                Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Chest.Id);
+                inventoryList.Add(adventurersDic[adventurerToShowId].Chest);
+            }
+            if (adventurersDic[adventurerToShowId].Helmet.GoldCost > 1)
+            {
+                adventurersDic[adventurerToShowId].Helmet.IsEquipped = false;
+                Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Helmet.Id);
+                inventoryList.Add(adventurersDic[adventurerToShowId].Helmet);
+            }
+            if (adventurersDic[adventurerToShowId].Boot.GoldCost > 1)
+            {
+                adventurersDic[adventurerToShowId].Boot.IsEquipped = false;
+                Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Boot.Id);
+                inventoryList.Add(adventurersDic[adventurerToShowId].Boot);
+            }
+            //if (adventurersDic[adventurerToShowId].Consumable.GoldCost > 1)
+            //{
+            //    adventurersDic[adventurerToShowId].Consumable.IsEquipped = false;
+            //    Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Consumable.Id);
+            //}
             Controller.Instance.RemoveAdventurer(adventurerToShowId);
             adventurersDic.Remove(adventurerToShowId);
             UpdateAdventurerButtons();
