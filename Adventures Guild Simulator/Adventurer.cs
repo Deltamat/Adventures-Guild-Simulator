@@ -24,6 +24,7 @@ namespace Adventures_Guild_Simulator
         GameObject bootFrame;
         GameObject weaponFrame;
         GameObject chestFrame;
+        GameObject consumableFrame;
         bool onQuest = false;        
        
         public int Id { get => id; set => id = value; }
@@ -41,6 +42,7 @@ namespace Adventures_Guild_Simulator
         public GameObject BootFrame { get => bootFrame; set => bootFrame = value; }
         public GameObject WeaponFrame { get => weaponFrame; set => weaponFrame = value; }
         public GameObject ChestFrame { get => chestFrame; set => chestFrame = value; }
+        public GameObject ConsumableFrame { get => consumableFrame; set => consumableFrame = value; }
 
         public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Equipment weapon, Equipment chest, Equipment helmet, Equipment boot, Consumable consumable) : base(position, spriteName)
         {
@@ -82,7 +84,14 @@ namespace Adventures_Guild_Simulator
             BootFrame = new GameObject(Boot.Position + new Vector2(-60, -60), "Frame", Boot.Rarity);
             WeaponFrame = new GameObject(Weapon.Position + new Vector2(-60, -60), "Frame", Weapon.Rarity);
             HelmetFrame = new GameObject(Helmet.Position + new Vector2(-60, -60), "Frame", Helmet.Rarity);
-
+            if (Consumable == null)
+            {
+                ConsumableFrame = new GameObject(position + new Vector2(-60, -60), "Frame", "Common");
+            }
+            else
+            {
+                ConsumableFrame = new GameObject(position + new Vector2(-60, -60), "Frame", Consumable.Rarity);
+            }            
         }
 
         public override void Update(GameTime gameTime)
