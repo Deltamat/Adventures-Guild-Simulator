@@ -165,7 +165,10 @@ namespace Adventures_Guild_Simulator
                 naming.CreateNames();
             }
         }
-        
 
+        public string GetName(int i, int j)
+        {
+            return naming.SelectPrefix(GameWorld.Instance.GenerateRandom(i, j));
+        }
     }
 }

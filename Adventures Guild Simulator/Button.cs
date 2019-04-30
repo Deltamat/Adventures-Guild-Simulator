@@ -103,9 +103,7 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
-        {
-            
-
+        {            
             //Pretty selfexplanatory, but it changes the button's color to gray from  
             //white if you hover over it with the mouse.
             if (isHovering || selected)

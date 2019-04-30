@@ -10,10 +10,7 @@ namespace Adventures_Guild_Simulator
 {
     class Inventory : Item
     {
-        bool isEquipped;
-        MouseState mouseState = Mouse.GetState();
-
-        public bool IsEquipped { get => isEquipped; set => isEquipped = value; }
+        MouseState mouseState = Mouse.GetState();        
 
         List<Item> currentInventory = new List<Item>();
 
