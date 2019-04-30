@@ -339,11 +339,6 @@ namespace Adventures_Guild_Simulator
                 inventoryList.Remove(item);
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
-            {
-                sellAdventurerButton.Update(gameTime);
-            }
-
             if (Keyboard.GetState().IsKeyDown(Keys.S) && delay > 1000)
             {
                 Item.SellItem();
