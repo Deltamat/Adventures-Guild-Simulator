@@ -99,6 +99,14 @@ namespace Adventures_Guild_Simulator
         {
             consumable.UpdateUses(id, newUses);
         }
+        public void EquipConsumable(int id)
+        {
+            consumable.EquipConsumable(id);
+        }
+        public void UnequipConsumable(int id)
+        {
+            consumable.UnequipConsumable(id);
+        }
         #endregion
 
         #region Equipment
