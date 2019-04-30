@@ -478,7 +478,7 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
                     spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
                     spriteBatch.DrawString(GameWorld.instance.fontCopperplate, $"SR:{value.Skill}", value.Position + new Vector2(-50, 70), Color.White);
-
+                    spriteBatch.DrawString(fontCopperplate, $"lvl:{value.Level}",value.Position + new Vector2(-50, 95), Color.White);
                     if (value.Helmet != null)
                     {
                         spriteBatch.Draw(value.Helmet.Sprite, value.Helmet.CollisionBox, Color.White);
