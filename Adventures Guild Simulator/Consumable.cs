@@ -39,25 +39,21 @@ namespace Adventures_Guild_Simulator
                 tempRarity = "Legendary";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
             }
-
             else if (tempRarityGenerator > 90)
             {
                 tempRarity = "Epic";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
             }
-
             else if (tempRarityGenerator > 75)
             {
                 tempRarity = "Rare";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
             }
-
             else if (tempRarityGenerator > 50)
             {
                 tempRarity = "Uncommon";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
             }
-
             else
             {
                 tempRarity = "Common";
@@ -71,17 +67,14 @@ namespace Adventures_Guild_Simulator
             {
                 tempItemType = "Potion";
             }
-
             else if (tempItemTypeGenerate == 1)
             {
                 tempItemType = "Potion";
             }
-
             else if (tempItemTypeGenerate == 2)
             {
                 tempItemType = "Potion";
             }
-
             else if (tempItemTypeGenerate == 3)
             {
                 tempItemType = "Potion";
@@ -89,6 +82,10 @@ namespace Adventures_Guild_Simulator
 
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
+            if (tempGoldCost < 1)
+            {
+                tempGoldCost = 1;
+            }
 
             GameWorld.Instance.itemList.Add(new Consumable(itemPosition, tempItemType, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false, 1));
         }
@@ -104,25 +101,21 @@ namespace Adventures_Guild_Simulator
                 tempRarity = "Legendary";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
             }
-
             else if (tempRarityGenerator > 90)
             {
                 tempRarity = "Epic";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
             }
-
             else if (tempRarityGenerator > 75)
             {
                 tempRarity = "Rare";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
             }
-
             else if (tempRarityGenerator > 50)
             {
                 tempRarity = "Uncommon";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
             }
-
             else
             {
                 tempRarity = "Common";
@@ -136,17 +129,14 @@ namespace Adventures_Guild_Simulator
             {
                 tempItemType = "Potion";
             }
-
             else if (tempItemTypeGenerate == 1)
             {
                 tempItemType = "Potion";
             }
-
             else if (tempItemTypeGenerate == 2)
             {
                 tempItemType = "Potion";
             }
-
             else if (tempItemTypeGenerate == 3)
             {
                 tempItemType = "Potion";
@@ -154,7 +144,11 @@ namespace Adventures_Guild_Simulator
 
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
-            
+            if (tempGoldCost < 1)
+            {
+                tempGoldCost = 1;
+            }
+
             return new Consumable(itemPosition, tempItemType, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false, 1);
         }
 

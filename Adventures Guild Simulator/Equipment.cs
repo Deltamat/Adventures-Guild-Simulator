@@ -40,25 +40,21 @@ namespace Adventures_Guild_Simulator
                 tempRarity = "Legendary";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
             }
-
             else if (tempRarityGenerator > 90)
             {
                 tempRarity = "Epic";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
             }
-
             else if (tempRarityGenerator > 75)
             {
                 tempRarity = "Rare";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
             }
-
             else if (tempRarityGenerator > 50)
             {
                 tempRarity = "Uncommon";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
             }
-
             else
             {
                 tempRarity = "Common";
@@ -140,13 +136,11 @@ namespace Adventures_Guild_Simulator
                 armorNumber = GameWorld.Instance.GenerateRandom(0, 23);
 
             }
-
             else if (tempItemTypeGenerate == 2)
             {
                 tempItemType = "Helmet";
                 armorNumber = GameWorld.Instance.GenerateRandom(0, 25);
             }
-
             else if (tempItemTypeGenerate == 3)
             {
                 tempItemType = "Boot";
@@ -158,6 +152,10 @@ namespace Adventures_Guild_Simulator
 
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
+            if (tempGoldCost < 1)
+            {
+                tempGoldCost = 1;
+            }
 
             if (tempItemType == "Weapon")
             {
@@ -186,25 +184,21 @@ namespace Adventures_Guild_Simulator
                 tempRarity = "Legendary";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
             }
-
             else if (tempRarityGenerator > 90)
             {
                 tempRarity = "Epic";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
             }
-
             else if (tempRarityGenerator > 75)
             {
                 tempRarity = "Rare";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
             }
-
             else if (tempRarityGenerator > 50)
             {
                 tempRarity = "Uncommon";
                 tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
             }
-
             else
             {
                 tempRarity = "Common";
@@ -279,18 +273,15 @@ namespace Adventures_Guild_Simulator
                         break;
                 }
             }
-
             else if (tempItemTypeGenerate == 1)
             {
                 tempItemType = "Chest";
 
             }
-
             else if (tempItemTypeGenerate == 2)
             {
                 tempItemType = "Helmet";
             }
-
             else if (tempItemTypeGenerate == 3)
             {
                 tempItemType = "Boot";
@@ -301,6 +292,10 @@ namespace Adventures_Guild_Simulator
 
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
+            if (tempGoldCost < 1)
+            {
+                tempGoldCost = 1;
+            }
 
             if (tempItemType == "Weapon")
             {

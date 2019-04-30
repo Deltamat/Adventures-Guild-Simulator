@@ -12,7 +12,7 @@ namespace Adventures_Guild_Simulator
     {
         protected Texture2D sprite;
         protected Vector2 position;
-        private string rarity = "Common";
+        protected string rarity = "Common";
         /// <summary>
         /// Get-set property for the sprite Texture2D
         /// </summary>
