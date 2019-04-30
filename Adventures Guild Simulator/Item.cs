@@ -16,7 +16,6 @@ namespace Adventures_Guild_Simulator
         int skillRating;
         int goldCost;
         string type;
-        string rarity;
         string name;
         private static bool anySelected = false;
         private bool owned = true;
@@ -46,7 +45,6 @@ namespace Adventures_Guild_Simulator
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
-        public string Rarity { get => rarity; set => rarity = value; }
         public bool Owned { get => owned; set => owned = value; }
         public static bool AnySelected { get => anySelected; set => anySelected = value; }
         public Color RarityColor { get => rarityColor; set => rarityColor = value; }
@@ -146,6 +144,7 @@ namespace Adventures_Guild_Simulator
                             item.selected = false;
                         }
                     }
+                    GameWorld.Instance.drawSelectedAdventurer = false;
 
                     selected = true;
                     SelectedID = id;
@@ -287,7 +286,7 @@ namespace Adventures_Guild_Simulator
             }
 
             //Generates a name using the naming database
-            string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+            string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
 
             //Generates a gold cost from 75% - 125% of the skill rating
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
@@ -365,6 +364,7 @@ namespace Adventures_Guild_Simulator
             {
                 item.Rarity = "Common";
             }
+            AnySelected = false;
         }
     }
 }
