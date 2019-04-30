@@ -74,9 +74,9 @@ namespace Adventures_Guild_Simulator
         {
             return consumable.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, isEquipped, uses);
         }
-        public void DeleteConsumable(int id)
+        public void SellConsumable(int id)
         {
-            consumable.Delete(id);
+            consumable.SellConsumable(id);
         }
         public void UpdateConsumable(int id, int newUses)
         {

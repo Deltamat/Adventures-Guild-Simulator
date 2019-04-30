@@ -73,7 +73,7 @@ namespace Adventures_Guild_Simulator
             //Picks the color for the item text
             if (Rarity == "Common")
             {
-               RarityColor = Color.White;
+                RarityColor = Color.White;
             }
 
             if (Rarity == "Uncommon")
@@ -83,7 +83,7 @@ namespace Adventures_Guild_Simulator
 
             if (Rarity == "Rare")
             {
-               RarityColor = Color.Blue;
+                RarityColor = Color.Blue;
             }
 
             if (Rarity == "Epic")
@@ -96,7 +96,7 @@ namespace Adventures_Guild_Simulator
                 RarityColor = Color.Orange;
             }
         }
-        
+
         /// <summary>
         /// Constructor for generating temporary items (because it doesn't need the "id")
         /// </summary>       
@@ -155,19 +155,23 @@ namespace Adventures_Guild_Simulator
                     SelectedID = id;
                     AnySelected = true;
 
+                    //If the item is in the shop
                     if (GameWorld.Instance.shop.Contains(this) && GameWorld.Instance.gold >= GoldCost)
                     {
                         GameWorld.Instance.gold -= GoldCost;
+                        Controller.Instance.UpdateStats();
                         if (this.GetType() == typeof(Equipment))
                         {
-                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false);
+                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false); //Adds the equipment to the database
                         }
                         else if (this.GetType() == typeof(Consumable))
                         {
-                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4));
+                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1, 4)); //Adds the consumable to the database
                         }
-                        GameWorld.Instance.boughtItems.Add(this);
-                        GameWorld.Instance.inventoryList.Add(this);
+                        GameWorld.Instance.boughtItems.Add(this); //Removes the item from the shop
+                        GameWorld.Instance.inventoryList.Add(this); //Adds the item to the inventory
+                        selected = false;
+                        AnySelected = false;
                     }
                 }
 
@@ -178,7 +182,7 @@ namespace Adventures_Guild_Simulator
                         if (adventurer.selected)
                         {
                             Adventurer A = GameWorld.Instance.adventurersDic[adventurer.Id];
-                            
+
                             if (type == "Helmet")
                             {
                                 GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
@@ -231,7 +235,7 @@ namespace Adventures_Guild_Simulator
             int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
             int tempSkillRating;
             string tempRarity;
-            
+
 
             //Generates the rarity of the item
             if (tempRarityGenerator == 99)
@@ -328,7 +332,7 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
-            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);            
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);
         }
 
         //Code for drawing the information once the inventory item is selected
@@ -350,16 +354,23 @@ namespace Adventures_Guild_Simulator
             {
                 if (GameWorld.Instance.inventoryList[i].selected == true)
                 {
-                    //GameWorld.Instance.inventoryFrameList[i].Rarity = "Common";
-                    Controller.Instance.SellEquipement(GameWorld.Instance.inventoryList[i].Id);
-                    GameWorld.Instance.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]);
+                    GameWorld.Instance.gold += GameWorld.Instance.inventoryList[i].GoldCost; //Adds the sells price to the players gold
+                    Controller.Instance.UpdateStats(); //Updates the gold
+                    if (GameWorld.Instance.inventoryList[i].GetType() == typeof(Equipment)) //Checks for equipment
+                    {
+                        Controller.Instance.SellEquipement(GameWorld.Instance.inventoryList[i].Id); //Deletes the item from the database
+                    }
+                    else if (GameWorld.Instance.inventoryList[i].GetType() == typeof(Consumable)) //Checks for consumable
+                    {
+                        Controller.Instance.SellConsumable(GameWorld.Instance.inventoryList[i].Id); //Deletes the item from the database
+                    }
+                    GameWorld.Instance.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]); //Adds the item to the list toBeRemoved
                 }
             }
             foreach (var item in GameWorld.Instance.inventoryFrameList)
             {
                 item.Rarity = "Common";
             }
-
         }
     }
 }

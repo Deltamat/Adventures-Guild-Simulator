@@ -178,7 +178,7 @@ namespace Adventures_Guild_Simulator
             {
                 TextForButton = "Sell selected adventurer",
             };
-            ResetButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(100, 100), "AB")
+            ResetButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(100, 1000), "AB")
             {
                 TextForButton = "Reset",
             };
@@ -344,10 +344,9 @@ namespace Adventures_Guild_Simulator
             {
                 sellAdventurerButton.Update(gameTime);
             }
-  
-            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+            foreach (Item item in toBeRemovedItem)
             {
-                sellAdventurerButton.Update(gameTime);
+                inventoryList.Remove(item);
             }
 
             if (Keyboard.GetState().IsKeyDown(Keys.S) && delay > 1000)
@@ -645,7 +644,7 @@ namespace Adventures_Guild_Simulator
             {
                 Button AdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(700 + line * 250, 600 + i * 45), "AB")
                 {
-                    TextForButton = $"{item.Value.Name} LvL: {item.Value.Level}",
+                    TextForButton = $"{item.Value.Name}",
                     FontColor = Color.White,
                     Id = item.Value.Id,
                     questActive = item.Value.OnQuest
@@ -723,7 +722,9 @@ namespace Adventures_Guild_Simulator
             questsCompleted = 0;
             adventurerDeaths = 0;
             inventoryList = new List<Item>();
-            foreach (var item in GameWorld.Instance.inventoryFrameList)
+            quests = new List<Quest>();
+            drawSelectedAdventurer = false;
+            foreach (var item in inventoryFrameList)
             {
                 item.Rarity = "Common";
             }
