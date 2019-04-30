@@ -159,13 +159,13 @@ namespace Adventures_Guild_Simulator
 
             if (tempItemType == "Weapon")
             {
-                string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {weaponType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {weaponType} of {Controller.Instance.GetName(1, 39)}";
                 Controller.Instance.CreateEquipment(tempName, $"Items/Weapons/{weaponType}/{weaponNumber}", tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
             }
 
             else 
             {
-                string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
                 Controller.Instance.CreateEquipment(tempName, $"Items/Armor/{tempItemType}/{armorNumber}", tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
             }
         }
@@ -299,13 +299,13 @@ namespace Adventures_Guild_Simulator
 
             if (tempItemType == "Weapon")
             {
-                string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {weaponType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {weaponType} of {Controller.Instance.GetName(1, 39)}";
                 return new Equipment(itemPosition, tempName, $"Items/Weapons/{weaponType}/{weaponNumber}", tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
             }
 
             else
             {
-                string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
                 return new Equipment(itemPosition, tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
             }
             
