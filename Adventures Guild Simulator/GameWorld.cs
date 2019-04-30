@@ -522,7 +522,8 @@ namespace Adventures_Guild_Simulator
                 if (adventurersDic.TryGetValue(adventurerToShowId, out value))
                 {
                     spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
-                    spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon
+                    spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon                    
+                    spriteBatch.DrawString(fontCopperplate, $"lvl:{value.Level}",value.Position + new Vector2(-50, 95), Color.White);
                     spriteBatch.DrawString(fontCopperplate, $"SR:{value.Skill}", value.Position + new Vector2(-50, 70), Color.White);
 
                     if (value.Helmet != null)
