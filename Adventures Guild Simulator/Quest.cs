@@ -146,7 +146,7 @@ namespace Adventures_Guild_Simulator
                             item.questActive = false;
                         }
                     }
-                    
+
                     assignedAdventurer.OnQuest = false;
                     GameWorld.Instance.questsToBeRemoved.Add(this);
                     float failureChance;
@@ -184,6 +184,21 @@ namespace Adventures_Guild_Simulator
                         GameWorld.Instance.adventurerDeaths++; //Adds one to total adventurer deaths
                         Controller.Instance.UpdateStats();
                         GameWorld.Instance.UpdateAdventurerButtons();
+                    }
+
+                    if (assignedAdventurer.Consumable != null) //use potion
+                    {
+                        assignedAdventurer.Consumable.Uses--;
+                        if (assignedAdventurer.Consumable.Uses < 1)
+                        {
+                            Controller.Instance.SellConsumable(assignedAdventurer.Consumable.Id); // removes the potion, not sell ;)
+                            GameWorld.Instance.consumableDic.Remove(assignedAdventurer.Consumable.Id);
+                            assignedAdventurer.Consumable = null;
+                        }
+                        else
+                        {
+                            Controller.Instance.UpdateConsumable(assignedAdventurer.Consumable.Id, assignedAdventurer.Consumable.Uses);
+                        }
                     }
                 }
             }

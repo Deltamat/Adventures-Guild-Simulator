@@ -75,7 +75,12 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                consumables.Add(reader.GetInt32(0), new Consumable(Vector2.Zero, reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7), reader.GetInt32(8)));
+                Consumable c = new Consumable(new Vector2(650, 200), reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), false, reader.GetInt32(8));
+                if (reader.GetInt16(7) == 1)
+                {
+                    c.IsEquipped = true;
+                }
+                consumables.Add(c.Id, c);
             }
             reader.Close();
             return consumables;

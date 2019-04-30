@@ -185,6 +185,8 @@ namespace Adventures_Guild_Simulator
                                 {
                                     GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
                                 }
+                                A.Helmet.IsEquipped = false;
+                                Controller.Instance.UnequipEquipment(A.Helmet.Id);
                                 A.Helmet = (Equipment)this;
                                 A.Helmet.IsEquipped = true;
                                 A.HelmetFrame.Rarity = this.Rarity;
@@ -200,6 +202,8 @@ namespace Adventures_Guild_Simulator
                                 {
                                     GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
                                 }
+                                A.Weapon.IsEquipped = false;
+                                Controller.Instance.UnequipEquipment(A.Weapon.Id);
                                 A.Weapon = (Equipment)this;
                                 A.WeaponFrame.Rarity = this.Rarity;
                                 A.Weapon.IsEquipped = true;
@@ -216,6 +220,8 @@ namespace Adventures_Guild_Simulator
                                 {
                                     GameWorld.Instance.toBeAddedItem.Add(A.Boot);
                                 }
+                                A.Boot.IsEquipped = false;
+                                Controller.Instance.UnequipEquipment(A.Boot.Id);
                                 A.Boot = (Equipment)this;
                                 A.BootFrame.Rarity = this.Rarity;
                                 A.Boot.IsEquipped = true;
@@ -231,6 +237,8 @@ namespace Adventures_Guild_Simulator
                                 {
                                     GameWorld.Instance.toBeAddedItem.Add(A.Chest);
                                 }
+                                A.Chest.IsEquipped = false;
+                                Controller.Instance.UnequipEquipment(A.Chest.Id);
                                 A.Chest = (Equipment)this;
                                 A.ChestFrame.Rarity = this.Rarity;
                                 A.Chest.IsEquipped = true;
@@ -242,8 +250,15 @@ namespace Adventures_Guild_Simulator
 
                             if (type == "Potion")
                             {
+                                if (A.Consumable != null)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Consumable);
+                                    A.Consumable.IsEquipped = false;
+                                    Controller.Instance.UnequipConsumable(A.Consumable.Id);
+                                }
+                                
                                 A.Consumable = (Consumable)this;
-                                //A.ConsumableFrame.Rarity = this.Rarity;
+                                A.ConsumableFrame.Rarity = this.Rarity;
                                 A.Consumable.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
@@ -257,6 +272,10 @@ namespace Adventures_Guild_Simulator
                             A.Helmet.Position = A.Position + new Vector2(300, 0);
                             A.Chest.Position = A.Position + new Vector2(450, 0);
                             A.Boot.Position = A.Position + new Vector2(600, 0);
+                            if (A.Consumable != null)
+                            {
+                                A.Consumable.Position = A.Position + new Vector2(0, 0);
+                            }
 
                             delay = 0;
                         }
