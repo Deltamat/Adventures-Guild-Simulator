@@ -60,7 +60,7 @@ namespace Adventures_Guild_Simulator
 
             if (helmet == null)
             {
-               Helmet = new Equipment(Position, "Training Helmet", "Helmet", "Helmet", "Common", 0, 10, true);
+               Helmet = new Equipment(Position, "Training Helmet", "Helmet", "Helmet", "Common", 0, 1, true);
             }
 
             if (chest == null)
