@@ -16,7 +16,6 @@ namespace Adventures_Guild_Simulator
         int skillRating;
         int goldCost;
         string type;
-        string rarity;
         string name;
         private static bool anySelected = false;
         private bool owned = true;
@@ -47,7 +46,6 @@ namespace Adventures_Guild_Simulator
         public string Type { get => type; set => type = value; }
         public string Name { get => name; set => name = value; }
         public int GoldCost { get => goldCost; set => goldCost = value; }
-        public string Rarity { get => rarity; set => rarity = value; }
         public bool Owned { get => owned; set => owned = value; }
         public static bool AnySelected { get => anySelected; set => anySelected = value; }
         public Color RarityColor { get => rarityColor; set => rarityColor = value; }
@@ -107,8 +105,6 @@ namespace Adventures_Guild_Simulator
             Type = type;
             Name = name;
             GoldCost = goldCost;
-
-
         }
 
         public override void Update(GameTime gameTime)
@@ -150,6 +146,7 @@ namespace Adventures_Guild_Simulator
                             item.selected = false;
                         }
                     }
+                    GameWorld.Instance.drawSelectedAdventurer = false;
 
                     selected = true;
                     SelectedID = id;
@@ -185,19 +182,25 @@ namespace Adventures_Guild_Simulator
 
                             if (type == "Helmet")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
+                                if (A.Helmet.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
+                                }
                                 A.Helmet = (Equipment)this;
                                 A.Helmet.IsEquipped = true;
                                 A.HelmetFrame.Rarity = this.Rarity;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 Controller.Instance.UpdateAdventurerHelmet(A.Helmet.id);
-                                Controller.Instance.EquipEquipment(A.Helmet.id, A.Helmet.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Helmet.id);
                             }
 
                             if (type == "Weapon")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
+                                if (A.Weapon.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
+                                }
                                 A.Weapon = (Equipment)this;
                                 A.WeaponFrame.Rarity = this.Rarity;
                                 A.Weapon.IsEquipped = true;
@@ -205,31 +208,37 @@ namespace Adventures_Guild_Simulator
 
                                 // update the database
                                 Controller.Instance.UpdateAdventurerWeapon(A.Weapon.Id);
-                                Controller.Instance.EquipEquipment(A.Weapon.Id, A.Weapon.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Weapon.Id);
                             }
 
                             if (type == "Boot")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Boot);
+                                if (A.Boot.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Boot);
+                                }
                                 A.Boot = (Equipment)this;
                                 A.BootFrame.Rarity = this.Rarity;
                                 A.Boot.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 Controller.Instance.UpdateAdventurerBoot(A.Boot.id);
-                                Controller.Instance.EquipEquipment(A.Boot.Id, A.Boot.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Boot.Id);
                             }
 
                             if (type == "Chest")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Chest);
+                                if (A.Chest.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Chest);
+                                }
                                 A.Chest = (Equipment)this;
                                 A.ChestFrame.Rarity = this.Rarity;
                                 A.Chest.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 Controller.Instance.UpdateAdventurerChest(A.Chest.id);
-                                Controller.Instance.EquipEquipment(A.Chest.Id, A.Chest.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Chest.Id);
                             }
 
                             
@@ -311,7 +320,7 @@ namespace Adventures_Guild_Simulator
             }
 
             //Generates a name using the naming database
-            string tempName = $"{ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(38, 100))} {tempItemType} of {ModelNaming.SelectPrefix(GameWorld.Instance.GenerateRandom(1, 39))}";
+            string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
 
             //Generates a gold cost from 75% - 125% of the skill rating
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
@@ -389,6 +398,7 @@ namespace Adventures_Guild_Simulator
             {
                 item.Rarity = "Common";
             }
+            AnySelected = false;
         }
     }
 }
