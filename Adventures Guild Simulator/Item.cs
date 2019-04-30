@@ -240,7 +240,18 @@ namespace Adventures_Guild_Simulator
                                 Controller.Instance.EquipEquipment(A.Chest.Id);
                             }
 
-                            
+                            if (type == "Potion")
+                            {
+                                A.Consumable = (Consumable)this;
+                                //A.ConsumableFrame.Rarity = this.Rarity;
+                                A.Consumable.IsEquipped = true;
+                                GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerConsumeable(A.Consumable.id);
+                                Controller.Instance.EquipConsumable(A.Consumable.Id);
+                            }
+
+
 
                             A.Weapon.Position = A.Position + new Vector2(150, 0);
                             A.Helmet.Position = A.Position + new Vector2(300, 0);

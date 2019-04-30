@@ -84,7 +84,14 @@ namespace Adventures_Guild_Simulator
             BootFrame = new GameObject(Boot.Position + new Vector2(-60, -60), "Frame", Boot.Rarity);
             WeaponFrame = new GameObject(Weapon.Position + new Vector2(-60, -60), "Frame", Weapon.Rarity);
             HelmetFrame = new GameObject(Helmet.Position + new Vector2(-60, -60), "Frame", Helmet.Rarity);
-
+            if (Consumable == null)
+            {
+                ConsumableFrame = new GameObject(position + new Vector2(-60, -60), "Frame", "Common");
+            }
+            else
+            {
+                ConsumableFrame = new GameObject(position + new Vector2(-60, -60), "Frame", Consumable.Rarity);
+            }            
         }
 
         public override void Update(GameTime gameTime)

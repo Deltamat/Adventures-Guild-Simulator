@@ -171,9 +171,9 @@ namespace Adventures_Guild_Simulator
             UpdateAdventurerButtons();
 
             //Buttons
-            var buyAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2((int)(ScreenSize.Width - ScreenSize.Center.X - 100), (int)(ScreenSize.Height - ScreenSize.Center.Y - 20)), "AB")
+            var buyAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(950, 1020), "AB")
             {
-                TextForButton = "Buy Adventurer",
+                TextForButton = "Buy adv.",
                 FontColor = Color.White
             };
             sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
@@ -220,13 +220,12 @@ namespace Adventures_Guild_Simulator
                 {
                     return;
                 }
-                Adventurer a = Controller.Instance.CreateAdventurer("Gert");
+                Adventurer a = Controller.Instance.CreateAdventurer(Controller.Instance.GetName(100, 120));
                 adventurersDic.Add(a.Id, a);
                 drawSelectedAdventurer = false;
                 UpdateAdventurerButtons();
                 gold -= 20;
-            }
-            
+            }            
         }
 
         /// <summary>
@@ -406,9 +405,16 @@ namespace Adventures_Guild_Simulator
                 inventoryList.Remove(inventoryList[28]);
             }
 
-            for (int i = 0; i < inventoryList.Count; i++)
+            for (int i = 0; i < inventoryFrameList.Count; i++)
             {
-                inventoryFrameList[i].Rarity = inventoryList[i].Rarity;
+                if (i <= inventoryList.Count - 1)
+                {
+                    inventoryFrameList[i].Rarity = inventoryList[i].Rarity;
+                }
+                else
+                {
+                    inventoryFrameList[i].Rarity = "Common";
+                }
             }
 
             for (int i = 0; i < inventoryList.Count; i++)
@@ -521,10 +527,10 @@ namespace Adventures_Guild_Simulator
             {
                 if (adventurersDic.TryGetValue(adventurerToShowId, out value))
                 {
-                    spriteBatch.DrawString(font, value.Name, new Vector2(670, 120), Color.White); // name
-                    spriteBatch.Draw(value.Sprite, value.CollisionBox, Color.White); // icon                    
-                    spriteBatch.DrawString(fontCopperplate, $"lvl:{value.Level}",value.Position + new Vector2(-50, 95), Color.White);
-                    spriteBatch.DrawString(fontCopperplate, $"SR:{value.Skill}", value.Position + new Vector2(-50, 70), Color.White);
+                    spriteBatch.DrawString(fontCopperplate, value.Name, new Vector2(750, 325), Color.White); // name
+                    spriteBatch.Draw(value.Sprite, value.Position + new Vector2(-40, 125), Color.White); // icon                    
+                    spriteBatch.DrawString(fontCopperplate, $"lvl: {value.Level}", new Vector2(750, 375), Color.White);
+                    spriteBatch.DrawString(fontCopperplate, $"SR: {value.Skill}", new Vector2(750, 425), Color.White);
 
                     if (value.Helmet != null)
                     {
@@ -549,6 +555,7 @@ namespace Adventures_Guild_Simulator
                     if (value.Consumable != null)
                     {
                         spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
+                        spriteBatch.DrawString(fontCopperplate, $"SR:{value.Consumable.SkillRating}", value.Consumable.Position + new Vector2(-50, 70), Color.White);
                     }
 
                     if (value.BootFrame != null)
@@ -569,7 +576,12 @@ namespace Adventures_Guild_Simulator
                     if (value.HelmetFrame != null)
                     {
                         value.HelmetFrame.Draw(spriteBatch, true);
-                    }                   
+                    }
+
+                    if (value.ConsumableFrame != null)
+                    {
+                        value.ConsumableFrame.Draw(spriteBatch, true);
+                    }
                 }
 
                 //draws the sell adventurer button

@@ -92,5 +92,17 @@ namespace Adventures_Guild_Simulator
             cmd.CommandText = "DELETE FROM consumable";
             cmd.ExecuteNonQuery();
         }
+
+        public void EquipConsumable(int id)
+        {
+            cmd.CommandText = $"UPDATE consumable SET isEquipped={true} WHERE id={id}";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UnequipConsumable(int id)
+        {
+            cmd.CommandText = $"UPDATE consumable SET isEquipped={false} WHERE id={id}";
+            cmd.ExecuteNonQuery();
+        }
     }
 }
