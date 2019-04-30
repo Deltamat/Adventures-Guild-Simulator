@@ -57,6 +57,13 @@ namespace Adventures_Guild_Simulator
             return temp;
         }
 
+        //Removes the item with the ID from the database equipment
+        public void SellConsumable(int ID)
+        {
+            cmd.CommandText = $"DELETE FROM consumable WHERE id = {ID}";
+            cmd.ExecuteNonQuery();
+        }
+
         /// <summary>
         /// Adds all consumables from the database to a dictionary
         /// </summary>
@@ -77,12 +84,6 @@ namespace Adventures_Guild_Simulator
         public void UpdateUses(int id, int newUses)
         {
             cmd.CommandText = $"UPDATE consumable SET uses={newUses} WHERE id={id}";
-            cmd.ExecuteNonQuery();
-        }
-
-        public void Delete(int id)
-        {
-            cmd.CommandText = $"DELETE FROM consumable WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
 
