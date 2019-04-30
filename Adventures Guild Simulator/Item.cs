@@ -159,14 +159,13 @@ namespace Adventures_Guild_Simulator
                         Controller.Instance.UpdateStats();
                         if (this.GetType() == typeof(Equipment))
                         {
-                            Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false); //Adds the equipment to the database
+                            GameWorld.Instance.inventoryList.Add(Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false)); //Adds the equipment to the database
                         }
                         else if (this.GetType() == typeof(Consumable))
                         {
-                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1, 4)); //Adds the consumable to the database
+                            GameWorld.Instance.inventoryList.Add(Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1, 4))); //Adds the consumable to the database
                         }
                         GameWorld.Instance.boughtItems.Add(this); //Removes the item from the shop
-                        GameWorld.Instance.inventoryList.Add(this); //Adds the item to the inventory
                         selected = false;
                         AnySelected = false;
                     }

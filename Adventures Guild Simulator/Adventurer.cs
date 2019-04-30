@@ -92,11 +92,6 @@ namespace Adventures_Guild_Simulator
             {
                 Skill += Consumable.SkillRating;
             }
-           
-            Chest.Update(gameTime);
-            Boot.Update(gameTime);
-            Weapon.Update(gameTime);
-            Helmet.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

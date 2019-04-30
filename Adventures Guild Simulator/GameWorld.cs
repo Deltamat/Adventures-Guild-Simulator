@@ -334,14 +334,7 @@ namespace Adventures_Guild_Simulator
 
             resetButton.Update(gameTime);
 
-            equipmentDic = Controller.Instance.LoadEquipment();
-
-            foreach (Item item in toBeAddedItem)
-            {
-                inventoryList.Add(item);
-            }
-
-            toBeAddedItem.Clear();
+            equipmentDic = Controller.Instance.LoadEquipment();            
 
             //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
@@ -373,6 +366,18 @@ namespace Adventures_Guild_Simulator
                 item.Update(gameTime);
             }
 
+            foreach (Item item in toBeAddedItem)
+            {
+                inventoryList.Add(item);
+            }
+            toBeAddedItem.Clear();
+
+            foreach (Item item in toBeRemovedItem)
+            {
+                inventoryList.Remove(item);
+            }
+            toBeRemovedItem.Clear();
+
             //updates the adventurer buttons, it is its own list because the list have to be emptied sometimes
             foreach (GameObject button in adventurerButtons)
             {
@@ -393,13 +398,7 @@ namespace Adventures_Guild_Simulator
             if (Item.AnySelected == true)
             {
                 sellItemButton.Update(gameTime);
-            }
-
-            foreach (Item item in toBeRemovedItem)
-            {
-                inventoryList.Remove(item);
-            }
-            toBeAddedItem.Clear();
+            }            
 
             //Makes sure the inventory amount isn't exceeded
             while (inventoryList.Count > 28)
