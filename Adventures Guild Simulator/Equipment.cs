@@ -135,7 +135,7 @@ namespace Adventures_Guild_Simulator
             }
             else if (tempItemTypeGenerate == 2)
             {
-                tempItemType = "helmet";
+                tempItemType = "Helmet";
             }
             else if (tempItemTypeGenerate == 3)
             {

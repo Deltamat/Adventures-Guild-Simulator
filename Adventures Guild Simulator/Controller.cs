@@ -59,9 +59,30 @@ namespace Adventures_Guild_Simulator
         {
             adventurer.SetLevel(id, level);
         }
-        public void UpdateAdventurerEquipment(int weaponId, int helmetId, int chestId, int bootId, int consumableId)
+        public void UpdateAdventurerEquipment(int weaponId, int helmetId, int chestId, int bootId)
         {
-            adventurer.UpdateEquipment(weaponId, helmetId, chestId, bootId, consumableId);
+            adventurer.UpdateEquipment(weaponId, helmetId, chestId, bootId);
+        }
+
+        public void UpdateAdventurerWeapon(int weaponId)
+        {
+            adventurer.UpdateWeapon(weaponId);
+        }
+        public void UpdateAdventurerHelmet(int helmetId)
+        {
+            adventurer.UpdateHelmet(helmetId);
+        }
+        public void UpdateAdventurerChest(int chestId)
+        {
+            adventurer.UpdateChest(chestId);
+        }
+        public void UpdateAdventurerBoot(int bootId)
+        {
+            adventurer.UpdateBoot(bootId);
+        }
+        public void UpdateAdventurerConsumeable(int consumableId)
+        {
+            adventurer.UpdateConsumable(consumableId);
         }
         #endregion
 
@@ -96,6 +117,10 @@ namespace Adventures_Guild_Simulator
         public void SellEquipement(int id)
         {
             equipment.SellEquipment(id);
+        }
+        public void EquipEquipment(int id, bool isEquipped)
+        {
+            equipment.EquipEquipment(id, isEquipped);
         }
 
 

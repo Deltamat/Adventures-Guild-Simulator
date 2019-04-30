@@ -55,22 +55,22 @@ namespace Adventures_Guild_Simulator
 
             if (weapon == null)
             {
-               Weapon = new Equipment(Position, "Training Sword", "Weapon", "weapon", "Common", 0, 1, true);
+               Weapon = new Equipment(Position, "Training Sword", "Weapon", "Weapon", "Common", 0, 1, true);
             }
 
             if (helmet == null)
             {
-               Helmet = new Equipment(Position, "Training Helmet", "Helmet", "helmet", "Common", 0, 10, true);
+               Helmet = new Equipment(Position, "Training Helmet", "Helmet", "Helmet", "Common", 0, 10, true);
             }
 
             if (chest == null)
             {
-               Chest = new Equipment(Position, "Training Chest", "Chest", "chest", "Common", 0, 1, true);
+               Chest = new Equipment(Position, "Training Chest", "Chest", "Chest", "Common", 0, 1, true);
             }
 
             if (boot == null)
             {
-               Boot = new Equipment(Position, "Training Boot", "Boot", "boot", "Common", 0, 1, true);
+               Boot = new Equipment(Position, "Training Boot", "Boot", "Boot", "Common", 0, 1, true);
             }
 
             Weapon.Position = position + new Vector2(150, 0);

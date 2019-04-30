@@ -367,6 +367,7 @@ namespace Adventures_Guild_Simulator
             {
                 inventoryList.Remove(item);
             }
+            toBeAddedItem.Clear();
 
             //Makes sure the inventory amount isn't exceeded
             while (inventoryList.Count > 28)

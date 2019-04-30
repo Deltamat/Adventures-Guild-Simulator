@@ -25,6 +25,7 @@ namespace Adventures_Guild_Simulator
         private static int selectedID;
         bool selectedSwitch = false;
         bool previousSelectedSwitch = false;
+        float delay;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -116,6 +117,8 @@ namespace Adventures_Guild_Simulator
             //Gets current position and "click info" from the mouse
             currentMouse = Mouse.GetState();
 
+            delay += gameTime.ElapsedGameTime.Milliseconds;
+
             var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
 
             //Checks if the mouseRectangle intersects with a button's Rectangle. 
@@ -126,6 +129,7 @@ namespace Adventures_Guild_Simulator
                 //(and release the mouse button while still inside the button's rectangle)
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    GameWorld.Instance.drawSelectedAdventurer = false;
                     foreach (Quest quest in GameWorld.Instance.quests)
                     {
                         quest.selected = false;
@@ -182,8 +186,12 @@ namespace Adventures_Guild_Simulator
                             {
                                 GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
                                 A.Helmet = (Equipment)this;
+                                A.Helmet.IsEquipped = true;
                                 A.HelmetFrame.Rarity = this.Rarity;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerHelmet(A.Helmet.id);
+                                Controller.Instance.EquipEquipment(A.Helmet.id, A.Helmet.IsEquipped);
                             }
 
                             if (type == "Weapon")
@@ -191,7 +199,12 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
                                 A.Weapon = (Equipment)this;
                                 A.WeaponFrame.Rarity = this.Rarity;
+                                A.Weapon.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                // update the database
+                                Controller.Instance.UpdateAdventurerWeapon(A.Weapon.Id);
+                                Controller.Instance.EquipEquipment(A.Weapon.Id, A.Weapon.IsEquipped);
                             }
 
                             if (type == "Boot")
@@ -199,7 +212,11 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeAddedItem.Add(A.Boot);
                                 A.Boot = (Equipment)this;
                                 A.BootFrame.Rarity = this.Rarity;
+                                A.Boot.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerBoot(A.Boot.id);
+                                Controller.Instance.EquipEquipment(A.Boot.Id, A.Boot.IsEquipped);
                             }
 
                             if (type == "Chest")
@@ -207,14 +224,21 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeAddedItem.Add(A.Chest);
                                 A.Chest = (Equipment)this;
                                 A.ChestFrame.Rarity = this.Rarity;
+                                A.Chest.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerChest(A.Chest.id);
+                                Controller.Instance.EquipEquipment(A.Chest.Id, A.Chest.IsEquipped);
                             }
 
+                            
 
                             A.Weapon.Position = A.Position + new Vector2(150, 0);
                             A.Helmet.Position = A.Position + new Vector2(300, 0);
                             A.Chest.Position = A.Position + new Vector2(450, 0);
                             A.Boot.Position = A.Position + new Vector2(600, 0);
+
+                            delay = 0;
                         }
                     }
                 }
@@ -277,7 +301,7 @@ namespace Adventures_Guild_Simulator
 
             else if (tempItemTypeGenerate == 2)
             {
-                tempItemType = "helmet";
+                tempItemType = "Helmet";
             }
 
             else if (tempItemTypeGenerate == 3)
