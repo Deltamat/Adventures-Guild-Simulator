@@ -154,11 +154,6 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void UpdateEquipment(int weaponId, int helmetId, int chestId, int bootId)
-        {
-            cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot) = ({weaponId}, {helmetId}, {chestId}, {bootId})";
-            cmd.ExecuteNonQuery();
-        }
         public void UpdateWeapon(int weaponId)
         {
             cmd.CommandText = $"UPDATE adventurer SET weapon={weaponId}";

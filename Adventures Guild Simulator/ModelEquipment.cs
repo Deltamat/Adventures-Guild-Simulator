@@ -90,9 +90,15 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void EquipEquipment(int id, bool isEquipped)
+        public void EquipEquipment(int id)
         {
-            cmd.CommandText = $"UPDATE equipment SET isEquipped={isEquipped} WHERE id={id}";
+            cmd.CommandText = $"UPDATE equipment SET isEquipped={true} WHERE id={id}";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UnequipEquipment(int id)
+        {
+            cmd.CommandText = $"UPDATE equipment SET isEquipped={false} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
     }

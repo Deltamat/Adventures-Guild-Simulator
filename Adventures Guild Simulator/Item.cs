@@ -192,7 +192,7 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 Controller.Instance.UpdateAdventurerHelmet(A.Helmet.id);
-                                Controller.Instance.EquipEquipment(A.Helmet.id, A.Helmet.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Helmet.id);
                             }
 
                             if (type == "Weapon")
@@ -205,7 +205,7 @@ namespace Adventures_Guild_Simulator
 
                                 // update the database
                                 Controller.Instance.UpdateAdventurerWeapon(A.Weapon.Id);
-                                Controller.Instance.EquipEquipment(A.Weapon.Id, A.Weapon.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Weapon.Id);
                             }
 
                             if (type == "Boot")
@@ -217,7 +217,7 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 Controller.Instance.UpdateAdventurerBoot(A.Boot.id);
-                                Controller.Instance.EquipEquipment(A.Boot.Id, A.Boot.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Boot.Id);
                             }
 
                             if (type == "Chest")
@@ -229,7 +229,7 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 Controller.Instance.UpdateAdventurerChest(A.Chest.id);
-                                Controller.Instance.EquipEquipment(A.Chest.Id, A.Chest.IsEquipped);
+                                Controller.Instance.EquipEquipment(A.Chest.Id);
                             }
 
                             

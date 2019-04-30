@@ -59,10 +59,6 @@ namespace Adventures_Guild_Simulator
         {
             adventurer.SetLevel(id, level);
         }
-        public void UpdateAdventurerEquipment(int weaponId, int helmetId, int chestId, int bootId)
-        {
-            adventurer.UpdateEquipment(weaponId, helmetId, chestId, bootId);
-        }
 
         public void UpdateAdventurerWeapon(int weaponId)
         {
@@ -118,9 +114,13 @@ namespace Adventures_Guild_Simulator
         {
             equipment.SellEquipment(id);
         }
-        public void EquipEquipment(int id, bool isEquipped)
+        public void EquipEquipment(int id)
         {
-            equipment.EquipEquipment(id, isEquipped);
+            equipment.EquipEquipment(id);
+        }
+        public void UnequipEquipment(int id)
+        {
+            equipment.UnequipEquipment(id);
         }
 
 
