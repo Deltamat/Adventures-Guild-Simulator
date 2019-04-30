@@ -30,6 +30,9 @@ namespace Adventures_Guild_Simulator
             int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
             int tempSkillRating;
             string tempRarity;
+            string weaponType = "Axe";
+            int weaponNumber = 0;
+            int armorNumber = 0;
 
             //Weapon rarity
             if (tempRarityGenerator == 99)
@@ -65,22 +68,87 @@ namespace Adventures_Guild_Simulator
             if (tempItemTypeGenerate == 0)
             {
                 tempItemType = "Weapon";
+
+                int tempNumber = GameWorld.Instance.GenerateRandom(0, 11);
+
+                switch (tempNumber)
+                {
+                    case 0:
+                        weaponType = "Axe";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 24);
+                        break;
+
+                    case 1:
+                        weaponType = "Bow";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 11);
+                        break;
+
+                    case 2:
+                        weaponType = "Club";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 15);
+                        break;
+
+                    case 3:
+                        weaponType = "Crossbow";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 4);
+                        break;
+
+                    case 4:
+                        weaponType = "Dagger";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 18);
+                        break;
+
+                    case 5:
+                        weaponType = "Fist";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 8);
+                        break;
+
+                    case 6:
+                        weaponType = "Gun";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 8);
+                        break;
+
+                    case 7:
+                        weaponType = "Hammer";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 13);
+                        break;
+
+                    case 8:
+                        weaponType = "Polearm";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 11);
+                        break;
+
+                    case 9:
+                        weaponType = "Staff";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 13);
+                        break;
+
+                    case 10:
+                        weaponType = "Sword";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 24);
+                        break;
+                }
             }
+
             else if (tempItemTypeGenerate == 1)
             {
                 tempItemType = "Chest";
+                armorNumber = GameWorld.Instance.GenerateRandom(0, 23);
+
             }
             else if (tempItemTypeGenerate == 2)
             {
-                tempItemType = "helmet";
+                tempItemType = "Helmet";
+                armorNumber = GameWorld.Instance.GenerateRandom(0, 25);
             }
             else if (tempItemTypeGenerate == 3)
             {
                 tempItemType = "Boot";
+                armorNumber = GameWorld.Instance.GenerateRandom(0, 17);
             }
 
             //Random name generating
-            string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
+
 
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
@@ -89,7 +157,17 @@ namespace Adventures_Guild_Simulator
                 tempGoldCost = 1;
             }
 
-            Controller.Instance.CreateEquipment(tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false); //Generate object
+            if (tempItemType == "Weapon")
+            {
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {weaponType} of {Controller.Instance.GetName(1, 39)}";
+                Controller.Instance.CreateEquipment(tempName, $"Items/Weapons/{weaponType}/{weaponNumber}", tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
+            }
+
+            else 
+            {
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
+                Controller.Instance.CreateEquipment(tempName, $"Items/Armor/{tempItemType}/{armorNumber}", tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
+            }
         }
 
         public static Equipment ReturnEquipment(Vector2 itemPosition)
@@ -97,6 +175,8 @@ namespace Adventures_Guild_Simulator
             int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
             int tempSkillRating;
             string tempRarity;
+            string weaponType = "Axe";
+            int weaponNumber = 0;
 
             //Weapon rarity
             if (tempRarityGenerator == 99)
@@ -132,10 +212,71 @@ namespace Adventures_Guild_Simulator
             if (tempItemTypeGenerate == 0)
             {
                 tempItemType = "Weapon";
+
+                int tempNumber = GameWorld.Instance.GenerateRandom(0, 11);
+
+                switch (tempNumber)
+                {
+                    case 0:
+                        weaponType = "Axe";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 24);
+                    break;
+
+                    case 1:
+                        weaponType = "Bow";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 11);
+                        break;
+
+                    case 2:
+                        weaponType = "Club";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 15);
+                        break;
+
+                    case 3:
+                        weaponType = "Crossbow";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 4);
+                        break;
+
+                    case 4:
+                        weaponType = "Dagger";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 18);
+                        break;
+
+                    case 5:
+                        weaponType = "Fist";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 8);
+                        break;
+
+                    case 6:
+                        weaponType = "Gun";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 8);
+                        break;
+
+                    case 7:
+                        weaponType = "Hammer";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 13);
+                        break;
+
+                    case 8:
+                        weaponType = "Polearm";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 11);
+                        break;
+
+                    case 9:
+                        weaponType = "Staff";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 13);
+                        break;
+
+                    case 10:
+                        weaponType = "Sword";
+                        weaponNumber = GameWorld.Instance.GenerateRandom(0, 24);
+                        break;
+                }
             }
             else if (tempItemTypeGenerate == 1)
             {
                 tempItemType = "Chest";
+
             }
             else if (tempItemTypeGenerate == 2)
             {
@@ -147,7 +288,7 @@ namespace Adventures_Guild_Simulator
             }
 
             //Random name generating
-            string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
+           
 
             double tempGoldCostGenerate = (Convert.ToDouble(GameWorld.Instance.GenerateRandom(1, 50)) / 100);
             int tempGoldCost = Convert.ToInt32(Math.Round(tempSkillRating * (tempGoldCostGenerate + 0.75)));
@@ -156,7 +297,18 @@ namespace Adventures_Guild_Simulator
                 tempGoldCost = 1;
             }
 
-            return new Equipment(itemPosition, tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
+            if (tempItemType == "Weapon")
+            {
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {weaponType} of {Controller.Instance.GetName(1, 39)}";
+                return new Equipment(itemPosition, tempName, $"Items/Weapons/{weaponType}/{weaponNumber}", tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
+            }
+
+            else
+            {
+                string tempName = $"{Controller.Instance.GetName(38, 100)} {tempItemType} of {Controller.Instance.GetName(1, 39)}";
+                return new Equipment(itemPosition, tempName, tempItemType, tempItemType, tempRarity, tempGoldCost, tempSkillRating, false);
+            }
+            
         }
 
         public override void Update(GameTime gameTime)

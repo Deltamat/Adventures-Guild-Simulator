@@ -388,7 +388,7 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
-            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"SkillRating: {SkillRating}", Position + new Vector2(100, 70), Color.White);
         }
 
         //Code for drawing the information once the inventory item is selected
@@ -410,7 +410,7 @@ namespace Adventures_Guild_Simulator
             {
                 if (GameWorld.Instance.inventoryList[i].selected == true)
                 {
-                    GameWorld.Instance.gold += GameWorld.Instance.inventoryList[i].GoldCost; //Adds the sells price to the players gold
+                    GameWorld.Instance.gold += (GameWorld.Instance.inventoryList[i].GoldCost/3); //Adds the sells price to the players gold
                     Controller.Instance.UpdateStats(); //Updates the gold
                     if (GameWorld.Instance.inventoryList[i].GetType() == typeof(Equipment)) //Checks for equipment
                     {

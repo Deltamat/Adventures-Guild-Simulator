@@ -423,9 +423,9 @@ namespace Adventures_Guild_Simulator
             }
 
             //Generates an item into the equipment database + to the inventory
-            if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 2000)
+            if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 1000)
             {
-                Item.GenerateItem(new Vector2(300, 200));
+                Equipment.GenerateEquipment(new Vector2(300, 200));
 
                 inventoryList.Clear();
                 foreach (var item in equipmentDic)
@@ -671,7 +671,7 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
                     spriteBatch.DrawString(fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
                     spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
-                    spriteBatch.DrawString(fontCopperplate, $"GearScore: {item.SkillRating}", new Vector2(800, 230), Color.White);
+                    spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
                 }
             }
 

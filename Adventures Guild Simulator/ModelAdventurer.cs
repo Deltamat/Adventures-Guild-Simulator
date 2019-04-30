@@ -48,7 +48,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                 a = new Adventurer(new Vector2(650, 200), "defaultSprite", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
+                 a = new Adventurer(new Vector2(650, 200), $"Adventures/{GameWorld.Instance.GenerateRandom(0,58)}", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
             }
             reader.Close();
             return a;
