@@ -26,6 +26,7 @@ namespace Adventures_Guild_Simulator
         private static int selectedID;
         bool selectedSwitch = false;
         bool previousSelectedSwitch = false;
+        float delay;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -118,6 +119,8 @@ namespace Adventures_Guild_Simulator
             //Gets current position and "click info" from the mouse
             currentMouse = Mouse.GetState();
 
+            delay += gameTime.ElapsedGameTime.Milliseconds;
+
             var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
 
             //Checks if the mouseRectangle intersects with a button's Rectangle. 
@@ -128,6 +131,7 @@ namespace Adventures_Guild_Simulator
                 //(and release the mouse button while still inside the button's rectangle)
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    GameWorld.Instance.drawSelectedAdventurer = false;
                     foreach (Quest quest in GameWorld.Instance.quests)
                     {
                         quest.selected = false;
@@ -212,6 +216,8 @@ namespace Adventures_Guild_Simulator
                             A.Helmet.Position = A.Position + new Vector2(300, 0);
                             A.Chest.Position = A.Position + new Vector2(450, 0);
                             A.Boot.Position = A.Position + new Vector2(600, 0);
+
+                            delay = 0;
                         }
                     }
                 }
@@ -274,7 +280,7 @@ namespace Adventures_Guild_Simulator
 
             else if (tempItemTypeGenerate == 2)
             {
-                tempItemType = "helmet";
+                tempItemType = "Helmet";
             }
 
             else if (tempItemTypeGenerate == 3)

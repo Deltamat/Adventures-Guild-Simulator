@@ -45,7 +45,7 @@ namespace Adventures_Guild_Simulator
         public Dictionary<int, Equipment> equipmentDic = new Dictionary<int, Equipment>();
         public Dictionary<int, Consumable> consumableDic = new Dictionary<int, Consumable>();
         public bool questSelected;
-        bool drawSelectedAdventurer;
+        public bool drawSelectedAdventurer;
         public List<Item> shop = new List<Item>();
         public List<Item> boughtItems = new List<Item>();
 
@@ -279,6 +279,9 @@ namespace Adventures_Guild_Simulator
 
             ResetButton.Update(gameTime);
 
+         
+
+
             //If there are less than 5 quests, generate a new one
             while (quests.Count < 5)
             {
@@ -290,12 +293,6 @@ namespace Adventures_Guild_Simulator
             equipmentDic = Controller.Instance.LoadEquipment();
 
 
-            foreach (Item item in toBeAddedItem)
-            {
-                inventoryList.Add(item);
-            }
-
-            toBeAddedItem.Clear();
             //Updates quests
             foreach (Quest quest in quests)
             {
@@ -318,6 +315,19 @@ namespace Adventures_Guild_Simulator
             {
                 item.Update(gameTime);
             }
+
+            foreach (Item item in toBeRemovedItem)
+            {
+                inventoryList.Remove(item);
+            }
+
+            foreach (Item item in toBeAddedItem)
+            {
+                inventoryList.Add(item);
+            }
+
+            toBeAddedItem.Clear();
+            toBeRemovedItem.Clear();
             //updates the adventurer buttons, it is its own list because the list have to be emptied sometimes
             foreach (GameObject button in adventurerButtons)
             {
@@ -334,11 +344,7 @@ namespace Adventures_Guild_Simulator
             {
                 sellAdventurerButton.Update(gameTime);
             }
-            foreach (Item item in toBeRemovedItem)
-            {
-                inventoryList.Remove(item);
-            }
-
+  
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 sellAdventurerButton.Update(gameTime);
