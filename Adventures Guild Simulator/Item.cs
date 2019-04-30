@@ -105,8 +105,6 @@ namespace Adventures_Guild_Simulator
             Type = type;
             Name = name;
             GoldCost = goldCost;
-
-
         }
 
         public override void Update(GameTime gameTime)
@@ -184,7 +182,10 @@ namespace Adventures_Guild_Simulator
 
                             if (type == "Helmet")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
+                                if (A.Helmet.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
+                                }
                                 A.Helmet = (Equipment)this;
                                 A.Helmet.IsEquipped = true;
                                 A.HelmetFrame.Rarity = this.Rarity;
@@ -196,7 +197,10 @@ namespace Adventures_Guild_Simulator
 
                             if (type == "Weapon")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
+                                if (A.Weapon.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
+                                }
                                 A.Weapon = (Equipment)this;
                                 A.WeaponFrame.Rarity = this.Rarity;
                                 A.Weapon.IsEquipped = true;
@@ -209,7 +213,10 @@ namespace Adventures_Guild_Simulator
 
                             if (type == "Boot")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Boot);
+                                if (A.Boot.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Boot);
+                                }
                                 A.Boot = (Equipment)this;
                                 A.BootFrame.Rarity = this.Rarity;
                                 A.Boot.IsEquipped = true;
@@ -221,7 +228,10 @@ namespace Adventures_Guild_Simulator
 
                             if (type == "Chest")
                             {
-                                GameWorld.Instance.toBeAddedItem.Add(A.Chest);
+                                if (A.Chest.GoldCost != 0)
+                                {
+                                    GameWorld.Instance.toBeAddedItem.Add(A.Chest);
+                                }
                                 A.Chest = (Equipment)this;
                                 A.ChestFrame.Rarity = this.Rarity;
                                 A.Chest.IsEquipped = true;
