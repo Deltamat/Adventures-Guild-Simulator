@@ -61,6 +61,7 @@ namespace Adventures_Guild_Simulator
             cmd.CommandText = $"DELETE FROM equipment WHERE id = {ID}";
             cmd.ExecuteNonQuery();
         }
+
         /// <summary>
         /// Adds all equipment from the database to a dictionary
         /// </summary>

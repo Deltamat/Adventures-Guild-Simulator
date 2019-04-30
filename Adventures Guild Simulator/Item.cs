@@ -26,6 +26,7 @@ namespace Adventures_Guild_Simulator
         private static int selectedID;
         bool selectedSwitch = false;
         bool previousSelectedSwitch = false;
+        float delay;
 
         private MouseState currentMouse;
         private MouseState previousMouse;
@@ -72,7 +73,7 @@ namespace Adventures_Guild_Simulator
             //Picks the color for the item text
             if (Rarity == "Common")
             {
-               RarityColor = Color.White;
+                RarityColor = Color.White;
             }
 
             if (Rarity == "Uncommon")
@@ -82,7 +83,7 @@ namespace Adventures_Guild_Simulator
 
             if (Rarity == "Rare")
             {
-               RarityColor = Color.Blue;
+                RarityColor = Color.Blue;
             }
 
             if (Rarity == "Epic")
@@ -95,7 +96,7 @@ namespace Adventures_Guild_Simulator
                 RarityColor = Color.Orange;
             }
         }
-        
+
         /// <summary>
         /// Constructor for generating temporary items (because it doesn't need the "id")
         /// </summary>       
@@ -118,6 +119,8 @@ namespace Adventures_Guild_Simulator
             //Gets current position and "click info" from the mouse
             currentMouse = Mouse.GetState();
 
+            delay += gameTime.ElapsedGameTime.Milliseconds;
+
             var mouseRectangle = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
 
             //Checks if the mouseRectangle intersects with a button's Rectangle. 
@@ -128,6 +131,7 @@ namespace Adventures_Guild_Simulator
                 //(and release the mouse button while still inside the button's rectangle)
                 if (currentMouse.LeftButton == ButtonState.Released && previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    GameWorld.Instance.drawSelectedAdventurer = false;
                     foreach (Quest quest in GameWorld.Instance.quests)
                     {
                         quest.selected = false;
@@ -162,10 +166,12 @@ namespace Adventures_Guild_Simulator
                         }
                         else if (this.GetType() == typeof(Consumable))
                         {
-                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1,4)); //Adds the consumable to the database
+                            Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1, 4)); //Adds the consumable to the database
                         }
                         GameWorld.Instance.boughtItems.Add(this); //Removes the item from the shop
                         GameWorld.Instance.inventoryList.Add(this); //Adds the item to the inventory
+                        selected = false;
+                        AnySelected = false;
                     }
                 }
 
@@ -176,7 +182,7 @@ namespace Adventures_Guild_Simulator
                         if (adventurer.selected)
                         {
                             Adventurer A = GameWorld.Instance.adventurersDic[adventurer.Id];
-                            
+
                             if (type == "Helmet")
                             {
                                 GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
@@ -232,6 +238,8 @@ namespace Adventures_Guild_Simulator
                             A.Helmet.Position = A.Position + new Vector2(300, 0);
                             A.Chest.Position = A.Position + new Vector2(450, 0);
                             A.Boot.Position = A.Position + new Vector2(600, 0);
+
+                            delay = 0;
                         }
                     }
                 }
@@ -245,7 +253,7 @@ namespace Adventures_Guild_Simulator
             int tempRarityGenerator = GameWorld.Instance.GenerateRandom(0, 100);
             int tempSkillRating;
             string tempRarity;
-            
+
 
             //Generates the rarity of the item
             if (tempRarityGenerator == 99)
@@ -294,7 +302,7 @@ namespace Adventures_Guild_Simulator
 
             else if (tempItemTypeGenerate == 2)
             {
-                tempItemType = "helmet";
+                tempItemType = "Helmet";
             }
 
             else if (tempItemTypeGenerate == 3)
@@ -342,7 +350,7 @@ namespace Adventures_Guild_Simulator
 
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
-            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);            
+            spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"GearScore: {SkillRating}", Position + new Vector2(100, 70), Color.White);
         }
 
         //Code for drawing the information once the inventory item is selected
@@ -364,9 +372,17 @@ namespace Adventures_Guild_Simulator
             {
                 if (GameWorld.Instance.inventoryList[i].selected == true)
                 {
-                    //GameWorld.Instance.inventoryFrameList[i].Rarity = "Common";
-                    Controller.Instance.SellEquipement(GameWorld.Instance.inventoryList[i].Id);
-                    GameWorld.Instance.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]);
+                    GameWorld.Instance.gold += GameWorld.Instance.inventoryList[i].GoldCost; //Adds the sells price to the players gold
+                    Controller.Instance.UpdateStats(); //Updates the gold
+                    if (GameWorld.Instance.inventoryList[i].GetType() == typeof(Equipment)) //Checks for equipment
+                    {
+                        Controller.Instance.SellEquipement(GameWorld.Instance.inventoryList[i].Id); //Deletes the item from the database
+                    }
+                    else if (GameWorld.Instance.inventoryList[i].GetType() == typeof(Consumable)) //Checks for consumable
+                    {
+                        Controller.Instance.SellConsumable(GameWorld.Instance.inventoryList[i].Id); //Deletes the item from the database
+                    }
+                    GameWorld.Instance.toBeRemovedItem.Add(GameWorld.Instance.inventoryList[i]); //Adds the item to the list toBeRemoved
                 }
             }
             foreach (var item in GameWorld.Instance.inventoryFrameList)
