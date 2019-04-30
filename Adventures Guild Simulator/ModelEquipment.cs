@@ -72,7 +72,12 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                equipmentItems.Add(reader.GetInt32(0), new Equipment(new Vector2(1000), reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), reader.GetBoolean(7)));
+                Equipment e = new Equipment(new Vector2(1000), reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5), reader.GetInt32(6), false);
+                if (reader.GetInt16(7) == 1)
+                {
+                    e.IsEquipped = true;
+                }
+                equipmentItems.Add(reader.GetInt32(0), e);
             }
             reader.Close();
             return equipmentItems;
@@ -81,6 +86,12 @@ namespace Adventures_Guild_Simulator
         public void Reset()
         {
             cmd.CommandText = "DELETE FROM equipment";
+            cmd.ExecuteNonQuery();
+        }
+
+        public void EquipEquipment(int id, bool isEquipped)
+        {
+            cmd.CommandText = $"UPDATE equipment SET isEquipped={isEquipped} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
     }

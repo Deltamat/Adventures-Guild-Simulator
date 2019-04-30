@@ -181,8 +181,12 @@ namespace Adventures_Guild_Simulator
                             {
                                 GameWorld.Instance.toBeAddedItem.Add(A.Helmet);
                                 A.Helmet = (Equipment)this;
+                                A.Helmet.IsEquipped = true;
                                 A.HelmetFrame.Rarity = this.Rarity;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerHelmet(A.Helmet.id);
+                                Controller.Instance.EquipEquipment(A.Helmet.id, A.Helmet.IsEquipped);
                             }
 
                             if (type == "Weapon")
@@ -190,7 +194,12 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeAddedItem.Add(A.Weapon);
                                 A.Weapon = (Equipment)this;
                                 A.WeaponFrame.Rarity = this.Rarity;
+                                A.Weapon.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                // update the database
+                                Controller.Instance.UpdateAdventurerWeapon(A.Weapon.Id);
+                                Controller.Instance.EquipEquipment(A.Weapon.Id, A.Weapon.IsEquipped);
                             }
 
                             if (type == "Boot")
@@ -198,7 +207,11 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeAddedItem.Add(A.Boot);
                                 A.Boot = (Equipment)this;
                                 A.BootFrame.Rarity = this.Rarity;
+                                A.Boot.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerBoot(A.Boot.id);
+                                Controller.Instance.EquipEquipment(A.Boot.Id, A.Boot.IsEquipped);
                             }
 
                             if (type == "Chest")
@@ -206,9 +219,14 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeAddedItem.Add(A.Chest);
                                 A.Chest = (Equipment)this;
                                 A.ChestFrame.Rarity = this.Rarity;
+                                A.Chest.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
+
+                                Controller.Instance.UpdateAdventurerChest(A.Chest.id);
+                                Controller.Instance.EquipEquipment(A.Chest.Id, A.Chest.IsEquipped);
                             }
 
+                            
 
                             A.Weapon.Position = A.Position + new Vector2(150, 0);
                             A.Helmet.Position = A.Position + new Vector2(300, 0);

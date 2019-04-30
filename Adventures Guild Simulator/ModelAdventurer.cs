@@ -154,9 +154,34 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void UpdateEquipment(int weaponId, int helmetId, int chestId, int bootId, int consumableId)
+        public void UpdateEquipment(int weaponId, int helmetId, int chestId, int bootId)
         {
-            cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot, consumable) = ({weaponId}, {helmetId}, {chestId}, {bootId}, {consumableId})";
+            cmd.CommandText = $"UPDATE adventurer SET (weapon, helmet, chest, boot) = ({weaponId}, {helmetId}, {chestId}, {bootId})";
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateWeapon(int weaponId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET weapon={weaponId}";
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateHelmet(int helmetId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET helmet={helmetId}";
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateChest(int chestId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET chest={chestId}";
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateBoot(int bootId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET boot={bootId}";
+            cmd.ExecuteNonQuery();
+        }
+        public void UpdateConsumable(int consumableId)
+        {
+            cmd.CommandText = $"UPDATE adventurer SET consumable={consumableId}";
             cmd.ExecuteNonQuery();
         }
 
