@@ -24,6 +24,7 @@ namespace Adventures_Guild_Simulator
         GameObject bootFrame;
         GameObject weaponFrame;
         GameObject chestFrame;
+        GameObject consumableFrame;
         bool onQuest = false;        
        
         public int Id { get => id; set => id = value; }
@@ -41,6 +42,7 @@ namespace Adventures_Guild_Simulator
         public GameObject BootFrame { get => bootFrame; set => bootFrame = value; }
         public GameObject WeaponFrame { get => weaponFrame; set => weaponFrame = value; }
         public GameObject ChestFrame { get => chestFrame; set => chestFrame = value; }
+        public GameObject ConsumableFrame { get => consumableFrame; set => consumableFrame = value; }
 
         public Adventurer(Vector2 position, string spriteName, int id, string name, int level, Equipment weapon, Equipment chest, Equipment helmet, Equipment boot, Consumable consumable) : base(position, spriteName)
         {
