@@ -403,7 +403,10 @@ namespace Adventures_Guild_Simulator
             if (selected == true)
             {
                 spriteBatch.Draw(sprite, Position, Color.Gray);
-                spriteBatch.Draw(sprite, new Vector2(580, 130), Color.White);
+                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);
+                spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", new Vector2(800, 130), RarityColor);
+                spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", new Vector2(600, 230), Color.Gold);
+                spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"SkillRating: {SkillRating}", new Vector2(800, 230), Color.White);
             }
         }
 

@@ -664,16 +664,15 @@ namespace Adventures_Guild_Simulator
                 infoScreenVector.Y += 25; //Moves the next string down by a margin
             }
 
-            foreach (Item item in inventoryList)
-            {
-                if (item.selected == true)
-                {
-                    spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
-                    spriteBatch.DrawString(fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
-                    spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
-                    spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
-                }
-            }
+            //foreach (Item item in inventoryList)
+            //{
+            //    if (item.selected == true)
+            //    {
+            //            spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
+            //            spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
+            //            spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
+            //    }
+            //}
 
             spriteBatch.End();
             base.Draw(gameTime);
