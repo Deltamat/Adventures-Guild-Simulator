@@ -163,7 +163,6 @@ namespace Adventures_Guild_Simulator
             stat.UpdateStats();
             equipment.Reset();
             consumable.Reset();
-
         }
 
         public void Naming()

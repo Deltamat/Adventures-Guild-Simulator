@@ -180,18 +180,22 @@ namespace Adventures_Guild_Simulator
             sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
                 TextForButton = "Sell adv.",
+                FontColor = Color.White
             };
             resetButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1800, 1020), "AB")
             {
                 TextForButton = "Reset",
+                FontColor = Color.White
             };
             sellItemButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
-                TextForButton = "Sell item"
+                TextForButton = "Sell item",
+                FontColor = Color.White
             };
             restockShop = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(280, 495), "AB")
             {
-                TextForButton = "Restock (50)"
+                TextForButton = "Restock (50)",
+                FontColor = Color.White
             };
 
             //sets a click event for each Button
@@ -652,15 +656,15 @@ namespace Adventures_Guild_Simulator
                 infoScreenVector.Y += 25; //Moves the next string down by a margin
             }
 
-            //foreach (Item item in inventoryList)
-            //{
-            //    if (item.selected == true)
-            //    {
-            //            spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
-            //            spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
-            //            spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
-            //    }
-            //}
+            foreach (Item item in inventoryList)
+            {
+                if (item.selected == true)
+                {
+                    spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
+                    spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
+                    spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
+                }
+            }
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -765,11 +769,12 @@ namespace Adventures_Guild_Simulator
 
         private void Reset(object sender, EventArgs e)
         {
-            gold = 5000;
+            gold = 50;
             questsCompleted = 0;
             adventurerDeaths = 0;
             inventoryList = new List<Item>();
             quests = new List<Quest>();
+            shop = new List<Item>();
             drawSelectedAdventurer = false;
             foreach (GameObject item in inventoryFrameList)
             {
