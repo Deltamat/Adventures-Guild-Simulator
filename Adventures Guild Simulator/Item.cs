@@ -196,7 +196,7 @@ namespace Adventures_Guild_Simulator
                                 A.HelmetFrame.Rarity = this.Rarity;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
-                                Controller.Instance.UpdateAdventurerHelmet(A.Helmet.id);
+                                Controller.Instance.UpdateAdventurerHelmet(A.Helmet.id, A.Id);
                                 Controller.Instance.EquipEquipment(A.Helmet.id);
                             }
 
@@ -214,7 +214,7 @@ namespace Adventures_Guild_Simulator
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
                                 // update the database
-                                Controller.Instance.UpdateAdventurerWeapon(A.Weapon.Id);
+                                Controller.Instance.UpdateAdventurerWeapon(A.Weapon.Id, A.Id);
                                 Controller.Instance.EquipEquipment(A.Weapon.Id);
                             }
 
@@ -231,7 +231,7 @@ namespace Adventures_Guild_Simulator
                                 A.Boot.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
-                                Controller.Instance.UpdateAdventurerBoot(A.Boot.id);
+                                Controller.Instance.UpdateAdventurerBoot(A.Boot.id, A.Id);
                                 Controller.Instance.EquipEquipment(A.Boot.Id);
                             }
 
@@ -248,7 +248,7 @@ namespace Adventures_Guild_Simulator
                                 A.Chest.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
-                                Controller.Instance.UpdateAdventurerChest(A.Chest.id);
+                                Controller.Instance.UpdateAdventurerChest(A.Chest.Id, A.Id);
                                 Controller.Instance.EquipEquipment(A.Chest.Id);
                             }
 
@@ -266,7 +266,7 @@ namespace Adventures_Guild_Simulator
                                 A.Consumable.IsEquipped = true;
                                 GameWorld.Instance.toBeRemovedItem.Add(this);
 
-                                Controller.Instance.UpdateAdventurerConsumeable(A.Consumable.id);
+                                Controller.Instance.UpdateAdventurerConsumeable(A.Consumable.Id, A.Id);
                                 Controller.Instance.EquipConsumable(A.Consumable.Id);
                             }
 
@@ -403,7 +403,7 @@ namespace Adventures_Guild_Simulator
             if (selected == true)
             {
                 spriteBatch.Draw(sprite, Position, Color.Gray);
-                spriteBatch.Draw(sprite, new Vector2(580, 130), Color.White);
+                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);
             }
         }
 

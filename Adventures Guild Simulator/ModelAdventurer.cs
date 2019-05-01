@@ -92,7 +92,7 @@ namespace Adventures_Guild_Simulator
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                Equipment helmet , weapon , chest, boot;
+                Equipment helmet, weapon, chest, boot;
                 Consumable consumable;
                 #region TryCatch
                 try
@@ -101,7 +101,6 @@ namespace Adventures_Guild_Simulator
                 }
                 catch (Exception)
                 {
-
                     helmet = null;
                 }
                 try
@@ -110,7 +109,6 @@ namespace Adventures_Guild_Simulator
                 }
                 catch (Exception)
                 {
-
                     weapon = null;
                 }
                 try
@@ -119,7 +117,6 @@ namespace Adventures_Guild_Simulator
                 }
                 catch (Exception)
                 {
-
                     chest = null;
                 }
                 try
@@ -128,7 +125,6 @@ namespace Adventures_Guild_Simulator
                 }
                 catch (Exception)
                 {
-
                     boot = null;
                 }
                 try
@@ -137,7 +133,6 @@ namespace Adventures_Guild_Simulator
                 }
                 catch (Exception)
                 {
-
                     consumable = null;
                 }
                 #endregion
@@ -154,29 +149,29 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
         }
 
-        public void UpdateWeapon(int weaponId)
+        public void UpdateWeapon(int weaponId, int id)
         {
-            cmd.CommandText = $"UPDATE adventurer SET weapon={weaponId}";
+            cmd.CommandText = $"UPDATE adventurer SET weapon={weaponId} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
-        public void UpdateHelmet(int helmetId)
+        public void UpdateHelmet(int helmetId, int id)
         {
-            cmd.CommandText = $"UPDATE adventurer SET helmet={helmetId}";
+            cmd.CommandText = $"UPDATE adventurer SET helmet={helmetId} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
-        public void UpdateChest(int chestId)
+        public void UpdateChest(int chestId, int id)
         {
-            cmd.CommandText = $"UPDATE adventurer SET chest={chestId}";
+            cmd.CommandText = $"UPDATE adventurer SET chest={chestId} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
-        public void UpdateBoot(int bootId)
+        public void UpdateBoot(int bootId, int id)
         {
-            cmd.CommandText = $"UPDATE adventurer SET boot={bootId}";
+            cmd.CommandText = $"UPDATE adventurer SET boot={bootId} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
-        public void UpdateConsumable(int consumableId)
+        public void UpdateConsumable(int consumableId, int id)
         {
-            cmd.CommandText = $"UPDATE adventurer SET consumable={consumableId}";
+            cmd.CommandText = $"UPDATE adventurer SET consumable={consumableId} WHERE id={id}";
             cmd.ExecuteNonQuery();
         }
 
