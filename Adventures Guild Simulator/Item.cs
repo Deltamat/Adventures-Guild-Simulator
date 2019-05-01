@@ -175,7 +175,7 @@ namespace Adventures_Guild_Simulator
                     }
                 }
 
-                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed)
+                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed &! GameWorld.Instance.shop.Contains(this))
                 {
                     foreach (Button adventurer in GameWorld.Instance.adventurerButtons)
                     {

@@ -422,22 +422,6 @@ namespace Adventures_Guild_Simulator
                 inventoryList[i].Position = inventoryFrameList[i].Position + new Vector2(10, 10);
             }
 
-            //Generates an item into the equipment database + to the inventory
-            if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 1000)
-            {
-                Equipment.GenerateEquipment(new Vector2(300, 200));
-
-                inventoryList.Clear();
-                foreach (var item in equipmentDic)
-                {
-                    if (item.Value.IsEquipped == false)
-                    {
-                        inventoryList.Add(item.Value);
-                    }
-                }
-                delay = 0;
-            }
-
             //Shop
             while (shop.Count < 4)
             {
@@ -458,20 +442,6 @@ namespace Adventures_Guild_Simulator
             foreach (Item item in boughtItems)
             {
                 shop.Remove(item);
-            }
-
-            //Adds all temp items to the inventory list
-            if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
-            {
-                Inventory.AddToInventory();
-                delay = 0;
-            }
-
-            //Deletes the temp list
-            if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
-            {
-                itemList.Clear();
-                delay = 0;
             }
 
             if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
