@@ -389,7 +389,8 @@ namespace Adventures_Guild_Simulator
                     RarityColor = Color.Orange;
                     break;
             }
-
+       
+            
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", Position + new Vector2(100, 0), RarityColor);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", Position + new Vector2(100, 35), Color.Gold);
             spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"SkillRating: {SkillRating}", Position + new Vector2(100, 70), Color.White);
@@ -402,8 +403,13 @@ namespace Adventures_Guild_Simulator
 
             if (selected == true)
             {
+                if (GetType() == typeof(Consumable))
+                {
+                    Consumable consumable = (Consumable)this;
+                    spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Uses: {consumable.Uses}", new Vector2(610, 255), Color.White);
+                }
                 spriteBatch.Draw(sprite, Position, Color.Gray);
-                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);
+                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);          
             }
         }
 
