@@ -117,12 +117,6 @@ namespace Adventures_Guild_Simulator
 
         public override void Update(GameTime gameTime)
         {
-            //Temp insta complete quest button
-            if (Keyboard.GetState().IsKeyDown(Keys.L))
-            {
-                ProgressTime = DurationTime - 1;
-            }
-
             if (Ongoing == false) //Whether any one is assinged to the quest
             {
                 //Counts down how much time before the quest expires

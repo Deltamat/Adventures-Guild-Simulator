@@ -175,7 +175,7 @@ namespace Adventures_Guild_Simulator
                     }
                 }
 
-                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed)
+                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed &! GameWorld.Instance.shop.Contains(this))
                 {
                     foreach (Button adventurer in GameWorld.Instance.adventurerButtons)
                     {
@@ -409,7 +409,10 @@ namespace Adventures_Guild_Simulator
                     spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Uses: {consumable.Uses}", new Vector2(610, 255), Color.White);
                 }
                 spriteBatch.Draw(sprite, Position, Color.Gray);
-                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);          
+                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);
+                spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"{Name}", new Vector2(800, 130), RarityColor);
+                spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Cost: {GoldCost}", new Vector2(600, 230), Color.Gold);
+                spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"SkillRating: {SkillRating}", new Vector2(800, 230), Color.White);
             }
         }
 

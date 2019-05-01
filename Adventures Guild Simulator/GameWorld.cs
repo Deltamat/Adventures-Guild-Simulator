@@ -53,6 +53,7 @@ namespace Adventures_Guild_Simulator
         private Button sellAdventurerButton;
         private Button resetButton;
         private Button sellItemButton;
+        private Button restockShop;
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -188,13 +189,17 @@ namespace Adventures_Guild_Simulator
             {
                 TextForButton = "Sell item"
             };
-
+            restockShop = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(280, 495), "AB")
+            {
+                TextForButton = "Restock (50)"
+            };
 
             //sets a click event for each Button
             buyAdventurerButton.Click += BuyAdventurer;
             sellAdventurerButton.Click += SellAdventurer;
             resetButton.Click += Reset;
             sellItemButton.Click += SellItemCall;
+            restockShop.Click += RestockShop;
 
             //List of our buttons
             userInterfaceObjects = new List<GameObject>()
@@ -288,11 +293,6 @@ namespace Adventures_Guild_Simulator
                 Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Boot.Id);
                 inventoryList.Add(adventurersDic[adventurerToShowId].Boot);
             }
-            //if (adventurersDic[adventurerToShowId].Consumable.GoldCost > 1)
-            //{
-            //    adventurersDic[adventurerToShowId].Consumable.IsEquipped = false;
-            //    Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Consumable.Id);
-            //}
             Controller.Instance.RemoveAdventurer(adventurerToShowId);
             adventurersDic.Remove(adventurerToShowId);
             UpdateAdventurerButtons();
@@ -307,6 +307,20 @@ namespace Adventures_Guild_Simulator
         private void SellItemCall(object sender, EventArgs e)
         {
             Item.SellItem();
+        }
+
+        /// <summary>
+        /// Deletes everything currently in the shop
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RestockShop(object sender, EventArgs e)
+        {
+            if (gold >= 50)
+            {
+                gold -= 50;
+                shop.Clear();
+            }
         }
 
         /// <summary>
@@ -332,6 +346,7 @@ namespace Adventures_Guild_Simulator
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
             resetButton.Update(gameTime);
+            restockShop.Update(gameTime);
 
             equipmentDic = Controller.Instance.LoadEquipment();            
 
@@ -422,22 +437,6 @@ namespace Adventures_Guild_Simulator
                 inventoryList[i].Position = inventoryFrameList[i].Position + new Vector2(10, 10);
             }
 
-            //Generates an item into the equipment database + to the inventory
-            if (Keyboard.GetState().IsKeyDown(Keys.E) && delay > 1000)
-            {
-                Equipment.GenerateEquipment(new Vector2(300, 200));
-
-                inventoryList.Clear();
-                foreach (var item in equipmentDic)
-                {
-                    if (item.Value.IsEquipped == false)
-                    {
-                        inventoryList.Add(item.Value);
-                    }
-                }
-                delay = 0;
-            }
-
             //Shop
             while (shop.Count < 4)
             {
@@ -458,20 +457,6 @@ namespace Adventures_Guild_Simulator
             foreach (Item item in boughtItems)
             {
                 shop.Remove(item);
-            }
-
-            //Adds all temp items to the inventory list
-            if (Keyboard.GetState().IsKeyDown(Keys.T) && delay > 2000)
-            {
-                Inventory.AddToInventory();
-                delay = 0;
-            }
-
-            //Deletes the temp list
-            if (Keyboard.GetState().IsKeyDown(Keys.C) && delay > 2000)
-            {
-                itemList.Clear();
-                delay = 0;
             }
 
             if (Mouse.GetState().MiddleButton == ButtonState.Pressed)
@@ -612,6 +597,8 @@ namespace Adventures_Guild_Simulator
                 button.Draw(spriteBatch);
             }
 
+            restockShop.Draw(spriteBatch);
+
             //Draws shop
             Vector2 shopVector = new Vector2(30);
             foreach (Item item in shop)
@@ -664,16 +651,15 @@ namespace Adventures_Guild_Simulator
                 infoScreenVector.Y += 25; //Moves the next string down by a margin
             }
 
-            foreach (Item item in inventoryList)
-            {
-                if (item.selected == true)
-                {
-                    spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
-                    spriteBatch.DrawString(fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
-                    spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
-                    spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
-                }
-            }
+            //foreach (Item item in inventoryList)
+            //{
+            //    if (item.selected == true)
+            //    {
+            //            spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
+            //            spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
+            //            spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
+            //    }
+            //}
 
             spriteBatch.End();
             base.Draw(gameTime);
