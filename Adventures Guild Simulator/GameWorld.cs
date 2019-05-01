@@ -180,18 +180,22 @@ namespace Adventures_Guild_Simulator
             sellAdventurerButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
                 TextForButton = "Sell adv.",
+                FontColor = Color.White
             };
             resetButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1800, 1020), "AB")
             {
                 TextForButton = "Reset",
+                FontColor = Color.White
             };
             sellItemButton = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(1230, 500), "AB")
             {
-                TextForButton = "Sell item"
+                TextForButton = "Sell item",
+                FontColor = Color.White
             };
             restockShop = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(280, 495), "AB")
             {
-                TextForButton = "Restock (50)"
+                TextForButton = "Restock (50)",
+                FontColor = Color.White
             };
 
             //sets a click event for each Button
@@ -656,7 +660,6 @@ namespace Adventures_Guild_Simulator
                 if (item.selected == true)
                 {
                     spriteBatch.DrawString(fontCopperplate, $"{item.Name}", new Vector2(800, 130), item.RarityColor);
-                    spriteBatch.DrawString(fontCopperplate, $"{item.Id}", new Vector2(800, 180), item.RarityColor);
                     spriteBatch.DrawString(fontCopperplate, $"Cost: {item.GoldCost}", new Vector2(600, 230), Color.Gold);
                     spriteBatch.DrawString(fontCopperplate, $"SkillRating: {item.SkillRating}", new Vector2(800, 230), Color.White);
                 }
