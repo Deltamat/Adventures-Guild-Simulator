@@ -26,7 +26,7 @@ namespace Adventures_Guild_Simulator
 
         //Adds all of the suffixes and prefixes, should only be done once
         public void CreateNames()
-        {
+        {            
             int i = 1;
             cmd.CommandText = $"INSERT OR REPLACE INTO naming (id, name, type) VALUES ({i}, 'Stamina', 'suffix')";
             cmd.ExecuteNonQuery();
@@ -383,9 +383,9 @@ namespace Adventures_Guild_Simulator
             cmd.ExecuteNonQuery();
             i++;
             cmd.CommandText = $"INSERT OR REPLACE INTO naming (id, name, type) VALUES ({i}, 'Arrowgun', 'name')";
-            cmd.ExecuteNonQuery();
+            cmd.ExecuteNonQuery();            
         }
-        
+
         //Generates a prefix or suffix for an item
         public string SelectPrefix(int id)
         {

@@ -175,7 +175,7 @@ namespace Adventures_Guild_Simulator
                     }
                 }
 
-                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed)
+                if (currentMouse.RightButton == ButtonState.Released && previousMouse.RightButton == ButtonState.Pressed &! GameWorld.Instance.shop.Contains(this))
                 {
                     foreach (Button adventurer in GameWorld.Instance.adventurerButtons)
                     {
@@ -403,7 +403,7 @@ namespace Adventures_Guild_Simulator
             if (selected == true)
             {
                 spriteBatch.Draw(sprite, Position, Color.Gray);
-                spriteBatch.Draw(sprite, new Vector2(580, 130), Color.White);
+                spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);
             }
         }
 
