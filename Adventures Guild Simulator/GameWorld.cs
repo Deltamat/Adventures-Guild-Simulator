@@ -768,11 +768,12 @@ namespace Adventures_Guild_Simulator
 
         private void Reset(object sender, EventArgs e)
         {
-            gold = 5000;
+            gold = 50;
             questsCompleted = 0;
             adventurerDeaths = 0;
             inventoryList = new List<Item>();
             quests = new List<Quest>();
+            shop = new List<Item>();
             drawSelectedAdventurer = false;
             foreach (GameObject item in inventoryFrameList)
             {

@@ -179,7 +179,7 @@ namespace Adventures_Guild_Simulator
         {
             cmd.CommandText = "DELETE FROM Adventurer";
             cmd.ExecuteNonQuery();
-            cmd.CommandText = $"INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, '{Controller.Instance.GetName(100,119)}', 1, 'defaultSprite')";
+            cmd.CommandText = $"INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, '{Controller.Instance.GetName(100,119)}', 1, 'Adventures/{GameWorld.Instance.GenerateRandom(0, 58)}')";
             cmd.ExecuteNonQuery();
         }
     }
