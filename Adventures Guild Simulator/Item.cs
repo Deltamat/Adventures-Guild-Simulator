@@ -406,7 +406,7 @@ namespace Adventures_Guild_Simulator
                 if (GetType() == typeof(Consumable))
                 {
                     Consumable consumable = (Consumable)this;
-                    spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Uses: {consumable.Uses}", new Vector2(610, 255), Color.White);
+                    spriteBatch.DrawString(GameWorld.Instance.fontCopperplate, $"Uses: {consumable.Uses}", new Vector2(600, 255), Color.White);
                 }
                 spriteBatch.Draw(sprite, Position, Color.Gray);
                 spriteBatch.Draw(sprite, new Vector2(610, 130), Color.White);

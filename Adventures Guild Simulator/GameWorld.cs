@@ -539,6 +539,7 @@ namespace Adventures_Guild_Simulator
                     }
                     if (value.Consumable != null)
                     {
+                        spriteBatch.DrawString(fontCopperplate, $"Uses: {value.Consumable.Uses}", value.Consumable.Position + new Vector2(-50, 95), Color.White);
                         spriteBatch.Draw(value.Consumable.Sprite, value.Consumable.CollisionBox, Color.White);
                         spriteBatch.DrawString(fontCopperplate, $"SR:{value.Consumable.SkillRating}", value.Consumable.Position + new Vector2(-50, 70), Color.White);
                     }
