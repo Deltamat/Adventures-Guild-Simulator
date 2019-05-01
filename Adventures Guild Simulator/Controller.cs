@@ -60,25 +60,25 @@ namespace Adventures_Guild_Simulator
             adventurer.SetLevel(id, level);
         }
 
-        public void UpdateAdventurerWeapon(int weaponId)
+        public void UpdateAdventurerWeapon(int weaponId, int id)
         {
-            adventurer.UpdateWeapon(weaponId);
+            adventurer.UpdateWeapon(weaponId, id);
         }
-        public void UpdateAdventurerHelmet(int helmetId)
+        public void UpdateAdventurerHelmet(int helmetId, int id)
         {
-            adventurer.UpdateHelmet(helmetId);
+            adventurer.UpdateHelmet(helmetId, id);
         }
-        public void UpdateAdventurerChest(int chestId)
+        public void UpdateAdventurerChest(int chestId, int id)
         {
-            adventurer.UpdateChest(chestId);
+            adventurer.UpdateChest(chestId, id);
         }
-        public void UpdateAdventurerBoot(int bootId)
+        public void UpdateAdventurerBoot(int bootId, int id)
         {
-            adventurer.UpdateBoot(bootId);
+            adventurer.UpdateBoot(bootId, id);
         }
-        public void UpdateAdventurerConsumeable(int consumableId)
+        public void UpdateAdventurerConsumeable(int consumableId, int id)
         {
-            adventurer.UpdateConsumable(consumableId);
+            adventurer.UpdateConsumable(consumableId, id);
         }
         #endregion
 

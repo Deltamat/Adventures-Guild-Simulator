@@ -778,7 +778,7 @@ namespace Adventures_Guild_Simulator
 
         private void Reset(object sender, EventArgs e)
         {
-            gold = 50;
+            gold = 5000;
             questsCompleted = 0;
             adventurerDeaths = 0;
             inventoryList = new List<Item>();
