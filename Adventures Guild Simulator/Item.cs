@@ -16,6 +16,7 @@ namespace Adventures_Guild_Simulator
         int skillRating;
         int goldCost;
         string type;
+        string spriteName;
         string name;
         private static bool anySelected = false;
         private bool owned = true;
@@ -54,6 +55,7 @@ namespace Adventures_Guild_Simulator
         public static int SelectedID { get => selectedID; set => selectedID = value; }
         public bool SelectedSwitch { get => selectedSwitch; set => selectedSwitch = value; }
         public bool PreviousSelectedSwitch { get => previousSelectedSwitch; set => previousSelectedSwitch = value; }
+        public string SpriteName { get => spriteName; set => spriteName = value; }
 
 
         /// <summary>
@@ -67,6 +69,7 @@ namespace Adventures_Guild_Simulator
             Type = type;
             Name = name;
             GoldCost = goldCost;
+            SpriteName = spriteName;
 
             //Picks the color for the item text
             if (Rarity == "Common")
@@ -105,6 +108,7 @@ namespace Adventures_Guild_Simulator
             Type = type;
             Name = name;
             GoldCost = goldCost;
+            SpriteName = spriteName;
         }
 
         public override void Update(GameTime gameTime)
@@ -159,11 +163,11 @@ namespace Adventures_Guild_Simulator
                         Controller.Instance.UpdateStats();
                         if (this.GetType() == typeof(Equipment))
                         {
-                            GameWorld.Instance.inventoryList.Add(Controller.Instance.CreateEquipment(name, type, type, rarity, goldCost, skillRating, false)); //Adds the equipment to the database
+                            GameWorld.Instance.inventoryList.Add(Controller.Instance.CreateEquipment(name, spriteName, type, rarity, goldCost, skillRating, false)); //Adds the equipment to the database
                         }
                         else if (this.GetType() == typeof(Consumable))
                         {
-                            GameWorld.Instance.inventoryList.Add(Controller.Instance.CreateConsumable(name, type, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1, 4))); //Adds the consumable to the database
+                            GameWorld.Instance.inventoryList.Add(Controller.Instance.CreateConsumable(name, spriteName, type, rarity, goldCost, skillRating, false, GameWorld.Instance.GenerateRandom(1, 4))); //Adds the consumable to the database
                         }
                         GameWorld.Instance.boughtItems.Add(this); //Removes the item from the shop
                         selected = false;
