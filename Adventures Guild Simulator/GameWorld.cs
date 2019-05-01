@@ -53,6 +53,7 @@ namespace Adventures_Guild_Simulator
         private Button sellAdventurerButton;
         private Button resetButton;
         private Button sellItemButton;
+        private Button restockShop;
 
         private static ContentManager content;
         public static ContentManager ContentManager
@@ -188,13 +189,17 @@ namespace Adventures_Guild_Simulator
             {
                 TextForButton = "Sell item"
             };
-
+            restockShop = new Button(content.Load<Texture2D>("AB"), content.Load<SpriteFont>("fontCopperplate"), new Vector2(280, 495), "AB")
+            {
+                TextForButton = "Restock (50)"
+            };
 
             //sets a click event for each Button
             buyAdventurerButton.Click += BuyAdventurer;
             sellAdventurerButton.Click += SellAdventurer;
             resetButton.Click += Reset;
             sellItemButton.Click += SellItemCall;
+            restockShop.Click += RestockShop;
 
             //List of our buttons
             userInterfaceObjects = new List<GameObject>()
@@ -288,11 +293,6 @@ namespace Adventures_Guild_Simulator
                 Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Boot.Id);
                 inventoryList.Add(adventurersDic[adventurerToShowId].Boot);
             }
-            //if (adventurersDic[adventurerToShowId].Consumable.GoldCost > 1)
-            //{
-            //    adventurersDic[adventurerToShowId].Consumable.IsEquipped = false;
-            //    Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Consumable.Id);
-            //}
             Controller.Instance.RemoveAdventurer(adventurerToShowId);
             adventurersDic.Remove(adventurerToShowId);
             UpdateAdventurerButtons();
@@ -307,6 +307,20 @@ namespace Adventures_Guild_Simulator
         private void SellItemCall(object sender, EventArgs e)
         {
             Item.SellItem();
+        }
+
+        /// <summary>
+        /// Deletes everything currently in the shop
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RestockShop(object sender, EventArgs e)
+        {
+            if (gold >= 50)
+            {
+                gold -= 50;
+                shop.Clear();
+            }
         }
 
         /// <summary>
@@ -332,6 +346,7 @@ namespace Adventures_Guild_Simulator
             globalDeltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
             resetButton.Update(gameTime);
+            restockShop.Update(gameTime);
 
             equipmentDic = Controller.Instance.LoadEquipment();            
 
@@ -581,6 +596,8 @@ namespace Adventures_Guild_Simulator
             {
                 button.Draw(spriteBatch);
             }
+
+            restockShop.Draw(spriteBatch);
 
             //Draws shop
             Vector2 shopVector = new Vector2(30);

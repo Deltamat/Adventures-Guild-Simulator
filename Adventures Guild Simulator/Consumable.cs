@@ -99,27 +99,27 @@ namespace Adventures_Guild_Simulator
             if (tempRarityGenerator == 99)
             {
                 tempRarity = "Legendary";
-                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 80;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(21, 25);
             }
             else if (tempRarityGenerator > 90)
             {
                 tempRarity = "Epic";
-                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 60;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(16, 20);
             }
             else if (tempRarityGenerator > 75)
             {
                 tempRarity = "Rare";
-                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 40;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(11, 15);
             }
             else if (tempRarityGenerator > 50)
             {
                 tempRarity = "Uncommon";
-                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 20;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(6, 10);
             }
             else
             {
                 tempRarity = "Common";
-                tempSkillRating = GameWorld.Instance.GenerateRandom(0, 20) + 1;
+                tempSkillRating = GameWorld.Instance.GenerateRandom(1, 5);
             }
 
             string tempItemType = "Potion";
