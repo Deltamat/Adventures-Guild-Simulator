@@ -20,16 +20,6 @@ namespace Adventures_Guild_Simulator
         }
         
         /// <summary>
-        /// Updates the gold stored in the database
-        /// </summary>
-        /// <param name="gold">The new gold value</param>
-        public void SetGold(int gold)
-        {
-            cmd.CommandText = $"REPLACE INTO Stat (id, gold) VALUES ({1}, {gold})";
-            cmd.ExecuteNonQuery();
-        }
-
-        /// <summary>
         /// Gets the gold stored and returns it
         /// </summary>
         /// <returns></returns>
@@ -45,16 +35,7 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return gold;
         }
-
-        /// <summary>
-        /// Updates the total death count in the database
-        /// </summary>
-        /// <param name="deaths">The new total deaths value</param>
-        public void SetDeaths(int deaths)
-        {
-            cmd.CommandText = $"REPLACE INTO Stat (id, deaths) VALUES ({1}, {deaths})";
-            cmd.ExecuteNonQuery();
-        }
+        
 
         /// <summary>
         /// Gets the total death count and returns it
@@ -72,17 +53,7 @@ namespace Adventures_Guild_Simulator
             reader.Close();
             return deaths;
         }
-
-        /// <summary>
-        /// Updates the gold stored in the database
-        /// </summary>
-        /// <param name="completedQuests">The new gold value</param>
-        public void SetCompletedQuests(int completedQuests)
-        {
-            cmd.CommandText = $"REPLACE INTO Stat (id, completedQuests) VALUES ({1}, {completedQuests})";
-            cmd.ExecuteNonQuery();
-        }
-
+        
         /// <summary>
         /// Gets the gold stored and returns it
         /// </summary>
