@@ -33,6 +33,22 @@ namespace Adventures_Guild_Simulator
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
             cmd.ExecuteNonQuery();
+
+            //bool resetBool = false;
+            //cmd.CommandText = "SELECT COUNT(*) FROM adventurer";
+            //SQLiteDataReader reader = cmd.ExecuteReader();
+            //while (reader.Read())
+            //{
+            //    if (reader.GetInt32(0) < 1)
+            //    {
+            //        resetBool = true;
+            //    }
+            //}
+            //reader.Close();
+            //if (resetBool)
+            //{
+            //    Reset();
+            //}
         }
 
         /// <summary>
@@ -42,13 +58,14 @@ namespace Adventures_Guild_Simulator
         public Adventurer CreateAdventurer(string name)
         {
             Adventurer a = null;
-            cmd.CommandText = $"INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, '{name}', 1, 'defaultSprite')";
+            string spriteName = $"Adventures/{GameWorld.Instance.GenerateRandom(0, 58)}";
+            cmd.CommandText = $"INSERT INTO Adventurer (id, name, level, spriteName) VALUES (null, '{name}', 1, '{spriteName}')";
             cmd.ExecuteNonQuery();
             cmd.CommandText = "SELECT * FROM Adventurer ORDER BY id DESC LIMIT 1";
             SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                 a = new Adventurer(new Vector2(650, 200), $"Adventures/{GameWorld.Instance.GenerateRandom(0,58)}", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
+                 a = new Adventurer(new Vector2(650, 200), $"{spriteName}", reader.GetInt32(0), reader.GetString(1), reader.GetInt32(6), null, null, null, null, null);
             }
             reader.Close();
             return a;
