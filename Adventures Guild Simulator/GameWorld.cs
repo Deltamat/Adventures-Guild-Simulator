@@ -101,7 +101,7 @@ namespace Adventures_Guild_Simulator
             //Sets the window size
             graphics.PreferredBackBufferWidth = 1920;
             graphics.PreferredBackBufferHeight = 1080;            
-            //graphics.IsFullScreen = true;
+            graphics.IsFullScreen = true;
 
             graphics.ApplyChanges();
             IsMouseVisible = true;
