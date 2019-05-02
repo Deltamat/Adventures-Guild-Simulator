@@ -115,12 +115,19 @@ namespace Adventures_Guild_Simulator
         /// </summary>
         protected override void Initialize()
         {
+            Controller.Instance.Naming();
+
             equipmentDic = Controller.Instance.LoadEquipment();
             consumableDic = Controller.Instance.LoadConsumable();
             adventurersDic = Controller.Instance.LoadAdventurers();
             gold = Controller.Instance.LoadGold();
             adventurerDeaths = Controller.Instance.LoadDeaths();
             questsCompleted = Controller.Instance.LoadCompletedQuests();
+
+            if (Controller.Instance.FirstTimeSetup())
+            {
+                FirstTimeSetup();
+            }
 
             //UI
             UI.Add(new GameObject(Vector2.Zero, "boardBackground"));
@@ -152,7 +159,7 @@ namespace Adventures_Guild_Simulator
             }
 
 
-            Controller.Instance.Naming();
+            
 
             base.Initialize();
         }        
@@ -234,6 +241,7 @@ namespace Adventures_Guild_Simulator
                 drawSelectedAdventurer = false;
                 UpdateAdventurerButtons();
                 gold -= 20;
+                Controller.Instance.UpdateStats();
             }            
         }
 
@@ -272,6 +280,7 @@ namespace Adventures_Guild_Simulator
         {
             Button b = (Button)sender;
             gold += adventurersDic[adventurerToShowId].Level;
+            Controller.Instance.UpdateStats();
 
             if (adventurersDic[adventurerToShowId].Weapon.GoldCost > 1)
             {
@@ -776,6 +785,32 @@ namespace Adventures_Guild_Simulator
         }
 
         private void Reset(object sender, EventArgs e)
+        {
+            gold = 50;
+            questsCompleted = 0;
+            adventurerDeaths = 0;
+            inventoryList = new List<Item>();
+            quests = new List<Quest>();
+            shop = new List<Item>();
+            drawSelectedAdventurer = false;
+            foreach (GameObject item in inventoryFrameList)
+            {
+                item.Rarity = "Common";
+            }
+
+            Controller.Instance.Reset();
+
+            equipmentDic = Controller.Instance.LoadEquipment();
+            consumableDic = Controller.Instance.LoadConsumable();
+            adventurersDic = Controller.Instance.LoadAdventurers();
+            gold = Controller.Instance.LoadGold();
+            adventurerDeaths = Controller.Instance.LoadDeaths();
+            questsCompleted = Controller.Instance.LoadCompletedQuests();
+
+            UpdateAdventurerButtons();
+        }
+
+        private void FirstTimeSetup()
         {
             gold = 50;
             questsCompleted = 0;

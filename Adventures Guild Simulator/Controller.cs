@@ -134,7 +134,7 @@ namespace Adventures_Guild_Simulator
 
         #endregion
 
-        #region Stat
+        #region Stat 
         public void UpdateStats()
         {
             stat.UpdateStats();
@@ -176,6 +176,11 @@ namespace Adventures_Guild_Simulator
         public string GetName(int i, int j)
         {
             return naming.SelectPrefix(GameWorld.Instance.GenerateRandom(i, j));
+        }
+
+        public bool FirstTimeSetup()
+        {
+            return stat.FirstTimeSetup();
         }
     }
 }

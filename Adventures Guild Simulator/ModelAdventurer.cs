@@ -33,6 +33,22 @@ namespace Adventures_Guild_Simulator
             cmd = connection.CreateCommand();
             cmd.CommandText = sqlexp;
             cmd.ExecuteNonQuery();
+
+            //bool resetBool = false;
+            //cmd.CommandText = "SELECT COUNT(*) FROM adventurer";
+            //SQLiteDataReader reader = cmd.ExecuteReader();
+            //while (reader.Read())
+            //{
+            //    if (reader.GetInt32(0) < 1)
+            //    {
+            //        resetBool = true;
+            //    }
+            //}
+            //reader.Close();
+            //if (resetBool)
+            //{
+            //    Reset();
+            //}
         }
 
         /// <summary>

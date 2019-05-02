@@ -105,5 +105,21 @@ namespace Adventures_Guild_Simulator
             cmd.CommandText = $"REPLACE INTO Stat (id, gold, deaths, completedQuests) VALUES ({1}, {GameWorld.Instance.gold}, {GameWorld.Instance.adventurerDeaths}, {GameWorld.Instance.questsCompleted})";
             cmd.ExecuteNonQuery();
         }
+
+        public bool FirstTimeSetup()
+        {
+            bool b = false;
+            cmd.CommandText = "SELECT COUNT(*) FROM stat";
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                if (reader.GetInt32(0) < 1)
+                {
+                    b = true;
+                }
+            }
+            reader.Close();
+            return b;
+        }
     }
 }
