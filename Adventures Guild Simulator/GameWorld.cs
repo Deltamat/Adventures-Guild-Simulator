@@ -297,12 +297,14 @@ namespace Adventures_Guild_Simulator
                 Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Boot.Id);
                 inventoryList.Add(adventurersDic[adventurerToShowId].Boot);
             }
-            if (adventurersDic[adventurerToShowId].Consumable.GoldCost > 1)
+            if (adventurersDic[adventurerToShowId].Consumable != null && adventurersDic[adventurerToShowId].Consumable.GoldCost > 1)
             {
                 adventurersDic[adventurerToShowId].Consumable.IsEquipped = false;
                 Controller.Instance.UnequipEquipment(adventurersDic[adventurerToShowId].Consumable.Id);
                 inventoryList.Add(adventurersDic[adventurerToShowId].Consumable);
             }
+
+
             Controller.Instance.RemoveAdventurer(adventurerToShowId);
             adventurersDic.Remove(adventurerToShowId);
             UpdateAdventurerButtons();
